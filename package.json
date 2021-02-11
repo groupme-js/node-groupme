@@ -1,0 +1,22 @@
+{
+  "name": "better-groupme",
+  "version": "0.0.1",
+  "description": "A new and improved version of node-groupme that isn't a million years old.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/not-so-smart/node-better-groupme.git"
+  },
+  "keywords": [
+    "groupme"
+  ],
+  "author": "Peter Currie <peterdcurrie@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/not-so-smart/node-better-groupme/issues"
+  },
+  "homepage": "https://github.com/not-so-smart/node-better-groupme#readme"
+}
