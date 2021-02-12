@@ -22,7 +22,7 @@ build/Release
 node_modules/
 
 # TypeScript declaration files
-types/
+typings/
 
 # TypeScript output files
 dist/

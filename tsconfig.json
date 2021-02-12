@@ -1,9 +1,10 @@
 {
     "extends": "@tsconfig/node14/tsconfig.json",
     "compilerOptions": {
+        "forceConsistentCasingInFileNames": true,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "./types",
+        "declarationDir": "typings",
         "noImplicitAny": true,
         "noImplicitThis": true,
         "baseUrl": "./src",
