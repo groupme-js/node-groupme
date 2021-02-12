@@ -42,3 +42,6 @@ dist/
 # dotenv environment variables file
 .env
 .env.test
+
+# HTTP requests
+*.http
