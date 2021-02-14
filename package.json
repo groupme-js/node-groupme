@@ -1,5 +1,5 @@
 {
-  "name": "better-groupme",
+  "name": "groupme.js",
   "version": "0.0.1",
   "description": "A new and improved node-groupme package that isn't a million years old.",
   "main": "dist/index.js",
@@ -26,6 +26,7 @@
     "typescript": "^4.1.5"
   },
   "dependencies": {
+    "@discordjs/collection": "^0.1.6",
     "node-fetch": "^2.6.1",
     "websocket": "^1.0.33"
   }
