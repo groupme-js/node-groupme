@@ -1,13 +1,10 @@
-type UserData = {
-    id: string;
-    avatar?: string;
-};
-
 export default class User {
     id: string;
-    avatar?: string;
-    constructor(data: UserData) {
+    avatar: string;
+    name?: string;
+    constructor(data: User) {
         this.id = data.id;
         this.avatar = data.avatar;
+        this.name = data.name;
     }
 }
