@@ -45,3 +45,6 @@ dist/
 
 # HTTP requests
 *.http
+
+# Reverse-engineering data
+data/
