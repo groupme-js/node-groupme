@@ -12,7 +12,7 @@ export default class UserManager implements BaseManager {
     }
 
     /**
-     * Gets a user by their GroupMe ID.
+     * Fetches a user by their GroupMe ID.
      */
     public fetch(id: string) {
 
