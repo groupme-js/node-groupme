@@ -1,13 +1,36 @@
+import Client from "client/Client";
 import { Attachment } from "./Attachment";
-import Message from "./Message";
 
-export default interface ChatChannel {
-    type: string,
-    id: string,
-    messageCount: number,
-    lastMessage: Message,
-    createdAt: Date,
-    updatedAt: Date,
+type MessagePreview = {
+    id: string;
+    user: UserPreview;
+    createdAt: number;
+    text: string;
+    attachments: Attachment[];
+}
+
+type UserPreview = {
+    nickname: string;
+    image_url: string;
+}
+
+export default abstract class ChatChannel {
+    readonly type: string;
+    readonly id: string;
+    readonly client: Client;
+    messageCount: number;
+    lastMessage: MessagePreview;
+    createdAt: number;
+    updatedAt: number;
+    constructor(data: ChatChannel) {
+        this.type = data.type;
+        this.id = data.id;
+        this.client = data.client;
+        this.messageCount = data.messageCount;
+        this.lastMessage = data.lastMessage;
+        this.createdAt = data.createdAt;
+        this.updatedAt = data.updatedAt;
+    }
 }
 
 type dm = {
