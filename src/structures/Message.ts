@@ -7,7 +7,7 @@ export default class Message {
     user: User;
     channel: ChatChannel;
     text: string;
-    createdAt: Date;
+    createdAt: number;
     sourceGuid: string;
     system: boolean;
     likes: User[];
