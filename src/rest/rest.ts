@@ -1,11 +1,6 @@
-import Collection from "util/Collection";
 import Client from "client/Client";
 import fetch from "node-fetch";
 import { Attachment } from "structures/Attachment";
-import Group from "structures/Group";
-import Member from "structures/Member";
-import Message from "structures/Message";
-import User from "structures/User";
 
 
 type GroupMeAPIResponse<T> = {
@@ -86,30 +81,8 @@ export default class RESTManager {
     fetchGroups() {
         api<GroupsIndexResponse>("groups").then(groups => {
             groups.forEach(g => {
-                /** The Group object to store data in. May either be cached or fetched. */
-                let group: Group;
-                const cachedGroup = this.client.groups.cache.get(g.id);
-                if (g.members) {
-                    const memberCache = cachedGroup ? cachedGroup.members : new Collection<string, Member>();
-                    g.members.forEach(m => {
-                        const user = this.client.users.add({
-                            id: m.user_id,
-                            avatar: m.image_url,
-                            name: m.name,
-                        });
-                        const memberData = {
-                            group: group,
-                            user: user,
-                            memberID: m.id,
-                            nickname: m.nickname,
-                            autokicked: m.autokicked,
-                            muted: m.muted,
-                            roles: m.roles,
-                        };
-                        const member = new Member(memberData)
-                    });
-                }
-                this.client.groups.add({
+                /** The Group object to store data in. */
+                const group = this.client.groups.add({
                     client: this.client,
                     createdAt: g.created_at,
                     creatorID: g.creator_user_id,
@@ -141,6 +114,25 @@ export default class RESTManager {
                     theme: g.theme_name,
                     updatedAt: g.updated_at
                 });
+                if (g.members) {
+                    g.members.forEach(m => {
+                        const user = this.client.users.add({
+                            id: m.user_id,
+                            avatar: m.image_url,
+                            name: m.name,
+                        });
+                        const memberData = {
+                            group: group,
+                            user: user,
+                            memberID: m.id,
+                            nickname: m.nickname,
+                            autokicked: m.autokicked,
+                            muted: m.muted,
+                            roles: m.roles,
+                        };
+                        group.members.add(memberData);
+                    });
+                }
 
             });
         })
