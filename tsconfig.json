@@ -2,15 +2,14 @@
     "extends": "@tsconfig/node14/tsconfig.json",
     "compilerOptions": {
         "forceConsistentCasingInFileNames": true,
+        "sourceMap": true,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "typings",
         "noImplicitAny": true,
         "noImplicitThis": true,
-        "baseUrl": "./src",
         "rootDir": "./src",
         "outDir": "./dist",
+        "declarationDir": "./typings",
     },
-    "include": ["./src"],
-    "exclude": ["node_modules"]
+    "include": ["./src"]
 }

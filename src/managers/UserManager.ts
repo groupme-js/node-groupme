@@ -1,6 +1,6 @@
-import { Client } from "client/Client";
-import { User, UserData } from "structures/User";
-import Collection from "util/Collection";
+import { Client } from "../client/Client";
+import { User, UserData } from "../structures/User";
+import Collection from "../util/Collection";
 import BaseManager from "./BaseManager";
 
 export default class UserManager implements BaseManager {

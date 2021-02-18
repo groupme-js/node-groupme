@@ -1,4 +1,4 @@
-import MemberManager from "managers/MemberManager";
+import MemberManager from "../managers/MemberManager";
 import { Channel } from "./Channel";
 
 export type GroupData = Omit<Group, "type" | "members">

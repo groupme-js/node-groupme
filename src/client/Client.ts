@@ -1,7 +1,7 @@
 import EventEmitter from "events";
-import GroupManager from "managers/GroupManager";
-import UserManager from "managers/UserManager";
-import RESTManager from "rest/rest";
+import GroupManager from "../managers/GroupManager";
+import UserManager from "../managers/UserManager";
+import RESTManager from "../rest/rest";
 
 export class Client extends EventEmitter {
     groups: GroupManager;
