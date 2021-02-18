@@ -1,5 +1,5 @@
-import Group from "./Group";
-import User from "./User";
+import { Group } from "./Group";
+import { User } from "./User";
 
 export type MemberData = {
     user: User;
@@ -11,7 +11,7 @@ export type MemberData = {
     roles: ["admin", "owner"] | ["admin"] | ["user"];
 }
 
-export default class Member {
+export class Member {
     private readonly _user: User;
     public get user(): User {
         return this._user;

@@ -1,5 +1,5 @@
-import Client from "client/Client";
-import User, { UserData } from "structures/User";
+import { Client } from "client/Client";
+import { User, UserData } from "structures/User";
 import Collection from "util/Collection";
 import BaseManager from "./BaseManager";
 

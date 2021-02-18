@@ -1,9 +1,9 @@
-import Channel from "./Channel";
-import User from "./User";
+import { Channel } from "./Channel";
+import { User } from "./User";
 
 export type ChatData = Omit<Chat, "type">
 
-export default class Chat extends Channel {
+export class Chat extends Channel {
     readonly type: "dm" = "dm";
     recipient: User;
     constructor(data: ChatData) {

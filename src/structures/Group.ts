@@ -1,9 +1,9 @@
 import MemberManager from "managers/MemberManager";
-import Channel from "./Channel";
+import { Channel } from "./Channel";
 
 export type GroupData = Omit<Group, "type" | "members">
 
-export default class Group extends Channel {
+export class Group extends Channel {
     readonly type: "group" = "group";
     readonly members: MemberManager;
     name: string;

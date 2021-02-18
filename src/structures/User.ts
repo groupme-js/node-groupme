@@ -4,7 +4,7 @@ export type UserData = {
     avatar: string,
 }
 
-export default class User {
+export class User {
     private readonly _id: string;
     public get id(): string {
         return this._id;

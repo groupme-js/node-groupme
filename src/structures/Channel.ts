@@ -1,4 +1,4 @@
-import Client from "client/Client";
+import { Client } from "client/Client";
 import { Attachment } from "./Attachment";
 
 type MessagePreview = {
@@ -14,7 +14,7 @@ type UserPreview = {
     image_url: string;
 }
 
-export default abstract class Channel {
+export abstract class Channel {
     readonly type: string;
     readonly id: string;
     readonly client: Client;

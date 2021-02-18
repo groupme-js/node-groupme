@@ -1,4 +1,4 @@
-import Client from "client/Client";
+import { Client } from "client/Client";
 import fetch from "node-fetch";
 import { Attachment } from "structures/Attachment";
 

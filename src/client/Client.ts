@@ -3,7 +3,7 @@ import GroupManager from "managers/GroupManager";
 import UserManager from "managers/UserManager";
 import RESTManager from "rest/rest";
 
-export default class Client extends EventEmitter {
+export class Client extends EventEmitter {
     groups: GroupManager;
     users: UserManager;
     token: string;

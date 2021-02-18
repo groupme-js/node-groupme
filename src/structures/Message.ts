@@ -1,8 +1,8 @@
 import { Attachment } from "./Attachment";
-import Channel from "./Channel";
-import User from "./User";
+import { Channel } from "./Channel";
+import { User } from "./User";
 
-export default class Message {
+export class Message {
     id: string;
     user: User;
     channel: Channel;
