@@ -1,8 +1,8 @@
-import ChatChannel from "./ChatChannel";
+import Channel from "./Channel";
 import Message from "./Message";
 import User from "./User";
 
-export default class DirectMessageChannel implements ChatChannel {
+export default class DirectMessageChannel implements Channel {
     type: "dm" = "dm";
     id: string;
     messageCount: number;

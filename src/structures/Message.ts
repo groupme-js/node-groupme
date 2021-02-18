@@ -1,11 +1,11 @@
 import { Attachment } from "./Attachment";
-import ChatChannel from "./ChatChannel";
+import Channel from "./Channel";
 import User from "./User";
 
 export default class Message {
     id: string;
     user: User;
-    channel: ChatChannel;
+    channel: Channel;
     text: string;
     createdAt: number;
     sourceGuid: string;

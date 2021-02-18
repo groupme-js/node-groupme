@@ -14,7 +14,7 @@ type UserPreview = {
     image_url: string;
 }
 
-export default abstract class ChatChannel {
+export default abstract class Channel {
     readonly type: string;
     readonly id: string;
     readonly client: Client;
@@ -22,7 +22,7 @@ export default abstract class ChatChannel {
     lastMessage: MessagePreview;
     createdAt: number;
     updatedAt: number;
-    constructor(data: ChatChannel) {
+    constructor(data: Channel) {
         this.type = data.type;
         this.id = data.id;
         this.client = data.client;
