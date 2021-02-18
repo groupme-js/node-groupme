@@ -1,24 +1,20 @@
+import MemberManager from "managers/MemberManager";
 import ChatChannel from "./ChatChannel";
-import Message from "./Message";
-import User from "./User";
 
-export default class GroupChatChannel implements ChatChannel {
-    type: "group" = "group";
-    id: string;
-    messageCount: number;
-    lastMessage: Message;
-    createdAt: Date;
-    updatedAt: Date;
+export type GroupData = Omit<GroupChatChannel, "type" | "members">
+
+export default class GroupChatChannel extends ChatChannel {
+    readonly type: "group" = "group";
+    readonly members: MemberManager;
     name: string;
     phoneNumber: string;
     private: boolean;
     imageURL: string;
-    creator: User;
-    mutedUntil: Date;
+    creatorID: string;
+    mutedUntil: number;
     officeMode: boolean;
     inviteURL: string;
     inviteQR: string;
-    members: User[] | null;
     maxMembers: number;
     theme: string | null;
     likeIcon: {
@@ -29,22 +25,26 @@ export default class GroupChatChannel implements ChatChannel {
     requiresApproval: boolean;
     showJoinQuestion: boolean;
     joinQuestion: string | null;
-    constructor(data: Omit<GroupChatChannel, "type">) {
-        this.id = data.id;
-        this.messageCount = data.messageCount;
-        this.lastMessage = data.lastMessage;
-        this.createdAt = data.createdAt;
-        this.updatedAt = data.updatedAt;
+    constructor(data: GroupData) {
+        super({
+            id: data.id,
+            type: "group",
+            client: data.client,
+            lastMessage: data.lastMessage,
+            messageCount: data.messageCount,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+        });
+        this.members = new MemberManager(this.client, this);
         this.name = data.name;
         this.phoneNumber = data.phoneNumber;
         this.private = data.private;
         this.imageURL = data.imageURL;
-        this.creator = data.creator;
+        this.creatorID = data.creatorID;
         this.mutedUntil = data.mutedUntil;
         this.officeMode = data.officeMode;
         this.inviteURL = data.inviteURL;
         this.inviteQR = data.inviteQR;
-        this.members = data.members;
         this.maxMembers = data.maxMembers;
         this.theme = data.theme;
         this.likeIcon = data.likeIcon;
