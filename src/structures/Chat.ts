@@ -1,9 +1,9 @@
 import Channel from "./Channel";
 import User from "./User";
 
-export type ChatData = Omit<DirectMessageChannel, "type">
+export type ChatData = Omit<Chat, "type">
 
-export default class DirectMessageChannel extends Channel {
+export default class Chat extends Channel {
     readonly type: "dm" = "dm";
     recipient: User;
     constructor(data: ChatData) {
