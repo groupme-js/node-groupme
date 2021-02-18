@@ -1,9 +1,9 @@
 import MemberManager from "managers/MemberManager";
 import ChatChannel from "./ChatChannel";
 
-export type GroupData = Omit<GroupChatChannel, "type" | "members">
+export type GroupData = Omit<Group, "type" | "members">
 
-export default class GroupChatChannel extends ChatChannel {
+export default class Group extends ChatChannel {
     readonly type: "group" = "group";
     readonly members: MemberManager;
     name: string;

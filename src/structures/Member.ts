@@ -1,9 +1,9 @@
-import GroupChatChannel from "./GroupChatChannel";
+import Group from "./Group";
 import User from "./User";
 
 export type MemberData = {
     user: User;
-    group: GroupChatChannel;
+    group: Group;
     memberID: string;
     nickname: string;
     muted: boolean;
@@ -16,8 +16,8 @@ export default class Member {
     public get user(): User {
         return this._user;
     }
-    private readonly _group: GroupChatChannel;
-    public get group(): GroupChatChannel {
+    private readonly _group: Group;
+    public get group(): Group {
         return this._group;
     }
     private readonly _memberID: string;

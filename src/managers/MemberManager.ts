@@ -1,14 +1,14 @@
 import Collection from "util/Collection";
-import GroupChatChannel from "structures/GroupChatChannel";
+import Group from "structures/Group";
 import BaseManager from "./BaseManager";
 import Member, { MemberData } from "structures/Member";
 import Client from "client/Client";
 
 export default class MemberManager implements BaseManager {
     client: Client;
-    group: GroupChatChannel;
+    group: Group;
     cache: Collection<string, Member>;
-    constructor(client: Client, group: GroupChatChannel) {
+    constructor(client: Client, group: Group) {
         this.client = client;
         this.group = group;
         this.cache = new Collection<string, Member>();

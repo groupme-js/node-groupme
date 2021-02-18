@@ -1,14 +1,14 @@
 import Client from "client/Client";
-import GroupChatChannel, { GroupData } from "structures/GroupChatChannel";
+import Group, { GroupData } from "structures/Group";
 import Collection from "util/Collection";
 import BaseManager from "./BaseManager";
 
 export default class GroupManager implements BaseManager {
     client: Client;
-    cache: Collection<string, GroupChatChannel>;
+    cache: Collection<string, Group>;
     constructor(client: Client) {
         this.client = client;
-        this.cache = new Collection<string, GroupChatChannel>();
+        this.cache = new Collection<string, Group>();
     }
 
     /**
@@ -17,8 +17,8 @@ export default class GroupManager implements BaseManager {
      * Member with the given data.
      * @returns the created or modified Member
      */
-    public add(groupData: GroupData): GroupChatChannel {
-        let group: GroupChatChannel;
+    public add(groupData: GroupData): Group {
+        let group: Group;
         const cachedGroup = this.cache.get(groupData.id);
         if (cachedGroup) {
             cachedGroup.createdAt = groupData.createdAt;
@@ -42,7 +42,7 @@ export default class GroupManager implements BaseManager {
             cachedGroup.updatedAt = groupData.updatedAt;
             group = cachedGroup;
         } else {
-            group = new GroupChatChannel(groupData);
+            group = new Group(groupData);
             this.cache.set(group.id, group);
         }
         return group;

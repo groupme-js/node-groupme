@@ -2,7 +2,7 @@ import Collection from "util/Collection";
 import Client from "client/Client";
 import fetch from "node-fetch";
 import { Attachment } from "structures/Attachment";
-import GroupChatChannel from "structures/GroupChatChannel";
+import Group from "structures/Group";
 import Member from "structures/Member";
 import Message from "structures/Message";
 import User from "structures/User";
@@ -87,7 +87,7 @@ export default class RESTManager {
         api<GroupsIndexResponse>("groups").then(groups => {
             groups.forEach(g => {
                 /** The Group object to store data in. May either be cached or fetched. */
-                let group: GroupChatChannel;
+                let group: Group;
                 const cachedGroup = this.client.groups.cache.get(g.id);
                 if (g.members) {
                     const memberCache = cachedGroup ? cachedGroup.members : new Collection<string, Member>();
