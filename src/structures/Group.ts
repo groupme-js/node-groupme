@@ -34,6 +34,8 @@ export class Group extends Channel {
             messageCount: data.messageCount,
             createdAt: data.createdAt,
             updatedAt: data.updatedAt,
+            messageDeletionMode: data.messageDeletionMode,
+            messageDeletionPeriod: data.messageDeletionPeriod,
         });
         this.members = new MemberManager(this.client, this);
         this.name = data.name;

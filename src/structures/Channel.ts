@@ -22,6 +22,8 @@ export abstract class Channel {
     lastMessage: MessagePreview;
     createdAt: number;
     updatedAt: number;
+    messageDeletionMode: string[];
+    messageDeletionPeriod: number;
     constructor(data: Channel) {
         this.type = data.type;
         this.id = data.id;
@@ -30,6 +32,8 @@ export abstract class Channel {
         this.lastMessage = data.lastMessage;
         this.createdAt = data.createdAt;
         this.updatedAt = data.updatedAt;
+        this.messageDeletionMode = data.messageDeletionMode;
+        this.messageDeletionPeriod = data.messageDeletionPeriod;
     }
 }
 

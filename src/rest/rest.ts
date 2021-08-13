@@ -53,6 +53,8 @@ type GroupsIndexResponse = {
         packId: number,
         packIndex: number
     } | null;
+    message_deletion_period: number,
+    message_deletion_mode: string[],
     requires_approval: boolean,
     show_join_question: boolean,
     join_question: null // just pretend that this will never exist :clueless:
@@ -111,7 +113,9 @@ export default class RESTManager {
                     requiresApproval: g.requires_approval,
                     showJoinQuestion: g.show_join_question,
                     theme: g.theme_name,
-                    updatedAt: g.updated_at
+                    updatedAt: g.updated_at,
+                    messageDeletionMode: g.message_deletion_mode,
+                    messageDeletionPeriod: g.message_deletion_period,
                 });
                 if (g.members) {
                     g.members.forEach(m => {
