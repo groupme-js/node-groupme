@@ -1,7 +1,6 @@
-import { Client } from "../client/Client";
 import fetch from "node-fetch";
+import { Client } from "../client/Client";
 import { Attachment } from "../structures/Attachment";
-
 
 type GroupMeAPIResponse<T> = {
     response: T,
@@ -79,7 +78,7 @@ export default class RESTManager {
     }
 
     fetchGroups() {
-        api<GroupsIndexResponse>("groups").then(groups => {
+        return api<GroupsIndexResponse>("groups").then(groups => {
             groups.forEach(g => {
                 /** The Group object to store data in. */
                 const group = this.client.groups.add({
@@ -135,7 +134,8 @@ export default class RESTManager {
                 }
 
             });
-        })
+            return this.client.groups.cache;
+        });
     }
 
     fetchChats() {
