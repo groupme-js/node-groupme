@@ -17,11 +17,25 @@
 			"problemMatcher": [
 				"$tsc"
 			],
+			"group": "build",
+			"label": "tsc: build - tsconfig.json"
+		},
+		{
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"command": [
+				"npm pack;",
+				"mv -Force ./groupme.js-0.0.1.tgz ../groupme.js-test;",
+				"cd ../groupme.js-test/;",
+				"npm i ./groupme.js-0.0.1.tgz;"
+			],
+			"label": "compile and send to test env",
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
-			"label": "tsc: build - tsconfig.json"
 		}
 	]
 }
