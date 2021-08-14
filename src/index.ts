@@ -5,3 +5,4 @@ export { Message } from "./structures/Message";
 export { User } from "./structures/User";
 export { Member } from "./structures/Member";
 export { Channel } from "./structures/Channel";
+export { Collection } from "./util/Collection";

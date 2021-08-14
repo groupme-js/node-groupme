@@ -1,8 +1,6 @@
-import Collection from "../util/Collection";
-import { Group } from "../structures/Group";
-import BaseManager from "./BaseManager";
+import { Client, Collection, Group } from "..";
 import { Member, MemberData } from "../structures/Member";
-import { Client } from "../client/Client";
+import BaseManager from "./BaseManager";
 
 export default class MemberManager implements BaseManager {
     client: Client;

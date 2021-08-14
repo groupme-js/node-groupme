@@ -1,6 +1,5 @@
-import { Client } from "../client/Client";
+import { Client, Collection } from "..";
 import { Chat, ChatData } from "../structures/Chat";
-import Collection from "../util/Collection";
 import BaseManager from "./BaseManager";
 
 export default class ChatManager implements BaseManager {
