@@ -26,8 +26,9 @@
 				"cwd": "${workspaceFolder}"
 			},
 			"command": [
+				"rm -r dist;",
 				"npm pack;",
-				"mv -Force ./groupme.js-0.0.1.tgz ../groupme.js-test;",
+				"mv -force ./groupme.js-0.0.1.tgz ../groupme.js-test;",
 				"cd ../groupme.js-test/;",
 				"npm i ./groupme.js-0.0.1.tgz;"
 			],
