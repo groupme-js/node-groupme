@@ -9,6 +9,11 @@ type GroupsRequestParams = {
     omit?: "memberships"
 }
 
+type ChatsRequestParams = {
+    page?: number,
+    per_page?: number
+}
+
 type GroupMeAPIResponse<T> = {
     response: T,
     meta: {
@@ -219,11 +224,29 @@ export default class RESTManager {
         return batch;
     }
 
-    async fetchChats() {
-        const chats = await this._api<ChatsIndexResponse>("chats");
+    async fetchChats(options?: {
+        page?: number,
+        per_page?: number,
+    }) {
+        const apiParams: ChatsRequestParams = {};
+        if (options) {
+            // If no pagination is specified, recursively fetch all chats
+            if (options.page === undefined && options.per_page === undefined) {
+                let batch, i = 1;
+                do batch = await this.fetchChats({ page: i++ });
+                while (batch.size);
+                return this.client.chats.cache;
+            }
+            // Translate the options into valid API parameters
+            if (options.page != undefined) apiParams.page = options.page;
+            if (options.per_page != undefined) apiParams.per_page = options.per_page;
+        }
+
+        const batch = new Collection<string, Chat>()
+        const chats = await this._api<ChatsIndexResponse>("chats", apiParams);
 
         chats.forEach(c => {
-            this.client.chats.add({
+            const chat = this.client.chats.add({
                 client: this.client,
                 createdAt: c.created_at,
                 updatedAt: c.updated_at,
@@ -248,8 +271,8 @@ export default class RESTManager {
                 messageDeletionMode: c.message_deletion_mode,
                 messageDeletionPeriod: c.message_deletion_period,
             });
+            batch.set(chat.recipient.id, chat);
         });
-
-        return this.client.chats.cache;
+        return batch;
     }
 }
