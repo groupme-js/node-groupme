@@ -1,7 +1,13 @@
 import fetch from "node-fetch";
-import { Client } from "../client/Client";
+import { URL } from "url";
+import { Channel, Chat, Client, Collection, Group, Member, Message, User } from "..";
 import { Attachment } from "../structures/Attachment";
-import { User } from "../structures/User";
+
+type GroupsRequestParams = {
+    page?: number,
+    per_page?: number,
+    omit?: "memberships"
+}
 
 type GroupMeAPIResponse<T> = {
     response: T,
@@ -91,24 +97,30 @@ type ChatsIndexResponse = {
 
 
 export default class RESTManager {
+    static BASE_URL = "https://api.groupme.com/v3/"
     client: Client;
     constructor(client: Client) {
         this.client = client;
     }
 
-    async _api<T>(path: string): Promise<T> {
-        const url = "https://api.groupme.com/v3/" + path;
+    async _api<T>(path: string, options?: { [key: string]: any }): Promise<T> {
+        const url = new URL(path, RESTManager.BASE_URL);
+        if (options) {
+            for (const key in options) {
+                if (Object.prototype.hasOwnProperty.call(options, key)) {
+                    const value = options[key];
+                    url.searchParams.set(key, value);
+                }
+            }
+        }
         const response = await fetch(url, {
             headers: { 'X-Access-Token': this.client.token }
         });
-        // console.log(`-----\nAPI request\nurl: ${url}\n`, response, `\n-----`)
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
+        console.log(`-----\nAPI request\nurl: ${url}\n-----`)
         const data = await (response.json() as Promise<GroupMeAPIResponse<T>>);
         // console.log(data);
         if (data.meta.errors) {
-            throw new Error(data.meta.errors.join('; '));
+            throw new Error(`${data.meta.errors.join('; ')}\n-- Endpoint: ${url}\n-- Options: ${JSON.stringify(options, null, '    ')}`);
         }
         return data.response;
     }
@@ -144,7 +156,9 @@ export default class RESTManager {
             if (options.omit_members == true) apiParams.omit = "memberships";
         }
 
-        groups.forEach(g => {
+        const batch = new Collection<string, Group>()
+        const groupsIndexResponse = await this._api<GroupsIndexResponse>("groups", apiParams);
+        groupsIndexResponse.forEach(g => {
             /** The Group object to store data in. */
             const group = this.client.groups.add({
                 client: this.client,
@@ -200,10 +214,9 @@ export default class RESTManager {
                     group.members.add(memberData);
                 });
             }
-
+            batch.set(group.id, group);
         });
-
-        return this.client.groups.cache;
+        return batch;
     }
 
     async fetchChats() {
