@@ -227,7 +227,8 @@ export default class RESTManager {
                 client: this.client,
                 createdAt: c.created_at,
                 updatedAt: c.updated_at,
-                id: c.last_message.conversation_id,
+                id: c.other_user.id,
+                conversation_id: c.last_message.conversation_id,
                 recipient: this.client.users.add({
                     id: c.other_user.id,
                     name: c.other_user.name,

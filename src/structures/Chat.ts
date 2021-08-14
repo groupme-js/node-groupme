@@ -5,6 +5,7 @@ export type ChatData = Omit<Chat, "type">
 
 export class Chat extends Channel {
     readonly type: "dm" = "dm";
+    conversation_id: string;
     recipient: User;
     constructor(data: ChatData) {
         super({
@@ -18,6 +19,7 @@ export class Chat extends Channel {
             messageDeletionMode: data.messageDeletionMode,
             messageDeletionPeriod: data.messageDeletionPeriod,
         })
+        this.conversation_id = data.conversation_id;
         this.recipient = data.recipient;
     }
 }
