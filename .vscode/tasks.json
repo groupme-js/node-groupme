@@ -26,11 +26,11 @@
 				"cwd": "${workspaceFolder}"
 			},
 			"command": [
-				"rm -r dist;",
+				"cmd /c rmdir /s /q dist;",
 				"npm pack;",
-				"mv -force ./groupme.js-0.0.1.tgz ../groupme.js-test;",
-				"cd ../groupme.js-test/;",
-				"npm i ./groupme.js-0.0.1.tgz;"
+				"mv -force ./node-groupme-*.tgz ../node-groupme-test/node-groupme.tgz;",
+				"cd ../node-groupme-test/;",
+				"npm i ./node-groupme.tgz;"
 			],
 			"label": "compile and send to test env",
 			"group": {
