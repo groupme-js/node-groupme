@@ -1,7 +1,7 @@
 {
-  "name": "groupme.js",
+  "name": "node-groupme",
   "version": "0.0.1",
-  "description": "A new and improved node-groupme package that isn't a million years old.",
+  "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/not-so-smart/node-better-groupme.git"
+    "url": "git+https://github.com/not-so-smart/node-groupme.git"
   },
   "keywords": [
     "groupme"
@@ -17,9 +17,9 @@
   "author": "Peter Currie <peterdcurrie@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/not-so-smart/node-better-groupme/issues"
+    "url": "https://github.com/not-so-smart/node-groupme/issues"
   },
-  "homepage": "https://github.com/not-so-smart/node-better-groupme#readme",
+  "homepage": "https://github.com/not-so-smart/node-groupme#readme",
   "devDependencies": {
     "@tsconfig/node14": "^1.0.0",
     "@types/node": "^14.14.27",
