@@ -1,7 +1,7 @@
 export type UserData = {
     id: string,
     name: string,
-    avatar: string,
+    avatar: string | null,
 }
 
 export class User {
@@ -9,7 +9,7 @@ export class User {
     public get id(): string {
         return this._id;
     }
-    avatar: string;
+    avatar: string | null;
     name: string;
     constructor(data: UserData) {
         this._id = data.id;

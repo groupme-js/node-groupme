@@ -5,7 +5,7 @@ import { Attachment } from "../structures/Attachment";
 import {
     Me, toMe,
     ChatsIndexResponse, toChats,
-    GroupsIndexResponse, toGroups,
+    GroupResponse, toGroups,
 } from "../interfaces"
 import { ok } from "assert";
 import { inspect } from "util";
@@ -109,7 +109,7 @@ export default class RESTManager {
         }
 
         const batch = new Collection<string, Group>()
-        const groupsIndexResponse = await this._api<GroupsIndexResponse>("GET", "groups", { query: apiParams });
+        const groupsIndexResponse = await this._api<GroupResponse[]>("GET", "groups", a => a.forEach(toGroups), { query: apiParams });
         groupsIndexResponse.forEach(g => {
             /** The Group object to store data in. */
             const group = this.client.groups.add({
@@ -131,7 +131,11 @@ export default class RESTManager {
                         nickname: g.messages.preview.nickname,
                     }
                 },
-                likeIcon: g.like_icon,
+                likeIcon: g.like_icon ? {
+                    packId: g.like_icon.pack_id,
+                    packIndex: g.like_icon.pack_index,
+                    type: "emoji"
+                } : null,
                 maxMembers: g.max_members,
                 messageCount: g.messages.count,
                 mutedUntil: g.muted_until,
@@ -190,7 +194,7 @@ export default class RESTManager {
         }
 
         const batch = new Collection<string, Chat>()
-        const chats = await this._api<ChatsIndexResponse>("GET", "chats", { query: apiParams });
+        const chats = await this._api<ChatsIndexResponse[]>("GET", "chats", toChats, { query: apiParams });
 
         chats.forEach(c => {
             const chat = this.client.chats.add({

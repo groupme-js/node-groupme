@@ -2,16 +2,16 @@ import { Client } from "../client/Client";
 import { Attachment } from "./Attachment";
 
 type MessagePreview = {
-    id: string;
+    id: string | null;
     user: UserPreview;
-    createdAt: number;
-    text: string;
+    createdAt: number | null;
+    text: string | null;
     attachments: Attachment[];
 }
 
 type UserPreview = {
-    nickname: string;
-    image_url: string;
+    nickname: string | null;
+    image_url: string | null;
 }
 
 export abstract class Channel {
@@ -22,8 +22,8 @@ export abstract class Channel {
     lastMessage: MessagePreview;
     createdAt: number;
     updatedAt: number;
-    messageDeletionMode: string[];
-    messageDeletionPeriod: number;
+    messageDeletionMode?: string[];
+    messageDeletionPeriod?: number;
     constructor(data: Channel) {
         this.type = data.type;
         this.id = data.id;

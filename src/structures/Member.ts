@@ -8,7 +8,7 @@ export type MemberData = {
     nickname: string;
     muted: boolean;
     autokicked: boolean;
-    roles: ["admin", "owner"] | ["admin"] | ["user"];
+    roles: ("admin" | "owner" | "user")[];
 }
 
 export class Member {

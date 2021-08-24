@@ -7,14 +7,14 @@ export class Group extends Channel {
     readonly type: "group" = "group";
     readonly members: MemberManager;
     name: string;
-    phoneNumber: string;
+    phoneNumber: string | null;
     private: boolean;
-    imageURL: string;
+    imageURL: string | null;
     creatorID: string;
-    mutedUntil: number;
+    mutedUntil?: number | null;
     officeMode: boolean;
-    inviteURL: string;
-    inviteQR: string;
+    inviteURL: string | null;
+    inviteQR: string | null;
     maxMembers: number;
     theme: string | null;
     likeIcon: {
