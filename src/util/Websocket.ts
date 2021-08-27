@@ -29,7 +29,7 @@ type ArrayResponse = [
 async function handshake(token: string) {
     const res = await fetch('https://push.groupme.com/faye', {
         method: 'POST',
-        headers: { 'X-Access-Token': token },
+        headers: { 'X-Access-Token': token, 'Content-Type': 'application/json' },
         body: JSON.stringify([{
             "channel": "/meta/handshake",
             "version": "1.0",
@@ -47,27 +47,26 @@ export default class WS {
     client: Client;
     private ws?: WebSocket
     private client_id?: string;
-    private request_id: number = 1
+    private request_id: number = 2
     constructor(client: Client) {
         this.client = client;
-        this.init()
     }
-    async init() {
+    init = async () => {
         this.client_id = await handshake(this.client.token);
 
         this.ws = new WebSocket('wss://push.groupme.com/faye')
-            .on('open', this.openCallback)
+            .on('open', () => this.openCallback())
 
         this.debug();
 
-
-
+        // return something? idk
     }
-    private send(data: any) {
+    private send = (data: any) => {
         ok(this.ws)
         data.id = this.request_id++;
         data.clientId = this.client_id;
-        this.ws.send(JSON.stringify([data]), err => {
+        const str = JSON.stringify([data]).replace("'", '"');
+        this.ws.send(str, err => {
             if (err) {
                 console.error('An error occurred while trying to send:', data)
                 throw err;
@@ -75,28 +74,29 @@ export default class WS {
             console.log('SENT:', data)
         })
     }
-    private connect() {
+    private connect = () => {
         this.send({
             "channel": "/meta/connect",
             "connectionType": "websocket",
         })
     }
-    private subscribe(channel: string) {
+    private subscribe = (channel: string) => {
         this.send({
             "channel": "/meta/subscribe",
             "subscription": channel,
             "ext": { "access_token": this.client.token }
         })
     }
-    private receive(data: WebSocket.Data) {
+    private receive = (data: WebSocket.Data) => {
         const parsed = JSON.parse(data.toString())[0]
         if (parsed.channel == '/meta/connect') return this.connect()
         // Handle incoming websocket messages
     }
     private openCallback = () => {
-        ok(this.ws && this.client.user)
+        ok(this.ws)
+        ok(this.client.user)
         this.ws.on('message', this.subscribeCallback)
-        this.subscribe(this.client.user.id)
+        this.subscribe(`/users/${this.client.user.id}`)
     }
     private subscribeCallback = (data: WebSocket.Data) => {
         ok(this.ws)
@@ -105,7 +105,7 @@ export default class WS {
         if (parsed.channel != '/meta/subscribe') return;
         console.log('SUBSCRIBE RUNNING CONNECT')
         this.ws.off('message', this.subscribeCallback)
-        this.ws.on('message', this.receive)
+        this.ws.on('message', (data) => this.receive(data))
         this.connect()
     }
     debug() {
