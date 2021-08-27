@@ -24,7 +24,7 @@ export class Client extends EventEmitter {
         this.rest = new RESTManager(this);
         this.ws = new WS(this)
     }
-    async login() {
+    login = async () => {
         const me = await this.rest.api<Me>("GET", "users/me", toMe)
         this.user = new ClientUser({
             avatar: me.image_url,
