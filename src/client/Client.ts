@@ -1,4 +1,5 @@
 import EventEmitter from "events";
+import { Me, toMe } from "../interfaces";
 import ChatManager from "../managers/ChatManager";
 import GroupManager from "../managers/GroupManager";
 import UserManager from "../managers/UserManager";
@@ -24,6 +25,12 @@ export class Client extends EventEmitter {
         this.ws = new WS(this)
     }
     async login() {
-        // GET /me
+        const me = await this.rest.api<Me>("GET", "users/me", toMe)
+        this.user = new ClientUser({
+            avatar: me.image_url,
+            id: me.user_id,
+            name: me.name
+        })
+        await this.ws.init()
     }
 }
