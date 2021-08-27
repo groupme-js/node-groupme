@@ -1,71 +1,52 @@
 import { ok } from "assert";
-import fetch from "node-fetch"
+import EventEmitter from "events";
 import WebSocket from "ws"
 import { Client } from "..";
 
-type ArrayResponse = [
-    {
-        "id"?: string,
-        "channel"?: "/meta/handshake",
-        "successful"?: boolean,
-        "version"?: string,
-        "supportedConnectionTypes"?: [
-            "long-polling",
-            "cross-origin-long-polling",
-            "callback-polling",
-            "websocket",
-            "eventsource",
-            "in-process"
-        ],
-        "clientId"?: string,
-        "advice"?: {
-            "reconnect": "retry",
-            "interval": 0,
-            "timeout": 600000
-        }
-    }
-]
-
-async function handshake(token: string) {
-    const res = await fetch('https://push.groupme.com/faye', {
-        method: 'POST',
-        headers: { 'X-Access-Token': token, 'Content-Type': 'application/json' },
-        body: JSON.stringify([{
-            "channel": "/meta/handshake",
-            "version": "1.0",
-            "supportedConnectionTypes": ["websocket"],
-            "id": "1"
-        }])
-    });
-    const data = await (res.json() as Promise<ArrayResponse>);
-    ok(data && data[0] && data[0].clientId);
-    const clientID = data[0].clientId;
-    return clientID;
-}
-
 export default class WS {
     client: Client;
-    private ws?: WebSocket
+    private ws?: WebSocket;
     private client_id?: string;
-    private request_id: number = 2
+    private request_id: number = 1;
+    private channels: EventEmitter;
     constructor(client: Client) {
         this.client = client;
+        this.channels = new EventEmitter();
     }
-    init = async () => {
-        this.client_id = await handshake(this.client.token);
-
-        this.ws = new WebSocket('wss://push.groupme.com/faye')
-            .on('open', () => this.openCallback())
-
-        this.debug();
-
-        // return something? idk
+    init = async () =>
+        new Promise<void>((resolve, reject) => {
+            this.ws = new WebSocket('wss://push.groupme.com/faye')
+                .on('open', () => {
+                    this.handshake()
+                })
+                .on('message', (data) => this.handle(data))
+            this.channels
+                .once('/meta/handshake', data => {
+                    if (!this.client.user) return reject('Client user must be defined before init') 
+                    this.client_id = data.clientId
+                    this.subscribe(`/user/${this.client.user.id}`)
+                })
+                .once('/meta/subscribe', data => {
+                    this.connect()
+                    resolve()
+                })
+                .on('/meta/connect', data => {
+                    this.connect()
+                })
+            this.debug();
+        })
+    private handle = (data: WebSocket.Data) => {
+        const parsed = JSON.parse(data.toString())[0]
+        ok(parsed)
+        ok(parsed.channel)
+        this.channels.emit(parsed.channel, parsed)
     }
+
     private send = (data: any) => {
         ok(this.ws)
         data.id = this.request_id++;
         data.clientId = this.client_id;
-        const str = JSON.stringify([data]).replace("'", '"');
+        const str = JSON.stringify([data])
         this.ws.send(str, err => {
             if (err) {
                 console.error('An error occurred while trying to send:', data)
@@ -74,39 +55,25 @@ export default class WS {
             console.log('SENT:', data)
         })
     }
-    private connect = () => {
+    private handshake = () => {
         this.send({
-            "channel": "/meta/connect",
-            "connectionType": "websocket",
+            channel: "/meta/handshake",
+            version: "1.0",
+            supportedConnectionTypes: ["websocket"]
         })
     }
     private subscribe = (channel: string) => {
         this.send({
-            "channel": "/meta/subscribe",
-            "subscription": channel,
-            "ext": { "access_token": this.client.token }
+            channel: "/meta/subscribe",
+            subscription: channel,
+            ext: { "access_token": this.client.token }
         })
     }
-    private receive = (data: WebSocket.Data) => {
-        const parsed = JSON.parse(data.toString())[0]
-        if (parsed.channel == '/meta/connect') return this.connect()
-        // Handle incoming websocket messages
-    }
-    private openCallback = () => {
-        ok(this.ws)
-        ok(this.client.user)
-        this.ws.on('message', this.subscribeCallback)
-        this.subscribe(`/users/${this.client.user.id}`)
-    }
-    private subscribeCallback = (data: WebSocket.Data) => {
-        ok(this.ws)
-        console.log('SUBSCRIBE CALLBACK')
-        const parsed = JSON.parse(data.toString())[0]
-        if (parsed.channel != '/meta/subscribe') return;
-        console.log('SUBSCRIBE RUNNING CONNECT')
-        this.ws.off('message', this.subscribeCallback)
-        this.ws.on('message', (data) => this.receive(data))
-        this.connect()
+    private connect = () => {
+        this.send({
+            channel: "/meta/connect",
+            connectionType: "websocket",
+        })
     }
     debug() {
         ok(this.ws)
