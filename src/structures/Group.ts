@@ -3,7 +3,11 @@ import { Channel } from "./Channel";
 
 export type GroupData = Omit<Group, "type" | "members">
 
-export class Group extends Channel {
+interface GroupInterface {
+
+}
+
+export class Group extends Channel implements GroupInterface {
     readonly type: "group" = "group";
     readonly members: MemberManager;
     name: string;

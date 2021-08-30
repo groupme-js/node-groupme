@@ -11,7 +11,11 @@ export type MemberData = {
     roles: ("admin" | "owner" | "user")[];
 }
 
-export class Member {
+interface MemberInterface {
+
+}
+
+export class Member implements MemberInterface {
     private readonly _user: User;
     public get user(): User {
         return this._user;

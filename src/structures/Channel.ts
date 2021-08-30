@@ -14,7 +14,11 @@ type UserPreview = {
     image_url: string | null;
 }
 
-export abstract class Channel {
+interface ChannelInterface {
+
+}
+
+export abstract class Channel implements ChannelInterface {
     readonly type: string;
     readonly id: string;
     readonly client: Client;

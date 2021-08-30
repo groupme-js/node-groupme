@@ -2,7 +2,11 @@ import { Client, Collection, Group } from "..";
 import { Member, MemberData } from "../structures/Member";
 import BaseManager from "./BaseManager";
 
-export default class MemberManager extends BaseManager {
+interface MemberManagerInterface {
+
+}
+
+export default class MemberManager extends BaseManager implements MemberManagerInterface {
     client: Client;
     group: Group;
     cache: Collection<string, Member>;

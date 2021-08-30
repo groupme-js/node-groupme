@@ -2,7 +2,11 @@ import { Client, Collection } from "..";
 import { User, UserData } from "../structures/User";
 import BaseManager from "./BaseManager";
 
-export default class UserManager extends BaseManager {
+interface UserManagerInterface {
+
+}
+
+export default class UserManager extends BaseManager implements UserManagerInterface {
     client: Client;
     cache: Collection<string, User>;
     constructor(client: Client) {

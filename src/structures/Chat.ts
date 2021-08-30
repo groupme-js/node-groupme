@@ -3,7 +3,11 @@ import { User } from "./User";
 
 export type ChatData = Omit<Chat, "type">
 
-export class Chat extends Channel {
+interface ChatInterface {
+
+}
+
+export class Chat extends Channel implements ChatInterface {
     readonly type: "dm" = "dm";
     conversation_id: string;
     recipient: User;

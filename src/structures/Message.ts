@@ -2,7 +2,11 @@ import { Attachment } from "./Attachment";
 import { Channel } from "./Channel";
 import { User } from "./User";
 
-export class Message {
+interface MessageInterface {
+
+}
+
+export class Message implements MessageInterface {
     id: string;
     user: User;
     channel: Channel;
