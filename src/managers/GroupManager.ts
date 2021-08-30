@@ -10,10 +10,11 @@ type GroupsRequestParams = {
     omit?: "memberships"
 }
 
-export default class GroupManager implements BaseManager {
+export default class GroupManager extends BaseManager {
     client: Client;
     cache: Collection<string, Group>;
     constructor(client: Client) {
+        super();
         this.client = client;
         this.cache = new Collection<string, Group>();
     }

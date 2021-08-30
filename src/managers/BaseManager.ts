@@ -1,3 +1,3 @@
-export default interface Manager {
+export default class Manager {
     
 }

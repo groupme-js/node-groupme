@@ -8,10 +8,11 @@ type ChatsRequestParams = {
     per_page?: number
 }
 
-export default class ChatManager implements BaseManager {
+export default class ChatManager extends BaseManager {
     client: Client;
     cache: Collection<string, Chat>;
     constructor(client: Client) {
+        super();
         this.client = client;
         this.cache = new Collection<string, Chat>();
     }

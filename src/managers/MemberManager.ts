@@ -2,11 +2,12 @@ import { Client, Collection, Group } from "..";
 import { Member, MemberData } from "../structures/Member";
 import BaseManager from "./BaseManager";
 
-export default class MemberManager implements BaseManager {
+export default class MemberManager extends BaseManager {
     client: Client;
     group: Group;
     cache: Collection<string, Member>;
     constructor(client: Client, group: Group) {
+        super();
         this.client = client;
         this.group = group;
         this.cache = new Collection<string, Member>();
