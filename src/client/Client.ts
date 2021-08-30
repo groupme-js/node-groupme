@@ -7,7 +7,15 @@ import RESTManager from "../rest/rest";
 import WS from "../util/Websocket";
 import { ClientUser } from "./ClientUser";
 
-export class Client extends EventEmitter {
+interface ClientInterface {
+    groups: GroupManager
+    chats: ChatManager
+    users: UserManager
+    user?: ClientUser
+    login: () => Promise<Client>
+}
+
+export class Client extends EventEmitter implements ClientInterface {
     groups: GroupManager;
     users: UserManager;
     chats: ChatManager;
@@ -24,7 +32,7 @@ export class Client extends EventEmitter {
         this.rest = new RESTManager(this);
         this.ws = new WS(this)
     }
-    login = async () => {
+    login = async (): Promise<this> => {
         const me = await this.rest.api<Me>("GET", "users/me", toMe)
         this.user = new ClientUser({
             avatar: me.image_url,
@@ -32,5 +40,6 @@ export class Client extends EventEmitter {
             name: me.name
         })
         await this.ws.init()
+        return this;
     }
 }
