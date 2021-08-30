@@ -1,6 +1,10 @@
 import { User, UserData } from "../structures/User";
 
-export class ClientUser extends User {
+interface ClientUserInterface {
+    
+}
+
+export class ClientUser extends User implements ClientUserInterface {
     constructor(data: UserData) {
         super(data)
     }
