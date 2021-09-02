@@ -11,7 +11,11 @@ type GroupsRequestParams = {
 }
 
 interface GroupManagerInterface {
-
+    client: Client
+    cache: Collection<string, Group>
+    fetch(): Collection<string, Group>
+    fetch(id: string): Group
+    fetch(ids: string[]): Collection<string, Group | null>
 }
 
 export default class GroupManager extends BaseManager implements GroupManagerInterface {
@@ -23,6 +27,13 @@ export default class GroupManager extends BaseManager implements GroupManagerInt
         this.cache = new Collection<string, Group>();
     }
 
+    fetch(): Collection<string, Group>
+    fetch(id: string): Group
+    fetch(ids: string[]): Collection<string, Group | null>
+    public fetch(id?: string | string[]): Group | Collection<string, Group> | Collection<string, Group | null> {
+        throw new Error("Not yet implemented");
+    }
+
     /**
      * Constructs a Group with the specified data and stores it in the cache.
      * If a Group with the specified ID already exists, updates the existing
@@ -30,6 +41,7 @@ export default class GroupManager extends BaseManager implements GroupManagerInt
      * @returns the created or modified Group
      */
     public add(groupData: GroupData): Group {
+        const a = this.fetch()
         const cachedGroup = this.cache.get(groupData.id);
         if (cachedGroup) {
             Object.assign(cachedGroup, groupData);
@@ -137,5 +149,5 @@ export default class GroupManager extends BaseManager implements GroupManagerInt
         });
         return batch;
     }
-    
+
 }
