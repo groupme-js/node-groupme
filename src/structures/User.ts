@@ -8,7 +8,7 @@ interface UserInterface {
 
 }
 
-export class User implements UserInterface {
+export default class User implements UserInterface {
     private readonly _id: string;
     public get id(): string {
         return this._id;

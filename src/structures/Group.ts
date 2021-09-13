@@ -1,61 +1,79 @@
-import MemberManager from "../managers/MemberManager";
-import { Channel } from "./Channel";
+import { Member, Collection, FormerGroup, Client, Message, SendableChannelInterface } from "..";
+import { APIGroup } from "../interfaces";
+import GroupMessageManager from "../managers/GroupMessageManager";
+import BaseGroup from "./BaseGroup";
+import { ChannelType } from "./Channel";
+import GroupMessage from "./GroupMessage";
 
-export type GroupData = Omit<Group, "type" | "members">
-
-interface GroupInterface {
-
+type GroupUpdateOptions = {
+    name: string
+    description: string
+    image_url: string
+    share: boolean
+    office_mode: boolean
 }
 
-export class Group extends Channel implements GroupInterface {
-    readonly type: "group" = "group";
-    readonly members: MemberManager;
-    name: string;
-    phoneNumber: string | null;
-    private: boolean;
-    imageURL: string | null;
-    creatorID: string;
-    mutedUntil?: number | null;
-    officeMode: boolean;
-    inviteURL: string | null;
-    inviteQR: string | null;
-    maxMembers: number;
-    theme: string | null;
-    likeIcon: {
-        type: "emoji",
-        packId: number,
-        packIndex: number
-    } | null;
-    requiresApproval: boolean;
-    showJoinQuestion: boolean;
-    joinQuestion: string | null;
-    constructor(data: GroupData) {
-        super({
-            id: data.id,
-            type: "group",
-            client: data.client,
-            lastMessage: data.lastMessage,
-            messageCount: data.messageCount,
-            createdAt: data.createdAt,
-            updatedAt: data.updatedAt,
-            messageDeletionMode: data.messageDeletionMode,
-            messageDeletionPeriod: data.messageDeletionPeriod,
-        });
-        this.members = new MemberManager(this.client, this);
-        this.name = data.name;
-        this.phoneNumber = data.phoneNumber;
-        this.private = data.private;
-        this.imageURL = data.imageURL;
-        this.creatorID = data.creatorID;
-        this.mutedUntil = data.mutedUntil;
-        this.officeMode = data.officeMode;
-        this.inviteURL = data.inviteURL;
-        this.inviteQR = data.inviteQR;
-        this.maxMembers = data.maxMembers;
-        this.theme = data.theme;
-        this.likeIcon = data.likeIcon;
-        this.requiresApproval = data.requiresApproval;
-        this.showJoinQuestion = data.showJoinQuestion;
-        this.joinQuestion = data.joinQuestion;
+interface ActiveGroupInterface {
+    fetch(): Promise<this>
+    update(options: GroupUpdateOptions): Promise<this>
+    transferOwnershipTo(newOwner: string): Promise<this>
+    delete(): Promise<void>
+    changeNickname(nickname: string): Promise<Member>
+    send(message: Message): Promise<GroupMessage>
+    leave(): Promise<FormerGroup>
+    get canLeave(): boolean
+    get canUpdate(): boolean
+    get canDelete(): boolean
+    get canTransfer(): boolean
+    get canAddMembers(): boolean
+    get canRemoveMembers(): boolean
+}
+
+export default class Group extends BaseGroup implements ActiveGroupInterface, SendableChannelInterface {
+    readonly type = ChannelType.Group;
+    readonly messages: GroupMessageManager;
+    constructor(client: Client, data: APIGroup) {
+        super(client, data);
+        this.messages = new GroupMessageManager(this)
     }
+    send(message: Message): Promise<GroupMessage> {
+        throw new Error("Method not implemented.");
+    }
+    fetch(): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    update(options: GroupUpdateOptions): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    transferOwnershipTo(newOwner: string): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    delete(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    changeNickname(nickname: string): Promise<Member> {
+        throw new Error("Method not implemented.");
+    }
+    leave(): Promise<FormerGroup> {
+        throw new Error("Method not implemented.");
+    }
+    get canLeave(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    get canUpdate(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    get canDelete(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    get canTransfer(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    get canAddMembers(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    get canRemoveMembers(): boolean {
+        throw new Error("Method not implemented.");
+    }
+
 }

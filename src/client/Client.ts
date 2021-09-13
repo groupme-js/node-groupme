@@ -5,7 +5,7 @@ import GroupManager from "../managers/GroupManager";
 import UserManager from "../managers/UserManager";
 import RESTManager from "../rest/rest";
 import WS from "../util/Websocket";
-import { ClientUser } from "./ClientUser";
+import ClientUser from "./ClientUser";
 
 interface ClientInterface {
     groups: GroupManager
@@ -15,7 +15,7 @@ interface ClientInterface {
     login: () => Promise<Client>
 }
 
-export class Client extends EventEmitter implements ClientInterface {
+export default class Client extends EventEmitter implements ClientInterface {
     groups: GroupManager;
     users: UserManager;
     chats: ChatManager;

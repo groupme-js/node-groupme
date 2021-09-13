@@ -1,6 +1,5 @@
-import { Client, Collection } from "..";
-import { ChatsIndexResponse, toChats } from "../interfaces"
-import { Chat, ChatData } from "../structures/Chat";
+import { Client, Collection, Chat, User } from "..";
+import { APIChat, toChats } from "../interfaces"
 import BaseManager from "./BaseManager";
 
 type ChatsRequestParams = {
@@ -9,33 +8,23 @@ type ChatsRequestParams = {
 }
 
 interface ChatManagerInterface {
-    
+    client: Client
+    cache: Collection<string, Chat>
+    fetch(): Promise<Collection<string, Chat>>
+    fetch(id: string): Promise<Chat>
+    fetch(ids: string[]): Promise<Collection<string, Chat | null>>
 }
 
-export default class ChatManager extends BaseManager implements ChatManagerInterface {
-    client: Client;
-    cache: Collection<string, Chat>;
+export default class ChatManager extends BaseManager<Chat> implements ChatManagerInterface {
     constructor(client: Client) {
-        super();
-        this.client = client;
-        this.cache = new Collection<string, Chat>();
+        super(client);
     }
 
-    /**
-     * Constructs a Chat with the specified data and stores it in the cache.
-     * If a Chat with the specified ID already exists, updates the existing
-     * Chat with the given data.
-     * @returns the created or modified Chat
-     */
-    public add(chatData: ChatData): Chat {
-        const cachedChat = this.cache.get(chatData.id);
-        if (cachedChat) {
-            Object.assign(cachedChat, chatData);
-            return cachedChat;
-        }
-        const chat = new Chat(chatData);
-        this.cache.set(chat.id, chat);
-        return chat;
+    fetch(): Promise<Collection<string, Chat>>;
+    fetch(id: string): Promise<Chat>;
+    fetch(ids: string[]): Promise<Collection<string, Chat | null>>;
+    fetch(ids?: any): Promise<Collection<string, Chat>> | Promise<Chat> | Promise<Collection<string, Chat | null>> {
+        throw new Error("Method not implemented.");
     }
 
     async fetchChats(options?: {
@@ -49,7 +38,7 @@ export default class ChatManager extends BaseManager implements ChatManagerInter
                 let batch, i = 1;
                 do batch = await this.fetchChats({ page: i++ });
                 while (batch.size);
-                return this.client.chats.cache;
+                return this.cache;
             }
             // Translate the options into valid API parameters
             if (options.page != undefined) apiParams.page = options.page;
@@ -57,35 +46,20 @@ export default class ChatManager extends BaseManager implements ChatManagerInter
         }
 
         const batch = new Collection<string, Chat>()
-        const chats = await this.client.rest.api<ChatsIndexResponse[]>("GET", "chats", toChats, { query: apiParams });
+        const chats = await this.client.rest.api<APIChat[]>
+            ("GET", "chats", toChats, { query: apiParams });
 
-        chats.forEach(c => {
-            const chat = this.client.chats.add({
-                client: this.client,
-                createdAt: c.created_at,
-                updatedAt: c.updated_at,
-                id: c.other_user.id,
-                conversation_id: c.last_message.conversation_id,
-                recipient: this.client.users.add({
-                    id: c.other_user.id,
-                    name: c.other_user.name,
-                    avatar: c.other_user.avatar_url,
-                }),
-                lastMessage: {
-                    id: c.last_message.id,
-                    attachments: c.last_message.attachments,
-                    createdAt: c.last_message.created_at,
-                    text: c.last_message.text,
-                    user: {
-                        nickname: c.last_message.name,
-                        image_url: c.last_message.avatar_url,
-                    },
-                },
-                messageCount: c.messages_count,
-                messageDeletionMode: c.message_deletion_mode,
-                messageDeletionPeriod: c.message_deletion_period,
-            });
-            batch.set(chat.recipient.id, chat);
+        chats.forEach(data => {
+            const chat = this._upsert(new Chat(
+                this.client,
+                this.client.users._upsert(new User({
+                    id: data.other_user.id,
+                    name: data.other_user.name,
+                    avatar: data.other_user.avatar_url,
+                })),
+                data,
+            ));
+            batch.set(chat.recipient.id, chat)
         });
         return batch;
     }

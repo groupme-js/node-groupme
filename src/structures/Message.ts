@@ -1,12 +1,16 @@
-import { Attachment } from "./Attachment";
-import { Channel } from "./Channel";
-import { User } from "./User";
+import { Channel, User } from "..";
+import Attachment from "./Attachment";
 
 interface MessageInterface {
-
+    fetch(): Promise<this>
+    reply(message: string): Promise<Message>
+    like(): Promise<this>
+    unlike(): Promise<this>
+    delete(): Promise<this>
+    get canDelete(): boolean
 }
 
-export class Message implements MessageInterface {
+export default abstract class Message implements MessageInterface {
     id: string;
     user: User;
     channel: Channel;
@@ -26,5 +30,23 @@ export class Message implements MessageInterface {
         this.system = data.system;
         this.likes = data.likes;
         this.attachments = data.attachments;
+    }
+    fetch(): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    reply(message: string): Promise<Message> {
+        throw new Error("Method not implemented.");
+    }
+    like(): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    unlike(): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    delete(): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    get canDelete(): boolean {
+        throw new Error("Method not implemented.");
     }
 }

@@ -1,41 +1,30 @@
-import { Client, Collection, Group } from "..";
-import { Member, MemberData } from "../structures/Member";
+import { Client, Collection, Member } from "..";
+import BaseGroup from "../structures/BaseGroup";
 import BaseManager from "./BaseManager";
+import FormerMemberManager from "./FormerMemberManager";
 
 interface MemberManagerInterface {
-
+    add(id: string): Promise<Member>
+    add(ids: string[]): Promise<Collection<string, Member>>
+    remove(member: Member): Promise<this>
 }
 
-export default class MemberManager extends BaseManager implements MemberManagerInterface {
-    client: Client;
-    group: Group;
-    cache: Collection<string, Member>;
-    constructor(client: Client, group: Group) {
-        super();
-        this.client = client;
+export default class MemberManager extends BaseManager<Member> implements MemberManagerInterface {
+    group: BaseGroup;
+    former: FormerMemberManager;
+    constructor(client: Client, group: BaseGroup) {
+        super(client);
         this.group = group;
-        this.cache = new Collection<string, Member>();
+        this.former = new FormerMemberManager(client, group);
     }
 
-    /**
-     * Constructs a Member with the specified data and stores it in the cache.
-     * If a Member with the specified ID already exists, updates the existing
-     * Member with the given data.
-     * @returns the created or modified Member
-     */
-    public add(memberData: MemberData): Member {
-        let member: Member;
-        const cachedMember = this.cache.get(memberData.memberID);
-        if (cachedMember) {
-            cachedMember.autokicked = memberData.autokicked;
-            cachedMember.muted = memberData.muted;
-            cachedMember.nickname = memberData.nickname;
-            cachedMember.roles = memberData.roles;
-            member = cachedMember;
-        } else {
-            member = new Member(memberData);
-            this.cache.set(member.memberID, member);
-        }
-        return member;
+    add(id: string): Promise<Member>;
+    add(ids: string[]): Promise<Collection<string, Member>>;
+    add(ids: any): Promise<Member> | Promise<Collection<string, Member>> {
+        throw new Error("Method not implemented.");
     }
+    remove(member: Member): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+
 }

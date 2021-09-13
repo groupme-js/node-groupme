@@ -1,70 +1,77 @@
 // To parse this data:
 //
-//   import { Convert } from "./file";
+//   import { Convert, MembersIndexResponse, StatefulAPIMember, Role, State } from "./file";
 //
-//   const chatsIndexResponse = Convert.toChatsIndexResponse(json);
+//   const membersIndexResponse = Convert.toMembersIndexResponse(json);
+//   const statefulAPIMember = Convert.toStatefulAPIMember(json);
+//   const role = Convert.toRole(json);
+//   const state = Convert.toState(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface APIChat {
-    created_at:              number;
-    last_message:            LastMessage;
-    messages_count:          number;
-    other_user:              OtherUser;
-    updated_at:              number;
-    message_deletion_period: number;
-    message_deletion_mode:   MessageDeletionMode[];
+export interface MembersIndexResponse {
+    memberships: StatefulAPIMember[];
 }
 
-export interface LastMessage {
-    attachments:     Attachment[];
-    avatar_url:      null | string;
-    conversation_id: string;
-    created_at:      number;
-    favorited_by:    any[];
-    id:              string;
-    name:            string;
-    recipient_id:    string;
-    sender_id:       string;
-    sender_type:     SenderType;
-    source_guid:     string;
-    text:            string;
-    user_id:         string;
+export interface StatefulAPIMember {
+    autokicked?: boolean;
+    id:          string;
+    image_url?:  string;
+    muted?:      boolean;
+    name:        string;
+    nickname:    string;
+    roles:       Role[];
+    state:       State;
+    user_id:     string;
 }
 
-export interface Attachment {
-    charmap?:     Array<number[]>;
-    placeholder?: string;
-    type:         string;
-    url?:         string;
-    preview_url?: string;
-}
-
-export enum SenderType {
+export enum Role {
+    Admin = "admin",
+    Owner = "owner",
     User = "user",
 }
 
-export enum MessageDeletionMode {
-    Creator = "creator",
-    Sender = "sender",
-}
-
-export interface OtherUser {
-    avatar_url: string;
-    id:         string;
-    name:       string;
+export enum State {
+    Active = "active",
+    Exited = "exited",
+    ExitedRemoved = "exited_removed",
+    Removed = "removed",
 }
 
 // Converts JSON types to/from your types
 // and asserts the results at runtime
 export class Convert {
-    public static toChatsIndexResponse(json: any): APIChat[] {
-        return cast(json, a(r("ChatsIndexResponse")));
+    public static toMembersIndexResponse(json: any): MembersIndexResponse {
+        return cast(json, r("MembersIndexResponse"));
     }
 
-    public static chatsIndexResponseToJson(value: APIChat[]): any {
-        return uncast(value, a(r("ChatsIndexResponse")));
+    public static membersIndexResponseToJson(value: MembersIndexResponse): any {
+        return uncast(value, r("MembersIndexResponse"));
+    }
+
+    public static toStatefulAPIMember(json: any): StatefulAPIMember {
+        return cast(json, r("StatefulAPIMember"));
+    }
+
+    public static statefulAPIMemberToJson(value: StatefulAPIMember): any {
+        return uncast(value, r("StatefulAPIMember"));
+    }
+
+    public static toRole(json: any): Role {
+        return cast(json, r("Role"));
+    }
+
+    public static roleToJson(value: Role): any {
+        return uncast(value, r("Role"));
+    }
+
+    public static toState(json: any): State {
+        return cast(json, r("State"));
+    }
+
+    public static stateToJson(value: State): any {
+        return uncast(value, r("State"));
     }
 }
 
@@ -201,47 +208,29 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "ChatsIndexResponse": o([
-        { json: "created_at", js: "created_at", typ: 0 },
-        { json: "last_message", js: "last_message", typ: r("LastMessage") },
-        { json: "messages_count", js: "messages_count", typ: 0 },
-        { json: "other_user", js: "other_user", typ: r("OtherUser") },
-        { json: "updated_at", js: "updated_at", typ: 0 },
-        { json: "message_deletion_period", js: "message_deletion_period", typ: 0 },
-        { json: "message_deletion_mode", js: "message_deletion_mode", typ: a(r("MessageDeletionMode")) },
-    ], false),
-    "LastMessage": o([
-        { json: "attachments", js: "attachments", typ: a(r("Attachment")) },
-        { json: "avatar_url", js: "avatar_url", typ: u(null, "") },
-        { json: "conversation_id", js: "conversation_id", typ: "" },
-        { json: "created_at", js: "created_at", typ: 0 },
-        { json: "favorited_by", js: "favorited_by", typ: a("any") },
+    "MembersIndexResponse": o([
+        { json: "memberships", js: "memberships", typ: a(r("StatefulAPIMember")) },
+    ], "any"),
+    "StatefulAPIMember": o([
+        { json: "autokicked", js: "autokicked", typ: u(undefined, true) },
         { json: "id", js: "id", typ: "" },
+        { json: "image_url", js: "image_url", typ: u(undefined, "") },
+        { json: "muted", js: "muted", typ: u(undefined, true) },
         { json: "name", js: "name", typ: "" },
-        { json: "recipient_id", js: "recipient_id", typ: "" },
-        { json: "sender_id", js: "sender_id", typ: "" },
-        { json: "sender_type", js: "sender_type", typ: r("SenderType") },
-        { json: "source_guid", js: "source_guid", typ: "" },
-        { json: "text", js: "text", typ: "" },
+        { json: "nickname", js: "nickname", typ: "" },
+        { json: "roles", js: "roles", typ: a(r("Role")) },
+        { json: "state", js: "state", typ: r("State") },
         { json: "user_id", js: "user_id", typ: "" },
-    ], false),
-    "Attachment": o([
-        { json: "charmap", js: "charmap", typ: u(undefined, a(a(0))) },
-        { json: "placeholder", js: "placeholder", typ: u(undefined, "") },
-        { json: "type", js: "type", typ: "" },
-        { json: "url", js: "url", typ: u(undefined, "") },
-        { json: "preview_url", js: "preview_url", typ: u(undefined, "") },
-    ], false),
-    "OtherUser": o([
-        { json: "avatar_url", js: "avatar_url", typ: "" },
-        { json: "id", js: "id", typ: "" },
-        { json: "name", js: "name", typ: "" },
-    ], false),
-    "SenderType": [
+    ], "any"),
+    "Role": [
+        "admin",
+        "owner",
         "user",
     ],
-    "MessageDeletionMode": [
-        "creator",
-        "sender",
+    "State": [
+        "active",
+        "exited",
+        "exited_removed",
+        "removed",
     ],
 };

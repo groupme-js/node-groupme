@@ -1,6 +1,5 @@
-import { Client, Collection } from "..";
-import { GroupResponse, toGroups } from "../interfaces";
-import { Group, GroupData } from "../structures/Group";
+import { Client, Collection, Group, Member, User } from "..";
+import { APIGroup, toGroups } from "../interfaces";
 import tArray from "../util/tArray";
 import BaseManager from "./BaseManager";
 
@@ -13,43 +12,21 @@ type GroupsRequestParams = {
 interface GroupManagerInterface {
     client: Client
     cache: Collection<string, Group>
-    fetch(): Collection<string, Group>
-    fetch(id: string): Group
-    fetch(ids: string[]): Collection<string, Group | null>
+    fetch(): Promise<Collection<string, Group>>
+    fetch(id: string): Promise<Group>
+    fetch(ids: string[]): Promise<Collection<string, Group | null>>
 }
 
-export default class GroupManager extends BaseManager implements GroupManagerInterface {
-    client: Client;
-    cache: Collection<string, Group>;
+export default class GroupManager extends BaseManager<Group> implements GroupManagerInterface {
     constructor(client: Client) {
-        super();
-        this.client = client;
-        this.cache = new Collection<string, Group>();
+        super(client);
     }
 
-    fetch(): Collection<string, Group>
-    fetch(id: string): Group
-    fetch(ids: string[]): Collection<string, Group | null>
-    public fetch(id?: string | string[]): Group | Collection<string, Group> | Collection<string, Group | null> {
-        throw new Error("Not yet implemented");
-    }
-
-    /**
-     * Constructs a Group with the specified data and stores it in the cache.
-     * If a Group with the specified ID already exists, updates the existing
-     * Group with the given data.
-     * @returns the created or modified Group
-     */
-    public add(groupData: GroupData): Group {
-        const a = this.fetch()
-        const cachedGroup = this.cache.get(groupData.id);
-        if (cachedGroup) {
-            Object.assign(cachedGroup, groupData);
-            return cachedGroup;
-        }
-        const group = new Group(groupData);
-        this.cache.set(group.id, group);
-        return group;
+    fetch(): Promise<Collection<string, Group>>;
+    fetch(id: string): Promise<Group>;
+    fetch(ids: string[]): Promise<Collection<string, Group | null>>;
+    public async fetch(ids?: string | string[]): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
+        throw new Error("Method not implemented.");
     }
 
     /**
@@ -84,67 +61,22 @@ export default class GroupManager extends BaseManager implements GroupManagerInt
         }
 
         const batch = new Collection<string, Group>()
-        const groupsIndexResponse = await this.client.rest.api<GroupResponse[]>("GET", "groups", tArray(toGroups), { query: apiParams });
+        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", tArray(toGroups), { query: apiParams });
         groupsIndexResponse.forEach(g => {
             /** The Group object to store data in. */
-            const group = this.client.groups.add({
-                client: this.client,
-                createdAt: g.created_at,
-                creatorID: g.creator_user_id,
-                id: g.id,
-                imageURL: g.image_url,
-                inviteQR: g.share_qr_code_url,
-                inviteURL: g.share_url,
-                joinQuestion: g.join_question,
-                lastMessage: {
-                    id: g.messages.last_message_id,
-                    createdAt: g.messages.last_message_created_at,
-                    text: g.messages.preview.text,
-                    attachments: g.messages.preview.attachments,
-                    user: {
-                        image_url: g.messages.preview.image_url,
-                        nickname: g.messages.preview.nickname,
-                    }
-                },
-                likeIcon: g.like_icon ? {
-                    packId: g.like_icon.pack_id,
-                    packIndex: g.like_icon.pack_index,
-                    type: "emoji"
-                } : null,
-                maxMembers: g.max_members,
-                messageCount: g.messages.count,
-                mutedUntil: g.muted_until,
-                name: g.name,
-                officeMode: g.office_mode,
-                phoneNumber: g.phone_number,
-                private: g.type == "private",
-                requiresApproval: g.requires_approval,
-                showJoinQuestion: g.show_join_question,
-                theme: g.theme_name,
-                updatedAt: g.updated_at,
-                messageDeletionMode: g.message_deletion_mode,
-                messageDeletionPeriod: g.message_deletion_period,
-            });
+            const group = this._upsert(new Group(this.client, g));
 
             if (g.members) {
-                g.members.forEach(m => {
-                    const user = this.client.users.add({
-                        id: m.user_id,
-                        avatar: m.image_url,
-                        name: m.name,
-                    });
-                    const memberData = {
-                        group: group,
-                        user: user,
-                        memberID: m.id,
-                        nickname: m.nickname,
-                        autokicked: m.autokicked,
-                        muted: m.muted,
-                        roles: m.roles,
-                    };
-                    group.members.add(memberData);
+                g.members.forEach(data => {
+                    const user = this.client.users._upsert(new User({
+                        id: data.user_id,
+                        avatar: data.image_url,
+                        name: data.name,
+                    }));
+                    group.members._upsert(new Member(this.client, group, user, data));
                 });
             }
+
             batch.set(group.id, group);
         });
         return batch;

@@ -15,7 +15,7 @@
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface GroupResponse {
+export interface APIGroup {
     created_at:               number;
     creator_user_id:          string;
     description:              string;
@@ -50,7 +50,7 @@ interface LikeIcon {
     type:       string;
 }
 
-interface MemberResponse {
+export interface MemberResponse {
     autokicked: boolean;
     id:         string;
     image_url:  null | string;
@@ -105,11 +105,11 @@ enum GroupType {
 // Converts JSON types to/from your types
 // and asserts the results at runtime
 export class Convert {
-    public static toGroupResponse(json: any): GroupResponse {
+    public static toGroupResponse(json: any): APIGroup {
         return cast(json, r("GroupResponse"));
     }
 
-    public static groupResponseToJson(value: GroupResponse): any {
+    public static groupResponseToJson(value: APIGroup): any {
         return uncast(value, r("GroupResponse"));
     }
 

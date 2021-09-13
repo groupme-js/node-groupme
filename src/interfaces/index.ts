@@ -1,12 +1,15 @@
 import { Convert as ConvertMe, Me } from "./Me";
-import { Convert as ConvertChat, ChatsIndexResponse } from "./ChatsIndexResponse";
-import { Convert as ConvertGroup, GroupResponse } from "./GroupResponse";
+import { Convert as ConvertChat, APIChat } from "./ChatsIndexResponse";
+import { Convert as ConvertGroup, APIGroup, MemberResponse } from "./GroupResponse";
+import { Convert as ConvertMembers, MembersIndexResponse, StatefulAPIMember } from "./GroupMembersIndexResponse";
 const
     toMe = ConvertMe.toMe,
     toChats = ConvertChat.toChatsIndexResponse,
-    toGroups = ConvertGroup.toGroupResponse
+    toGroups = ConvertGroup.toGroupResponse,
+    toMembers = ConvertMembers.toMembersIndexResponse
 export {
     Me, toMe,
-    ChatsIndexResponse, toChats,
-    GroupResponse, toGroups,
+    APIChat, toChats,
+    APIGroup, toGroups, MemberResponse as APIMember,
+    MembersIndexResponse, toMembers, StatefulAPIMember,
 }
