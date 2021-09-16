@@ -36,7 +36,7 @@ export default class Chat extends Channel implements ChatInterface, SendableChan
         });
         this.conversationID = data.last_message.conversation_id;
         this.recipient = user;
-        this.messages = new ChatMessageManager(this)
+        this.messages = new ChatMessageManager(client, this)
     }
     send(message: Message): Promise<ChatMessage> {
         throw new Error("Method not implemented.");
