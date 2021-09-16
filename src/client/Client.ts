@@ -22,7 +22,7 @@ export default class Client extends EventEmitter implements ClientInterface {
     token: string;
     rest: RESTManager;
     ws: WS;
-    user?: ClientUser;
+    user!: ClientUser;
     constructor(token: string) {
         super();
         this.token = token;
