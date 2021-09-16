@@ -32,7 +32,7 @@ interface ChannelData {
     messageDeletionPeriod?: number;
 }
 
-export abstract class Channel implements ChannelData {
+export default abstract class Channel implements ChannelData {
     abstract readonly type: ChannelType;
     readonly id: string;
     readonly client: Client;
