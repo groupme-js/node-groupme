@@ -1,6 +1,7 @@
 import { Member, Collection, FormerGroup, Client, Message, SendableChannelInterface } from "..";
 import { APIGroup } from "../interfaces";
 import GroupMessageManager from "../managers/GroupMessageManager";
+import PollManager from "../managers/PollManager";
 import BaseGroup from "./BaseGroup";
 import { ChannelType } from "./Channel";
 import GroupMessage from "./GroupMessage";
@@ -32,9 +33,11 @@ interface ActiveGroupInterface {
 export default class Group extends BaseGroup implements ActiveGroupInterface, SendableChannelInterface {
     readonly type = ChannelType.Group;
     readonly messages: GroupMessageManager;
+    readonly polls: PollManager;
     constructor(client: Client, data: APIGroup) {
         super(client, data);
-        this.messages = new GroupMessageManager(this)
+        this.messages = new GroupMessageManager(client, this);
+        this.polls = new PollManager(client, this);
     }
     send(message: Message): Promise<GroupMessage> {
         throw new Error("Method not implemented.");
