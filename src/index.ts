@@ -5,5 +5,6 @@ export { default as FormerGroup } from "./structures/FormerGroup";
 export { default as Group } from "./structures/Group";
 export { default as Member } from "./structures/Member";
 export { default as Message } from "./structures/Message";
+export { default as Poll } from "./structures/Poll";
 export { default as User } from "./structures/User";
 export { Collection } from "./util/Collection";
