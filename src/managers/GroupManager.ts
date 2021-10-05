@@ -22,36 +22,66 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         super(client);
     }
 
+    /* TODO: Fix duplication of code */
+    /* TODO: this.fetchGroups call is only fetching ten */
     fetch(): Promise<Collection<string, Group>>;
     fetch(id: string): Promise<Group>;
     fetch(ids: string[]): Promise<Collection<string, Group | null>>;
     public async fetch(ids?: string | string[]): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
-        let res;
+        let groups: any = [];
         if (ids == null) return this.fetchGroups();
-
-        res = await this.client.rest.api<APIGroup>(
-          "GET",
-          `groups/${ids}`,
-          toGroups
-        );
-
-        /** The Group object to store data in. */
-        const group = this._upsert(new Group(this.client, res));
-
-        if (res.members) {
-          res.members.forEach((data) => {
-            const user = this.client.users._upsert(
-              new User({
-                id: data.user_id,
-                avatar: data.image_url,
-                name: data.name,
-              })
+        if (Array.isArray(ids)) {
+            for (const id of ids) {
+                let curr = await this.client.rest.api<APIGroup>(
+                    "GET",
+                    `groups/${id}`,
+                    toGroups
+                );
+                groups.push(curr);
+            }
+        } else {
+            let _group = await this.client.rest.api<APIGroup>(
+                "GET",
+                `groups/${ids}`,
+                toGroups
             );
-            group.members._upsert(new Member(this.client, group, user, data));
-          });
+            const group = this._upsert(new Group(this.client, _group));
+            if (_group.members) {
+                _group.members.forEach((data: any) => {
+                    const user = this.client.users._upsert(
+                        new User({
+                            id: data.user_id,
+                            avatar: data.image_url,
+                            name: data.name,
+                        })
+                    );
+                    group.members._upsert(new Member(this.client, group, user, data));
+                });
+            }
+            return group;
         }
 
-        return group;
+        const batch = new Collection<string, Group>();
+        groups.forEach((_group: any) => {
+            /** The Group object to store data in. */
+            const group = this._upsert(new Group(this.client, _group));
+
+            if (_group.members) {
+                _group.members.forEach((data: any) => {
+                    const user = this.client.users._upsert(
+                        new User({
+                            id: data.user_id,
+                            avatar: data.image_url,
+                            name: data.name,
+                        })
+                    );
+                    group.members._upsert(new Member(this.client, group, user, data));
+                });
+            }
+            batch.set(group.id, group);
+        });
+
+        return batch;
     }
 
     /**
