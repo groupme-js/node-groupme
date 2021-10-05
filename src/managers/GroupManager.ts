@@ -26,7 +26,32 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     fetch(id: string): Promise<Group>;
     fetch(ids: string[]): Promise<Collection<string, Group | null>>;
     public async fetch(ids?: string | string[]): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
-        throw new Error("Method not implemented.");
+        let res;
+        if (ids == null) return this.fetchGroups();
+
+        res = await this.client.rest.api<APIGroup>(
+          "GET",
+          `groups/${ids}`,
+          toGroups
+        );
+
+        /** The Group object to store data in. */
+        const group = this._upsert(new Group(this.client, res));
+
+        if (res.members) {
+          res.members.forEach((data) => {
+            const user = this.client.users._upsert(
+              new User({
+                id: data.user_id,
+                avatar: data.image_url,
+                name: data.name,
+              })
+            );
+            group.members._upsert(new Member(this.client, group, user, data));
+          });
+        }
+
+        return group;
     }
 
     /**
