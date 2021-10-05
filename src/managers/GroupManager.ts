@@ -29,7 +29,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     fetch(ids: string[]): Promise<Collection<string, Group | null>>;
     public async fetch(ids?: string | string[]): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
         let groups: any = [];
-        if (ids == null) return this.fetchGroups();
+        if (ids == null) return await this.fetchGroups();
         if (Array.isArray(ids)) {
             for (const id of ids) {
                 let curr = await this.client.rest.api<APIGroup>(
@@ -100,20 +100,22 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
          * Recommended if dealing with very large groups. Defaults to false. */
         omit_members?: boolean,
     }) {
-        const apiParams: GroupsRequestParams = {};
-        if (options) {
-            // If no pagination is specified, recursively fetch all groups
-            if (options.page === undefined && options.per_page === undefined) {
-                let batch, i = 1;
-                do batch = await this.fetchGroups({ page: i++, omit_members: options.omit_members });
-                while (batch.size);
-                return this.client.groups.cache;
-            }
-            // Translate the options into valid API parameters
-            if (options.page != undefined) apiParams.page = options.page;
-            if (options.per_page != undefined) apiParams.per_page = options.per_page;
-            if (options.omit_members == true) apiParams.omit = "memberships";
+        // If no options or pagination is specified, recursively fetch all groups
+        if (!options || (options.page === undefined && options.per_page === undefined)) {
+            let batch, i = 1;
+            do {
+                batch = await this.fetchGroups({
+                page: i++,
+                omit_members: options?.omit_members,
+                });
+            } while (batch.size);
+            return this.client.groups.cache;
         }
+        
+        const apiParams: GroupsRequestParams = {}
+        if (options?.page) apiParams.page = options.page;
+        if (options?.per_page) apiParams.per_page = options.per_page;
+        if (options?.omit_members) apiParams.omit = "memberships";
 
         const batch = new Collection<string, Group>()
         const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", tArray(toGroups), { query: apiParams });
