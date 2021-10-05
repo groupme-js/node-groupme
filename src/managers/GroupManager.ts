@@ -23,7 +23,6 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     }
 
     /* TODO: Fix duplication of code */
-    /* TODO: this.fetchGroups call is only fetching ten */
     fetch(): Promise<Collection<string, Group>>;
     fetch(id: string): Promise<Group>;
     fetch(ids: string[]): Promise<Collection<string, Group | null>>;
