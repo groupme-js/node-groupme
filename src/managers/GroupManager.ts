@@ -111,10 +111,10 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
             return this.client.groups.cache;
         }
         
-        const apiParams: GroupsRequestParams = {}
-        if (options?.page) apiParams.page = options.page;
-        if (options?.per_page) apiParams.per_page = options.per_page;
-        if (options?.omit_members) apiParams.omit = "memberships";
+        const apiParams: GroupsRequestParams = {};
+        if (options && options.page !== undefined) apiParams.page = options.page;
+        if (options && options.per_page !== undefined) apiParams.per_page = options.per_page;
+        if (options && options.omit_members == true) apiParams.omit = "memberships";
 
         const batch = new Collection<string, Group>()
         const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", tArray(toGroups), { query: apiParams });
