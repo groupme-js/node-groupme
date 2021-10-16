@@ -2,6 +2,7 @@ import { Client, Collection, Group, Member, User } from "..";
 import { APIGroup, toGroups } from "../interfaces";
 import tArray from "../util/tArray";
 import BaseManager from "./BaseManager";
+import FormerGroupManager from "./FormerGroupManager";
 
 type GroupsRequestParams = {
     page?: number,
@@ -12,14 +13,18 @@ type GroupsRequestParams = {
 interface GroupManagerInterface {
     client: Client
     cache: Collection<string, Group>
+    former: FormerGroupManager
     fetch(): Promise<Collection<string, Group>>
     fetch(id: string): Promise<Group>
     fetch(ids: string[]): Promise<Collection<string, Group | null>>
 }
 
 export default class GroupManager extends BaseManager<Group> implements GroupManagerInterface {
+    former: FormerGroupManager;
+
     constructor(client: Client) {
         super(client);
+        this.former = new FormerGroupManager(client);
     }
 
     /* TODO: Fix duplication of code */
