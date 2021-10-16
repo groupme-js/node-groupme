@@ -1,5 +1,6 @@
-import { Client, Group, User } from "..";
+import { Client, User } from "..";
 import { APIMember } from "../interfaces";
+import BaseGroup from "./BaseGroup";
 
 interface MemberInterface {
 
@@ -7,10 +8,10 @@ interface MemberInterface {
 
 export default class Member implements MemberInterface {
     private readonly _user: User;
-    private readonly _group: Group;
+    private readonly _group: BaseGroup;
     private readonly _memberID: string;
     public get user(): User { return this._user }
-    public get group(): Group { return this._group }
+    public get group(): BaseGroup { return this._group }
     public get memberID(): string { return this._memberID }
     readonly client: Client;
     readonly id: string;
@@ -23,7 +24,7 @@ export default class Member implements MemberInterface {
         return this.roles.includes("admin");
     }
 
-    constructor(client: Client, group: Group, user: User, data: APIMember) {
+    constructor(client: Client, group: BaseGroup, user: User, data: APIMember) {
         this.client = client;
         this.id = user.id;
         this._user = user;
