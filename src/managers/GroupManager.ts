@@ -27,11 +27,65 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         this.former = new FormerGroupManager(client);
     }
 
+    /* TODO: Fix duplication of code */
     fetch(): Promise<Collection<string, Group>>;
     fetch(id: string): Promise<Group>;
     fetch(ids: string[]): Promise<Collection<string, Group | null>>;
     public async fetch(ids?: string | string[]): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
-        throw new Error("Method not implemented.");
+        let groups: any = [];
+        if (ids == null) return await this.fetchGroups();
+        if (Array.isArray(ids)) {
+            for (const id of ids) {
+                let curr = await this.client.rest.api<APIGroup>(
+                    "GET",
+                    `groups/${id}`,
+                    toGroups
+                );
+                groups.push(curr);
+            }
+        } else {
+            let _group = await this.client.rest.api<APIGroup>(
+                "GET",
+                `groups/${ids}`,
+                toGroups
+            );
+            const group = this._upsert(new Group(this.client, _group));
+            if (_group.members) {
+                _group.members.forEach((data: any) => {
+                    const user = this.client.users._upsert(
+                        new User({
+                            id: data.user_id,
+                            avatar: data.image_url,
+                            name: data.name,
+                        })
+                    );
+                    group.members._upsert(new Member(this.client, group, user, data));
+                });
+            }
+            return group;
+        }
+
+        const batch = new Collection<string, Group>();
+        groups.forEach((_group: any) => {
+            /** The Group object to store data in. */
+            const group = this._upsert(new Group(this.client, _group));
+
+            if (_group.members) {
+                _group.members.forEach((data: any) => {
+                    const user = this.client.users._upsert(
+                        new User({
+                            id: data.user_id,
+                            avatar: data.image_url,
+                            name: data.name,
+                        })
+                    );
+                    group.members._upsert(new Member(this.client, group, user, data));
+                });
+            }
+            batch.set(group.id, group);
+        });
+
+        return batch;
     }
 
     /**
@@ -50,20 +104,22 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
          * Recommended if dealing with very large groups. Defaults to false. */
         omit_members?: boolean,
     }) {
-        const apiParams: GroupsRequestParams = {};
-        if (options) {
-            // If no pagination is specified, recursively fetch all groups
-            if (options.page === undefined && options.per_page === undefined) {
-                let batch, i = 1;
-                do batch = await this.fetchGroups({ page: i++, omit_members: options.omit_members });
-                while (batch.size);
-                return this.client.groups.cache;
-            }
-            // Translate the options into valid API parameters
-            if (options.page != undefined) apiParams.page = options.page;
-            if (options.per_page != undefined) apiParams.per_page = options.per_page;
-            if (options.omit_members == true) apiParams.omit = "memberships";
+        // If no options or pagination is specified, recursively fetch all groups
+        if (!options || (options.page === undefined && options.per_page === undefined)) {
+            let batch, i = 1;
+            do {
+                batch = await this.fetchGroups({
+                page: i++,
+                omit_members: options?.omit_members,
+                });
+            } while (batch.size);
+            return this.client.groups.cache;
         }
+        
+        const apiParams: GroupsRequestParams = {};
+        if (options && options.page !== undefined) apiParams.page = options.page;
+        if (options && options.per_page !== undefined) apiParams.per_page = options.per_page;
+        if (options && options.omit_members == true) apiParams.omit = "memberships";
 
         const batch = new Collection<string, Group>()
         const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", tArray(toGroups), { query: apiParams });
