@@ -12,7 +12,10 @@
     "url": "git+https://github.com/not-so-smart/node-groupme.git"
   },
   "keywords": [
-    "groupme", "api", "node-groupme", "microsoft"
+    "groupme",
+    "api",
+    "node-groupme",
+    "microsoft"
   ],
   "author": "Peter Currie <peterdcurrie@gmail.com>",
   "license": "MIT",
@@ -31,6 +34,7 @@
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
     "node-fetch": "^2.6.1",
+    "typedoc-neo-theme": "^1.1.1",
     "ws": "^8.1.0"
   },
   "files": [
