@@ -23,6 +23,7 @@ interface GroupManagerInterface {
     fetch(): Promise<Collection<string, Group>>
     fetch(id: string): Promise<Group>
     fetch(ids: string[]): Promise<Collection<string, Group | null>>
+    fetch(options: FetchParams): Promise<Collection<string, Group | null>>
 }
 
 export default class GroupManager extends BaseManager<Group> implements GroupManagerInterface {
@@ -63,10 +64,10 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         }
     }
 
-    private async fetchId(ids: string) {
+    private async fetchId(id: string): Promise<Group> {
         let res = await this.client.rest.api<APIGroup>(
             "GET",
-            `groups/${ids}`,
+            `groups/${id}`,
             toGroups
         );
         const group = this._upsert(new Group(this.client, res));
@@ -85,7 +86,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         return group;
     }
 
-    private async fetchIds(ids: string[]) {
+    private async fetchIds(ids: string[]): Promise<Collection<string, Group | null>> {
         let groups: any = [];
         for (const id of ids) {
             let curr = await this.client.rest.api<APIGroup>(
@@ -116,7 +117,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         return batch;
     }
 
-    private async fetchIndex(options: FetchParams) {
+    private async fetchIndex(options: FetchParams): Promise<Collection<string, Group | null>> {
         const apiParams: GroupsRequestParams = {};
         if (options.page !== undefined) apiParams.page = options.page;
         if (options.per_page !== undefined) apiParams.per_page = options.per_page;
@@ -144,7 +145,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         return batch;
     }
 
-    private async fetchAll() {
+    private async fetchAll(): Promise<Collection<string, Group | null>> {
         let batch, i = 1;
         do {
             batch = await this.fetchIndex({
