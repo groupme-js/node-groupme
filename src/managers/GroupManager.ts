@@ -45,13 +45,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     fetch(): Promise<Collection<string, Group>>;
     fetch(id: string): Promise<Group>;
     fetch(ids: string[]): Promise<Collection<string, Group | null>>;
-    fetch(options: {
-        page?: number,
-        per_page?: number,
-        /** Whether to omit membership data from the response. 
-         * Recommended if dealing with very large groups. Defaults to false. */
-        omit_members?: boolean,
-    }): Promise<Collection<string, Group | null>>;
+    fetch(options: FetchParams): Promise<Collection<string, Group | null>>;
     public async fetch(options?: string | string[] | FetchParams): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
         if (typeof options === 'string') {
             return await this.fetchId(options);
