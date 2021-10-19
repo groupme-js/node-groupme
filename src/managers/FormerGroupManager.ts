@@ -27,7 +27,7 @@ export default class FormerGroupManager extends BaseManager<FormerGroup> impleme
                     avatar: data.image_url,
                     name: data.name,
                 }));
-                formerGroup.members._upsert(new Member(this.client, formerGroup, user, data, ));
+                formerGroup.members._upsert(new Member(this.client, formerGroup, user, data));
             });
             batch.set(formerGroup.id, formerGroup);
         });
