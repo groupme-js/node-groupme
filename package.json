@@ -4,22 +4,25 @@
   "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "npx tsc"
+    "prepare": "npx tsc",
+    "docs": "typedoc --theme ./node_modules/typedoc-neo-theme/bin/default"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/not-so-smart/node-groupme.git"
   },
   "keywords": [
-    "groupme"
+    "groupme",
+    "api",
+    "node-groupme",
+    "microsoft"
   ],
   "author": "Peter Currie <peterdcurrie@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/not-so-smart/node-groupme/issues"
   },
-  "homepage": "https://github.com/not-so-smart/node-groupme#readme",
+  "homepage": "https://groupme.js.org",
   "devDependencies": {
     "@tsconfig/node14": "^1.0.0",
     "@types/node": "^14.14.27",
@@ -31,6 +34,7 @@
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
     "node-fetch": "^2.6.1",
+    "typedoc-neo-theme": "^1.1.1",
     "ws": "^8.1.0"
   },
   "files": [
