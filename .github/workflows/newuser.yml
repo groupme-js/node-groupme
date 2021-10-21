@@ -1,4 +1,4 @@
-name: Generate Docs
+name: New User PR Message
 
 on:
   pull_request:
