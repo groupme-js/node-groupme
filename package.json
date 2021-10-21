@@ -4,7 +4,8 @@
   "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
   "scripts": {
-    "prepare": "npx tsc",
+    "build": "npx tsc",
+    "prepare": "husky install",
     "docs": "typedoc --theme ./node_modules/typedoc-neo-theme/bin/default"
   },
   "repository": {
@@ -28,6 +29,14 @@
     "@types/node": "^14.14.27",
     "@types/node-fetch": "^2.5.8",
     "@types/ws": "^7.4.7",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.2.3",
+    "prettier": "^2.4.1",
     "typedoc": "^0.21.9",
     "typescript": "^4.1.5"
   },
