@@ -1,5 +1,5 @@
 import { Channel, Client } from "..";
-import { APIGroup } from "../interfaces";
+import type { APIGroup } from "../interfaces";
 import MemberManager from "../managers/MemberManager";
 
 export default abstract class BaseGroup extends Channel {

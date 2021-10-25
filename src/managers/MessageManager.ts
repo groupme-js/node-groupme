@@ -1,4 +1,4 @@
-import { Channel, Client, Collection, Message } from "..";
+import type { Channel, Client, Collection, Message } from "..";
 import BaseManager from "./BaseManager";
 
 interface MessageManagerInterface {

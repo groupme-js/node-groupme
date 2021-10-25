@@ -1,5 +1,5 @@
-import { Client, Collection, Group } from "..";
-import Poll from "../structures/Poll";
+import type { Client, Collection, Group } from "..";
+import type Poll from "../structures/Poll";
 import BaseManager from "./BaseManager";
 
 interface PollManagerInterface {

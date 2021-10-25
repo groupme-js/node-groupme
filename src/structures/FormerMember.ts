@@ -1,5 +1,5 @@
 import { Client, Group, Member, User } from "..";
-import { APIMember } from "../interfaces";
+import type { APIMember } from "../interfaces";
 
 enum State {
     Exited = "exited",

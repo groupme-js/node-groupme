@@ -1,5 +1,5 @@
-import { Client, Collection, Group } from "..";
-import GroupMessage from "../structures/GroupMessage";
+import type { Client, Collection, Group } from "..";
+import type GroupMessage from "../structures/GroupMessage";
 import MessageManager from "./MessageManager";
 
 export default class GroupMessageManager extends MessageManager<Group, GroupMessage> {

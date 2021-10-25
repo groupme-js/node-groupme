@@ -1,10 +1,10 @@
-import { Member, Collection, FormerGroup, Client, Message, SendableChannelInterface } from "..";
-import { APIGroup } from "../interfaces";
+import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
+import type { APIGroup } from "../interfaces";
 import GroupMessageManager from "../managers/GroupMessageManager";
 import PollManager from "../managers/PollManager";
 import BaseGroup from "./BaseGroup";
 import { ChannelType } from "./Channel";
-import GroupMessage from "./GroupMessage";
+import type GroupMessage from "./GroupMessage";
 
 type GroupUpdateOptions = {
     name: string
