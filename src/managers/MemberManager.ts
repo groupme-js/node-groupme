@@ -1,5 +1,5 @@
-import { Client, Collection, Member } from "..";
-import BaseGroup from "../structures/BaseGroup";
+import type { Client, Collection, Member } from "..";
+import type BaseGroup from "../structures/BaseGroup";
 import BaseManager from "./BaseManager";
 import FormerMemberManager from "./FormerMemberManager";
 

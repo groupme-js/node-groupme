@@ -1,4 +1,4 @@
-import { Client, User } from "..";
+import type { Client, User } from "..";
 import BaseManager from "./BaseManager";
 
 interface UserManagerInterface {

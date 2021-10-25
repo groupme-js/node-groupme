@@ -1,6 +1,6 @@
-import { Client, User } from "..";
-import { APIMember } from "../interfaces";
-import BaseGroup from "./BaseGroup";
+import type { Client, User } from "..";
+import type { APIMember } from "../interfaces";
+import type BaseGroup from "./BaseGroup";
 
 interface MemberInterface {
 

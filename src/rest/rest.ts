@@ -1,6 +1,6 @@
 import fetch, { Headers, RequestInit } from "node-fetch";
 import { URL } from "url";
-import { Client } from "..";
+import type { Client } from "..";
 import { inspect } from "util";
 
 function assertDefined<T>(val: T, err: Error): asserts val is NonNullable<T> {

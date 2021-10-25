@@ -1,8 +1,8 @@
 import { Client, Channel, User, Message, SendableChannelInterface } from "..";
-import { APIChat } from "../interfaces";
+import type { APIChat } from "../interfaces";
 import ChatMessageManager from "../managers/ChatMessageManager";
 import { ChannelType } from "./Channel";
-import ChatMessage from "./ChatMessage";
+import type ChatMessage from "./ChatMessage";
 
 interface ChatInterface {
     send(message: Message): Promise<ChatMessage>

@@ -1,5 +1,5 @@
-import { Chat, Client, Collection } from "..";
-import ChatMessage from "../structures/ChatMessage";
+import type { Chat, Client, Collection } from "..";
+import type ChatMessage from "../structures/ChatMessage";
 import MessageManager from "./MessageManager";
 
 export default class ChatMessageManager extends MessageManager<Chat, ChatMessage> {

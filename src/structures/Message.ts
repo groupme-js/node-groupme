@@ -1,5 +1,5 @@
-import { Channel, User } from "..";
-import Attachment from "./Attachment";
+import type { Channel, User } from "..";
+import type Attachment from "./Attachment";
 
 interface MessageInterface {
     fetch(): Promise<this>

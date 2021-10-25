@@ -1,5 +1,5 @@
 import { Collection, User, Poll } from "..";
-import { PollOptionData } from "../interfaces";
+import type { PollOptionData } from "../interfaces";
 
 interface PollOptionInterface {
     vote(): Promise<this>

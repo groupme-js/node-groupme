@@ -1,6 +1,6 @@
 import { Client, Collection, Group, User } from "..";
-import { APIPoll } from "../interfaces";
-import PollOption from "./PollOption";
+import type { APIPoll } from "../interfaces";
+import type PollOption from "./PollOption";
 
 interface PollInterface {
     fetch(): Promise<this>
