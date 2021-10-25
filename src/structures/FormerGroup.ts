@@ -1,4 +1,4 @@
-import type { Channel, Client, Group } from "..";
+import type { Client, Group } from "..";
 import type { APIGroup } from "../interfaces";
 import BaseGroup from "./BaseGroup";
 import { ChannelType } from "./Channel";

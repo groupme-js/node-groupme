@@ -1,4 +1,4 @@
-import type { Member, Collection, FormerGroup, Client, Message, SendableChannelInterface } from "..";
+import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
 import type { APIGroup } from "../interfaces";
 import GroupMessageManager from "../managers/GroupMessageManager";
 import PollManager from "../managers/PollManager";

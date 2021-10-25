@@ -1,4 +1,4 @@
-import { Collection, User, Poll } from "..";
+import { Collection, Poll, User } from "..";
 import type { PollOptionData } from "../interfaces";
 
 interface PollOptionInterface {

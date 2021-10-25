@@ -1,6 +1,6 @@
 import { ok } from "assert";
 import EventEmitter from "events";
-import WebSocket from "ws"
+import WebSocket from "ws";
 import type { Client } from "..";
 
 export default class WS {

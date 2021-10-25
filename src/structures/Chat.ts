@@ -1,4 +1,4 @@
-import { Client, Channel, User, Message, SendableChannelInterface } from "..";
+import { Channel, Client, Message, SendableChannelInterface, User } from "..";
 import type { APIChat } from "../interfaces";
 import ChatMessageManager from "../managers/ChatMessageManager";
 import { ChannelType } from "./Channel";
