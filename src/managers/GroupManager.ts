@@ -124,8 +124,8 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         let batch, i = 1;
         do {
             batch = await this.fetchIndex({
-            page: i++,
-            omit_members: false,
+                page: i++,
+                omit_members: false,
             });
         } while (batch.size);
         return this.client.groups.cache;
