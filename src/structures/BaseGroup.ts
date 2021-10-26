@@ -62,6 +62,6 @@ export default abstract class BaseGroup extends Channel {
         } : null;
         this.requiresApproval = data.requires_approval;
         this.showJoinQuestion = data.show_join_question;
-        this.joinQuestion = data.join_question;
+        this.joinQuestion = data.join_question ? data.join_question.text : null;
     }
 }
