@@ -1,5 +1,5 @@
-import { Client, Collection, Chat, User } from "..";
-import { APIChat, toChats } from "../interfaces"
+import type { APIChat } from "groupme-api-types";
+import { Chat, Client, Collection, User } from "..";
 import BaseManager from "./BaseManager";
 
 type ChatsRequestParams = {
