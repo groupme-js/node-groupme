@@ -1,5 +1,5 @@
+import type { APIGroup } from "groupme-api-types";
 import { Client, Collection, Group, Member, User } from "..";
-import { APIGroup, toGroups } from "../interfaces";
 import BaseManager from "./BaseManager";
 import FormerGroupManager from "./FormerGroupManager";
 

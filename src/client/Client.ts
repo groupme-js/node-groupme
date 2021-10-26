@@ -1,5 +1,5 @@
 import EventEmitter from "events";
-import { Me, toMe } from "../interfaces";
+import type { Me } from "groupme-api-types";
 import ChatManager from "../managers/ChatManager";
 import GroupManager from "../managers/GroupManager";
 import UserManager from "../managers/UserManager";

@@ -1,5 +1,5 @@
+import type { APIGroup } from "groupme-api-types";
 import { Channel, Client } from "..";
-import type { APIGroup } from "../interfaces";
 import MemberManager from "../managers/MemberManager";
 
 export default abstract class BaseGroup extends Channel {
