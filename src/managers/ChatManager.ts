@@ -47,7 +47,7 @@ export default class ChatManager extends BaseManager<Chat> implements ChatManage
 
         const batch = new Collection<string, Chat>()
         const chats = await this.client.rest.api<APIChat[]>
-            ("GET", "chats", toChats, { query: apiParams });
+            ("GET", "chats", { query: apiParams });
 
         chats.forEach(data => {
             const chat = this._upsert(new Chat(

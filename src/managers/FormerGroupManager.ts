@@ -14,7 +14,7 @@ export default class FormerGroupManager extends BaseManager<FormerGroup> impleme
     }
 
     public async fetch(): Promise<Collection<string, FormerGroup>> {
-        const groupsFormerResponse = await this.client.rest.api<APIGroup[]>("GET", "groups/former", toGroups);
+        const groupsFormerResponse = await this.client.rest.api<APIGroup[]>("GET", "groups/former");
         const batch = new Collection<string, FormerGroup>();
 
         groupsFormerResponse.forEach(g => {

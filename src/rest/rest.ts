@@ -18,7 +18,7 @@ export default class RESTManager {
         this.client = client;
     }
 
-    async api<T>(method: "GET" | "POST", path: string, transformer: (json: any) => T, options?: { query?: { [key: string]: any }, body?: any }): Promise<T> {
+    async api<T>(method: "GET" | "POST", path: string, options?: { query?: { [key: string]: any }, body?: any }): Promise<T> {
         const url = new URL(path, RESTManager.BASE_URL);
         if (options && options.query) {
             for (const key in options.query) {
@@ -42,7 +42,7 @@ export default class RESTManager {
         assertDefined<any>(data.meta, createAPIError('Response is missing "meta" field', url, options, data))
         if (data.meta.errors) throw createAPIError(data.meta.errors.join('; '), url, options, data);
 
-        const result: T = transformer(data.response);
+        const result: T = data.response as T;
 
         return result;
     }

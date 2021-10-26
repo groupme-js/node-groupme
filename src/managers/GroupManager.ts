@@ -65,8 +65,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     private async fetchId(id: string): Promise<Group> {
         let res = await this.client.rest.api<APIGroup>(
             "GET",
-            `groups/${id}`,
-            toGroups
+            `groups/${id}`
         );
         const group = this._upsert(new Group(this.client, res));
         if (res.members) {
@@ -100,7 +99,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         if (options.omit_members === true) apiParams.omit = "memberships";
 
         const batch = new Collection<string, Group>()
-        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", toGroups, { query: apiParams });
+        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", { query: apiParams });
         groupsIndexResponse.forEach(g => {
             /** The Group object to store data in. */
             const group = this._upsert(new Group(this.client, g));

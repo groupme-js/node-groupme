@@ -33,7 +33,7 @@ export default class Client extends EventEmitter implements ClientInterface {
         this.ws = new WS(this)
     }
     login = async (): Promise<this> => {
-        const me = await this.rest.api<Me>("GET", "users/me", toMe)
+        const me = await this.rest.api<Me>("GET", "users/me")
         this.user = new ClientUser({
             avatar: me.image_url,
             id: me.user_id,
