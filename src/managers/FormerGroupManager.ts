@@ -1,6 +1,5 @@
 import { Client, Collection, FormerGroup, Member, User } from "..";
 import { APIGroup, toGroups } from "../interfaces";
-import tArray from "../util/tArray";
 import BaseManager from "./BaseManager";
 
 interface FormerGroupManagerInterface {
@@ -15,7 +14,7 @@ export default class FormerGroupManager extends BaseManager<FormerGroup> impleme
     }
 
     public async fetch(): Promise<Collection<string, FormerGroup>> {
-        const groupsFormerResponse = await this.client.rest.api<APIGroup[]>("GET", "groups/former", tArray(toGroups));
+        const groupsFormerResponse = await this.client.rest.api<APIGroup[]>("GET", "groups/former", toGroups);
         const batch = new Collection<string, FormerGroup>();
 
         groupsFormerResponse.forEach(g => {

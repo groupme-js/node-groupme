@@ -1,6 +1,5 @@
 import { Client, Collection, Group, Member, User } from "..";
 import { APIGroup, toGroups } from "../interfaces";
-import tArray from "../util/tArray";
 import BaseManager from "./BaseManager";
 import FormerGroupManager from "./FormerGroupManager";
 
@@ -101,7 +100,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         if (options.omit_members === true) apiParams.omit = "memberships";
 
         const batch = new Collection<string, Group>()
-        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", tArray(toGroups), { query: apiParams });
+        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", toGroups, { query: apiParams });
         groupsIndexResponse.forEach(g => {
             /** The Group object to store data in. */
             const group = this._upsert(new Group(this.client, g));
