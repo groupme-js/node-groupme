@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/not-so-smart/node-groupme.git"
+    "url": "git+https://github.com/groupme-js/node-groupme.git"
   },
   "keywords": [
     "groupme",
@@ -20,7 +20,7 @@
   "author": "Peter Currie <peterdcurrie@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/not-so-smart/node-groupme/issues"
+    "url": "https://github.com/groupme-js/node-groupme/issues"
   },
   "homepage": "https://groupme.js.org",
   "devDependencies": {
