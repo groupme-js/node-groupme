@@ -1,5 +1,5 @@
+import type { APIGroup } from "groupme-api-types";
 import { Channel, Client } from "..";
-import type { APIGroup } from "../interfaces";
 import MemberManager from "../managers/MemberManager";
 
 export default abstract class BaseGroup extends Channel {
@@ -62,6 +62,6 @@ export default abstract class BaseGroup extends Channel {
         } : null;
         this.requiresApproval = data.requires_approval;
         this.showJoinQuestion = data.show_join_question;
-        this.joinQuestion = data.join_question;
+        this.joinQuestion = data.join_question ? data.join_question.text : null;
     }
 }

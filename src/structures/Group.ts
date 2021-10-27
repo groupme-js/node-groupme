@@ -1,5 +1,5 @@
+import type { APIGroup } from "groupme-api-types";
 import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
-import type { APIGroup } from "../interfaces";
 import GroupMessageManager from "../managers/GroupMessageManager";
 import PollManager from "../managers/PollManager";
 import BaseGroup from "./BaseGroup";

@@ -1,5 +1,5 @@
+import type { APIMember } from "groupme-api-types";
 import type { Client, User } from "..";
-import type { APIMember } from "../interfaces";
 import type BaseGroup from "./BaseGroup";
 
 interface MemberInterface {

@@ -1,5 +1,5 @@
+import type { APIPoll } from "groupme-api-types";
 import { Client, Collection, Group, User } from "..";
-import type { APIPoll } from "../interfaces";
 import type PollOption from "./PollOption";
 
 interface PollInterface {

@@ -1,5 +1,5 @@
+import type { APIChat } from "groupme-api-types";
 import { Channel, Client, Message, SendableChannelInterface, User } from "..";
-import type { APIChat } from "../interfaces";
 import ChatMessageManager from "../managers/ChatMessageManager";
 import { ChannelType } from "./Channel";
 import type ChatMessage from "./ChatMessage";
