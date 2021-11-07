@@ -1,4 +1,4 @@
-import fetch, { Headers, RequestInit } from "node-fetch";
+import fetch, { Headers, RequestInit, Response } from "node-fetch";
 import { URL } from "url";
 import { inspect } from "util";
 import type { Client } from "..";
@@ -11,6 +11,15 @@ function createAPIError(message: string, endpoint: URL, options: any, response: 
     return new Error(`${message}\n-- Endpoint: ${endpoint}\n-- Options: ${inspect(options)}\n-- Response: ${inspect(response)}`);
 }
 
+type HttpMethod = "GET" | "POST";
+
+type RequestOptions = {
+    query?: {
+        [key: string]: any;
+    };
+    body?: any;
+};
+
 export default class RESTManager {
     static BASE_URL = "https://api.groupme.com/v3/"
     client: Client;
@@ -18,9 +27,11 @@ export default class RESTManager {
         this.client = client;
     }
 
-    async api<T>(method: "GET" | "POST", path: string, options?: { query?: { [key: string]: any }, body?: any }): Promise<T> {
+    async api<T>(method: HttpMethod, path: string, options?: RequestOptions): Promise<T>;
+    async api<T>(method: HttpMethod, path: string, options: RequestOptions, skipJsonParse: true): Promise<Response>;
+    async api<T>(method: HttpMethod, path: string, options?: RequestOptions, skipJsonParse?: boolean): Promise<T | Response> {
         const url = new URL(path, RESTManager.BASE_URL);
-        if (options && options.query) {
+        if (options?.query) {
             for (const key in options.query) {
                 if (Object.prototype.hasOwnProperty.call(options.query, key)) {
                     const value = options.query[key];
@@ -33,10 +44,13 @@ export default class RESTManager {
         init.headers = new Headers();
         init.headers.set('X-Access-Token', this.client.token);
         init.method = method;
-        if (options && options.body) init.body = options.body;
+        if (options?.body) init.body = options.body;
 
         const response = await fetch(url, init);
         console.log(`-----\nAPI request\nurl: ${url}\n-----`)
+
+        if (skipJsonParse) return response;
+
         const data = await response.json();
         assertDefined<any>(data, createAPIError('Invalid API response', url, options, data))
         assertDefined<any>(data.meta, createAPIError('Response is missing "meta" field', url, options, data))
