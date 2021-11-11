@@ -27,14 +27,15 @@ export default class RESTManager {
         this.client = client;
     }
 
-    async api<T>(method: HttpMethod, path: string, options?: RequestOptions): Promise<T>;
-    async api<T>(method: HttpMethod, path: string, options: RequestOptions, skipJsonParse: true): Promise<Response>;
-    async api<T>(method: HttpMethod, path: string, options?: RequestOptions, skipJsonParse?: boolean): Promise<T | Response> {
+    async api<T>(method: HttpMethod, path: string, data?: RequestOptions): Promise<T>;
+    async api<T>(method: HttpMethod, path: string, data: RequestOptions, options: { skipJsonParse: true }): Promise<Response>;
+    async api<T>(method: HttpMethod, path: string, data: RequestOptions, options: { allowNull: true }): Promise<T | null>;
+    async api<T>(method: HttpMethod, path: string, data?: RequestOptions, options?: { skipJsonParse?: boolean, allowNull?: boolean }): Promise<T | Response | null> {
         const url = new URL(path, RESTManager.BASE_URL);
-        if (options?.query) {
-            for (const key in options.query) {
-                if (Object.prototype.hasOwnProperty.call(options.query, key)) {
-                    const value = options.query[key];
+        if (data?.query) {
+            for (const key in data.query) {
+                if (Object.prototype.hasOwnProperty.call(data.query, key)) {
+                    const value = data.query[key];
                     url.searchParams.set(key, value);
                 }
             }
@@ -44,19 +45,24 @@ export default class RESTManager {
         init.headers = new Headers();
         init.headers.set('X-Access-Token', this.client.token);
         init.method = method;
-        if (options?.body) init.body = options.body;
+        if (data?.body) init.body = data.body;
 
         const response = await fetch(url, init);
         console.log(`-----\nAPI request\nurl: ${url}\n-----`)
 
-        if (skipJsonParse) return response;
+        if (options?.skipJsonParse) return response;
+        // for (const header of response.headers.entries()) console.log(header)
+        if (response.headers.get('content-length') === '0') {
+            if (options?.allowNull) return null;
+            else throw createAPIError('Received a response with Content-Length: 0, but expected content', url, data, {});
+        }
 
-        const data = await response.json();
-        assertDefined<any>(data, createAPIError('Invalid API response', url, options, data))
-        assertDefined<any>(data.meta, createAPIError('Response is missing "meta" field', url, options, data))
-        if (data.meta.errors) throw createAPIError(data.meta.errors.join('; '), url, options, data);
+        const json = await response.json();
+        assertDefined<any>(json, createAPIError('Invalid API response', url, data, json));
+        assertDefined<any>(json.meta, createAPIError('Response is missing "meta" field', url, data, json));
+        if (json.meta.errors) throw createAPIError(json.meta.errors.join('; '), url, data, json);
 
-        const result: T = data.response as T;
+        const result: T = json.response as T;
 
         return result;
     }
