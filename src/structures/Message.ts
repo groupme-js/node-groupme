@@ -1,4 +1,4 @@
-import type { APIMessage } from "groupme-api-types";
+import type { APIGroupMessage, APIChatMessage } from "groupme-api-types";
 import type { Channel, Client } from "..";
 import { User } from "..";
 import type Attachment from "./Attachment";
@@ -22,7 +22,7 @@ export default abstract class Message implements MessageInterface {
     system: boolean;
     likes: (User | string)[];
     attachments: Attachment[];
-    constructor(client: Client, channel: Channel, data: APIMessage) {
+    constructor(client: Client, channel: Channel, data: APIGroupMessage | APIChatMessage) {
         this.id = data.id;
         this.user = client.users._upsert(
             new User({
@@ -35,7 +35,7 @@ export default abstract class Message implements MessageInterface {
         this.text = data.text;
         this.createdAt = data.created_at;
         this.sourceGuid = data.source_guid;
-        this.system = data.system;
+        this.system = 'system' in data ? data.system : false;
         this.likes = data.favorited_by.map(id => client.users.cache.get(id) || id);
         this.attachments = data.attachments;
     }
