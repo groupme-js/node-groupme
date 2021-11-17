@@ -1,7 +1,6 @@
 import type {
-    APIMessage,
-    GetGroupMessagesQuery, GetGroupMessagesResponse,
     GetGroupMessageResponse,
+    GetGroupMessagesQuery, GetGroupMessagesResponse,
 } from "groupme-api-types";
 import type { Client, Group } from "..";
 import { Collection } from "..";
