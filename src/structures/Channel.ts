@@ -56,5 +56,5 @@ export default abstract class Channel implements ChannelData {
 
 export interface SendableChannelInterface {
     messages: MessageManager<Channel, Message>;
-    send(message: Message): Promise<Message>;
+    send(text: string): Promise<Message>;
 }

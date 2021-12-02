@@ -5,7 +5,7 @@ import { ChannelType } from "./Channel";
 import type ChatMessage from "./ChatMessage";
 
 interface ChatInterface {
-    send(message: Message): Promise<ChatMessage>
+    send(text: string): Promise<ChatMessage>
 
 }
 
@@ -38,7 +38,7 @@ export default class Chat extends Channel implements ChatInterface, SendableChan
         this.recipient = user;
         this.messages = new ChatMessageManager(client, this)
     }
-    send(message: Message): Promise<ChatMessage> {
+    send(text: string): Promise<ChatMessage> {
         throw new Error("Method not implemented.");
     }
 }

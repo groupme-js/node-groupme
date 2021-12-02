@@ -20,7 +20,7 @@ interface ActiveGroupInterface {
     transferOwnershipTo(newOwner: string): Promise<this>
     delete(): Promise<void>
     changeNickname(nickname: string): Promise<Member>
-    send(message: Message): Promise<GroupMessage>
+    send(text: string): Promise<GroupMessage>
     leave(): Promise<FormerGroup>
     get canLeave(): boolean
     get canUpdate(): boolean
