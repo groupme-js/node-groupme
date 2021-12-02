@@ -53,7 +53,10 @@ export default class RESTManager {
         init.headers = new Headers();
         init.headers.set('X-Access-Token', this.client.token);
         init.method = method;
-        if (data?.body) init.body = data.body;
+        if (data?.body) {
+            init.headers.set('Content-Type', 'application/json');
+            init.body = JSON.stringify(data.body);
+        }
 
         const response = await fetch(url, init);
         console.log(`-----\nAPI request\nurl: ${url}\n-----`)
