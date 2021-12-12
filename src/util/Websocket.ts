@@ -75,6 +75,11 @@ export default class WS {
             connectionType: "websocket",
         })
     }
+
+    close() {
+        if (this.ws) this.ws.close()
+    }
+    
     debug() {
         ok(this.ws)
 
