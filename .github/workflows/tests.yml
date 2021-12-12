@@ -12,5 +12,8 @@ jobs:
             - name: Install dependencies
               run: npm install
 
+            - name: Compile using TSC
+              run: npm run prepare
+
             - name: Run tests
               run: npm run test
