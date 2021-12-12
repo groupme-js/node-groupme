@@ -1,7 +1,24 @@
-const expect = require("expect.js")
+const token = process.env.TOKEN
 
-describe("test 1", async () => {
-    it(`should work`, async () => {
-        expect("hi").to.eql("hi")
+const expect = require("expect.js")
+const GroupMe = require("..")
+const client = new GroupMe.Client(token)
+
+const data = {
+    testGroup: "70077952",
+}
+
+const main = async () => {
+    await client.login()
+
+    await describe("GroupManager", async () => {
+        let g = await client.groups.fetch(data.testGroup)
+        it("should fetch a group", async () => {
+            expect(g.id).to.be(data.testGroup)
+        })
     })
-})
+
+    await client.logout()
+}
+
+main()
