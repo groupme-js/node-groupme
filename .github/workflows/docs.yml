@@ -22,6 +22,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_branch: main
+          publish_dir: ./docs
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           cname: groupme.js.org
           external_repository: groupme-js/website
