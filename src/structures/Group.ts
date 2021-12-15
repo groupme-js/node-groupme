@@ -15,7 +15,7 @@ type GroupUpdateOptions = {
 }
 
 interface ActiveGroupInterface {
-    fetch(): Promise<this>
+    fetch(): Promise<Group>
     update(options: GroupUpdateOptions): Promise<this>
     transferOwnershipTo(newOwner: string): Promise<this>
     delete(): Promise<void>
@@ -51,8 +51,8 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         return this.messages._upsert(message);
     }
 
-    fetch(): Promise<this> {
-        throw new Error("Method not implemented.");
+    fetch(): Promise<Group> {
+        return this.client.groups.fetch(this.id);
     }
 
     update(options: GroupUpdateOptions): Promise<this> {
