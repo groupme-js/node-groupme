@@ -22,12 +22,6 @@ interface ActiveGroupInterface {
     changeNickname(nickname: string): Promise<Member>
     send(text: string): Promise<GroupMessage>
     leave(): Promise<FormerGroup>
-    get canLeave(): boolean
-    get canUpdate(): boolean
-    get canDelete(): boolean
-    get canTransfer(): boolean
-    get canAddMembers(): boolean
-    get canRemoveMembers(): boolean
 }
 
 export default class Group extends BaseGroup implements ActiveGroupInterface, SendableChannelInterface {
@@ -81,28 +75,6 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         throw new Error("Method not implemented.");
     }
 
-    get canLeave(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canUpdate(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canDelete(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canTransfer(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canAddMembers(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canRemoveMembers(): boolean {
-        throw new Error("Method not implemented.");
     }
 
 }
