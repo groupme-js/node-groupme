@@ -51,7 +51,7 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         const response = await this.client.rest.api<PostGroupMessageResponse>(
             'POST',
             `groups/${this.id}/messages`,
-            { body }
+            { body },
         );
         const message = new GroupMessage(this.client, this, response.message);
         return this.messages._upsert(message);
