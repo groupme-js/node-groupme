@@ -20,10 +20,6 @@ export default class Member implements MemberInterface {
     autokicked: boolean;
     roles: ("admin" | "owner" | "user")[];
 
-    public get isAdmin(): boolean {
-        return this.roles.includes("admin");
-    }
-
     constructor(client: Client, group: BaseGroup, user: User, data: APIMember) {
         this.client = client;
         this.id = user.id;
@@ -34,5 +30,37 @@ export default class Member implements MemberInterface {
         this.muted = data.muted;
         this.autokicked = data.autokicked;
         this.roles = data.roles;
+    }
+
+    get isAdmin(): boolean {
+        return this.roles.includes("admin") || this.isOwner;
+    }
+
+    get isOwner(): boolean {
+        return this.user.id === this.group.creatorID;
+    }
+
+    get canLeaveGroup(): boolean {
+        return !this.isOwner;
+    }
+
+    get canUpdateGroup(): boolean {
+        return this.isAdmin || !this.group.closed;
+    }
+
+    get canAddMembers(): boolean {
+        return this.isAdmin || !this.group.closed;
+    }
+
+    get canRemoveMembers(): boolean {
+        return this.isAdmin || !this.group.closed;
+    }
+
+    get canDeleteGroup(): boolean {
+        return this.isOwner;
+    }
+
+    get canTransferGroup(): boolean {
+        return this.isOwner;
     }
 }
