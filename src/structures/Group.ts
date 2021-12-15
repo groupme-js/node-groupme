@@ -2,6 +2,7 @@ import type {
     APIGroup,
     PostGroupMessageBody, PostGroupMessageResponse,
     PatchGroupBody, PatchGroupResponse,
+    PostChangeOwnersBody, PostChangeOwnersResponse,
 } from "groupme-api-types";
 import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
 import GroupMessageManager from "../managers/GroupMessageManager";
@@ -70,8 +71,49 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         return this.client.groups._upsert(group);
     }
 
-    transferOwnershipTo(newOwner: string): Promise<this> {
-        throw new Error("Method not implemented.");
+    async transferOwnershipTo(newOwner: string): Promise<Group> {
+        const body: PostChangeOwnersBody = {
+            requests: [
+                {
+                    group_id: this.id,
+                    owner_id: newOwner,
+                }
+            ],
+        };
+        const response = await this.client.rest.api<PostChangeOwnersResponse>(
+            'POST',
+            'groups/change_owners',
+            { body },
+        );
+        const status = response.results[0].status;
+        let errorMessage = '';
+        switch (status) {
+            case '200':
+                return this.fetch();
+            case '400':
+                errorMessage = 'You cannot transfer a group to yourself.';
+                break;
+            case '403':
+                errorMessage = 'You cannot transfer a group you do not own.';
+                break;
+            case '404':
+                errorMessage = 'Group not found, or new owner is not a member of the group.';
+                break;
+            case '405':
+                errorMessage = 'Invalid request; Request object is missing a required field, or one of the required fields is not an ID.';
+                break;
+            default:
+                errorMessage = 'Idk what this status code means, but it\'s probably an error. It wasn\'t on the docs and I\'ve never seen it before. Please report this to the developers of node-groupme and/or the GroupMe API!';
+                break;
+        }
+        const err = {
+            statusCode: status,
+            message: errorMessage,
+            groupId: this.id,
+            groupName: this.name,
+            newOwner: newOwner,
+        }
+        throw err; // Failed to transfer group, see error details
     }
 
     delete(): Promise<void> {
