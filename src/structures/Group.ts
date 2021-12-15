@@ -1,4 +1,8 @@
-import type { APIGroup, PostGroupMessageBody, PostGroupMessageResponse } from "groupme-api-types";
+import type {
+    APIGroup,
+    PostGroupMessageBody, PostGroupMessageResponse,
+    PatchGroupBody, PatchGroupResponse,
+} from "groupme-api-types";
 import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
 import GroupMessageManager from "../managers/GroupMessageManager";
 import PollManager from "../managers/PollManager";
@@ -16,8 +20,8 @@ type GroupUpdateOptions = {
 
 interface ActiveGroupInterface {
     fetch(): Promise<Group>
-    update(options: GroupUpdateOptions): Promise<this>
-    transferOwnershipTo(newOwner: string): Promise<this>
+    update(options: GroupUpdateOptions): Promise<Group>
+    transferOwnershipTo(newOwner: string): Promise<Group>
     delete(): Promise<void>
     changeNickname(nickname: string): Promise<Member>
     send(text: string): Promise<GroupMessage>
@@ -55,8 +59,15 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         return this.client.groups.fetch(this.id);
     }
 
-    update(options: GroupUpdateOptions): Promise<this> {
-        throw new Error("Method not implemented.");
+    async update(options: GroupUpdateOptions): Promise<Group> {
+        const body: PatchGroupBody = options;
+        const response = await this.client.rest.api<PatchGroupResponse>(
+            'POST',
+            `groups/${this.id}/update`,
+            { body },
+        );
+        const group = new Group(this.client, response);
+        return this.client.groups._upsert(group);
     }
 
     transferOwnershipTo(newOwner: string): Promise<this> {
