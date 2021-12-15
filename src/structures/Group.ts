@@ -75,6 +75,8 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         throw new Error("Method not implemented.");
     }
 
+    public get me(): Member | undefined {
+        return this.members.cache.get(this.client.user.id);
     }
 
 }
