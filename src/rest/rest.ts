@@ -59,10 +59,10 @@ export default class RESTManager {
         }
 
         const response = await fetch(url, init);
-        console.log(`-----\nAPI request\nurl: ${url}\n-----`)
+        // console.log(`-----\nAPI request\nurl: ${url}\n-----`)
 
         if (options?.skipJsonParse) return response;
-        // for (const header of response.headers.entries()) console.log(header)
+        // for (const header of response.headers.entries()) // console.log(header)
         if (response.headers.get('content-length') === '0') {
             if (options?.allowNull) return null;
             else throw createAPIError('Received a response with Content-Length: 0, but expected content', url, data, {});

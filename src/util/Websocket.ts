@@ -52,7 +52,7 @@ export default class WS {
                 console.error('An error occurred while trying to send:', data)
                 throw err;
             }
-            console.log('SENT:', data)
+            // console.log('SENT:', data)
         })
     }
     private handshake = () => {
@@ -84,28 +84,28 @@ export default class WS {
         ok(this.ws)
 
         this.ws.on('open', () => {
-            console.log('Event: OPEN')
+            // console.log('Event: OPEN')
         }).on('upgrade', (request) => {
-            console.log('Event: UPGRADE')
-            console.log('Request:', request.headers)
+            // console.log('Event: UPGRADE')
+            // console.log('Request:', request.headers)
         }).on('close', (code, reason) => {
-            console.log('Event: CLOSE')
-            console.log('Code:', code)
-            console.log('Reason:', reason.toString())
-            console.log()
+            // console.log('Event: CLOSE')
+            // console.log('Code:', code)
+            // console.log('Reason:', reason.toString())
+            // console.log()
         }).on('message', (data) => {
-            console.log('MESSAGE:', JSON.parse(data.toString())[0])
+            // console.log('MESSAGE:', JSON.parse(data.toString())[0])
         }).on('ping', (data) => {
-            console.log('PING:', data.toString())
+            // console.log('PING:', data.toString())
         }).on('pong', (data) => {
-            console.log('PONG:', data.toString())
+            // console.log('PONG:', data.toString())
         }).on('error', (err) => {
-            console.log('Event: ERROR')
-            console.log('Error:', err)
+            // console.log('Event: ERROR')
+            // console.log('Error:', err)
         }).on('unexpected-response', (request, response) => {
-            console.log('Event: UNEXPECTED RESPONSE')
-            console.log('Request:', request.getHeaders())
-            console.log('Response:', response.headers)
+            // console.log('Event: UNEXPECTED RESPONSE')
+            // console.log('Request:', request.getHeaders())
+            // console.log('Response:', response.headers)
         })
     }
 

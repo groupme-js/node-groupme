@@ -7,18 +7,15 @@ const client = new GroupMe.Client(token)
 const data = {
     testGroup: "70077952",
 }
+client.login()
 
-const main = async () => {
-    await client.login()
-
-    await describe("GroupManager", async () => {
-        let g = await client.groups.fetch(data.testGroup)
-        it("should fetch a group", async () => {
-            expect(g.id).to.be(data.testGroup)
-        })
+describe("GroupManager", async () => {
+    let g = await client.groups.fetch(data.testGroup)
+    it("should fetch a group", async () => {
+        expect(g.id).to.be(data.testGroup)
     })
+})
 
-    await client.logout()
-}
-
-main()
+setTimeout(() => {
+    client.logout()
+}, 15000)
