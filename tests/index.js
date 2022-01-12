@@ -8,7 +8,6 @@ const data = {
     testGroup: "70077952",
 }
 
-require("./GroupManager")(client, data)
 
 describe("ws", () => {
     before(() => {
