@@ -4,21 +4,22 @@ const expect = require("chai").expect
 
 const GroupMe = require("..")
 const client = new GroupMe.Client(token)
-
 const data = {
     testGroup: "70077952",
 }
 
-describe("ws", async () => {
+require("./GroupManager")(client, data)
+
+describe("ws", () => {
     before(() => {
         client.login()
+        console.log(client)
     })
     after(() => {
         client.logout()
     })
-
-    let g = await client.groups.fetch(data.testGroup)
-    it("should fetch a group",  () => {
+    it("should fetch a group", async () => {
+        let g = await client.groups.fetch(data.testGroup)
         expect(g.id).to.be(data.testGroup)
-    })
+    }).timeout(5000)
 })

@@ -63,6 +63,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     }
 
     private async fetchId(id: string): Promise<Group> {
+        console.debug(id)
         let res = await this.client.rest.api<APIGroup>(
             "GET",
             `groups/${id}`
