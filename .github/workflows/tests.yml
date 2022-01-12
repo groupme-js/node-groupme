@@ -17,3 +17,5 @@ jobs:
 
             - name: Run tests
               run: npm run test
+              env:
+                GROUPME_TOKEN: ${{ secrets.GROUPME_TOKEN }}

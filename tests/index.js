@@ -1,6 +1,7 @@
-const token = process.env.TOKEN
+if(!process.env.GROUPME_TOKEN) require("dotenv").config()
+const token = process.env.GROUPME_TOKEN
 
-const expect = require("chai").expect
+const { expect } = require('chai');
 
 const GroupMe = require("..")
 const client = new GroupMe.Client(token)
@@ -12,13 +13,12 @@ const data = {
 describe("ws", () => {
     before(() => {
         client.login()
-        console.log(client)
     })
     after(() => {
         client.logout()
     })
     it("should fetch a group", async () => {
         let g = await client.groups.fetch(data.testGroup)
-        expect(g.id).to.be(data.testGroup)
+        expect(g.id).to.equal(data.testGroup)
     }).timeout(5000)
 })
