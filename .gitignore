@@ -48,3 +48,4 @@ dist/
 
 # Reverse-engineering data
 data/
+.DS_Store
