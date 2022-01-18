@@ -19,3 +19,13 @@ Inspired by [discord.js](https://github.com/discordjs/discord.js), `node-groupme
 This community-led effort is made possible by the [unofficial GroupMe API Community Docs](https://github.com/2CATteam/GroupMeCommunityDocs). Please contribute to the development of open-source applications by contributing to the community docs.
 
 Join the [node-groupme server on Discord](https://discord.gg/5yxWtuuEZg) to discuss the API or ask any questions.
+
+--- 
+
+### Getting Started
+```
+git clone git@github.com:groupme-js/node-groupme.git
+npm i
+npm run prepare
+```
+`npm run prepare` sets up [husky](https://github.com/typicode/husky) pre-commit hooks, which will auto format and run eslint on your staged files locally. 
