@@ -108,6 +108,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#client" class="tsd-kind-icon">client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#closed" class="tsd-kind-icon">closed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#createdAt" class="tsd-kind-icon">created<wbr>At</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#creatorID" class="tsd-kind-icon">creatorID</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#id" class="tsd-kind-icon">id</a></li>
@@ -128,7 +129,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#officeMode" class="tsd-kind-icon">office<wbr>Mode</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#phoneNumber" class="tsd-kind-icon">phone<wbr>Number</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="Group.html#polls" class="tsd-kind-icon">polls</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#private" class="tsd-kind-icon">private</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#requiresApproval" class="tsd-kind-icon">requires<wbr>Approval</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#showJoinQuestion" class="tsd-kind-icon">show<wbr>Join<wbr>Question</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="Group.html#theme" class="tsd-kind-icon">theme</a></li>
@@ -139,12 +139,7 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="Group.html#canAddMembers" class="tsd-kind-icon">can<wbr>Add<wbr>Members</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="Group.html#canDelete" class="tsd-kind-icon">can<wbr>Delete</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="Group.html#canLeave" class="tsd-kind-icon">can<wbr>Leave</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="Group.html#canRemoveMembers" class="tsd-kind-icon">can<wbr>Remove<wbr>Members</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="Group.html#canTransfer" class="tsd-kind-icon">can<wbr>Transfer</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="Group.html#canUpdate" class="tsd-kind-icon">can<wbr>Update</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="Group.html#me" class="tsd-kind-icon">me</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -175,7 +170,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseGroup.constructor</p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:37</li>
+									<li>Defined in src/structures/Group.ts:36</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -202,6 +197,17 @@
 						<p>Inherited from BaseGroup.client</p>
 						<ul>
 							<li>Defined in src/structures/Channel.ts:38</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="closed" class="tsd-anchor"></a>
+					<h3>closed</h3>
+					<div class="tsd-signature tsd-kind-icon">closed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from BaseGroup.closed</p>
+						<ul>
+							<li>Defined in src/structures/BaseGroup.ts:9</li>
 						</ul>
 					</aside>
 				</section>
@@ -366,7 +372,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/SendableChannelInterface.html">SendableChannelInterface</a>.<a href="../interfaces/SendableChannelInterface.html#messages">messages</a></p>
 						<ul>
-							<li>Defined in src/structures/Group.ts:35</li>
+							<li>Defined in src/structures/Group.ts:34</li>
 						</ul>
 					</aside>
 				</section>
@@ -420,18 +426,7 @@
 					<div class="tsd-signature tsd-kind-icon">polls<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">default</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/structures/Group.ts:36</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="private" class="tsd-anchor"></a>
-					<h3>private</h3>
-					<div class="tsd-signature tsd-kind-icon">private<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from BaseGroup.private</p>
-						<ul>
-							<li>Defined in src/structures/BaseGroup.ts:9</li>
+							<li>Defined in src/structures/Group.ts:35</li>
 						</ul>
 					</aside>
 				</section>
@@ -475,7 +470,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseGroup.type</p>
 						<ul>
-							<li>Defined in src/structures/Group.ts:34</li>
+							<li>Defined in src/structures/Group.ts:33</li>
 						</ul>
 					</aside>
 				</section>
@@ -494,104 +489,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="canAddMembers" class="tsd-anchor"></a>
-					<h3>can<wbr>Add<wbr>Members</h3>
+					<a name="me" class="tsd-anchor"></a>
+					<h3>me</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> canAddMembers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> me<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="Member.html" class="tsd-signature-type">Member</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/structures/Group.ts:100</li>
+									<li>Defined in src/structures/Group.ts:131</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="canDelete" class="tsd-anchor"></a>
-					<h3>can<wbr>Delete</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> canDelete<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/structures/Group.ts:92</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="canLeave" class="tsd-anchor"></a>
-					<h3>can<wbr>Leave</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> canLeave<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/structures/Group.ts:84</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="canRemoveMembers" class="tsd-anchor"></a>
-					<h3>can<wbr>Remove<wbr>Members</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> canRemoveMembers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/structures/Group.ts:104</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="canTransfer" class="tsd-anchor"></a>
-					<h3>can<wbr>Transfer</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> canTransfer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/structures/Group.ts:96</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="canUpdate" class="tsd-anchor"></a>
-					<h3>can<wbr>Update</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> canUpdate<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/structures/Group.ts:88</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="Member.html" class="tsd-signature-type">Member</a>
+							</h4>
 						</li>
 					</ul>
 				</section>
@@ -609,7 +522,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of ActiveGroupInterface.changeNickname</p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:76</li>
+									<li>Defined in src/structures/Group.ts:123</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -633,7 +546,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of ActiveGroupInterface.delete</p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:72</li>
+									<li>Defined in src/structures/Group.ts:119</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -651,7 +564,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of ActiveGroupInterface.fetch</p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:60</li>
+									<li>Defined in src/structures/Group.ts:59</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Group.html" class="tsd-signature-type">Group</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -669,7 +582,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of ActiveGroupInterface.leave</p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:80</li>
+									<li>Defined in src/structures/Group.ts:127</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="FormerGroup.html" class="tsd-signature-type">FormerGroup</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -687,7 +600,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/SendableChannelInterface.html">SendableChannelInterface</a>.<a href="../interfaces/SendableChannelInterface.html#send">send</a></p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:43</li>
+									<li>Defined in src/structures/Group.ts:42</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -711,7 +624,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of ActiveGroupInterface.transferOwnershipTo</p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:68</li>
+									<li>Defined in src/structures/Group.ts:74</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -735,7 +648,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of ActiveGroupInterface.update</p>
 								<ul>
-									<li>Defined in src/structures/Group.ts:64</li>
+									<li>Defined in src/structures/Group.ts:63</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -782,6 +695,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="Group.html#client" class="tsd-kind-icon">client</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="Group.html#closed" class="tsd-kind-icon">closed</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="Group.html#createdAt" class="tsd-kind-icon">created<wbr>At</a>
@@ -844,9 +760,6 @@
 								<a href="Group.html#polls" class="tsd-kind-icon">polls</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="Group.html#private" class="tsd-kind-icon">private</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="Group.html#requiresApproval" class="tsd-kind-icon">requires<wbr>Approval</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
@@ -862,22 +775,7 @@
 								<a href="Group.html#updatedAt" class="tsd-kind-icon">updated<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="Group.html#canAddMembers" class="tsd-kind-icon">can<wbr>Add<wbr>Members</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="Group.html#canDelete" class="tsd-kind-icon">can<wbr>Delete</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="Group.html#canLeave" class="tsd-kind-icon">can<wbr>Leave</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="Group.html#canRemoveMembers" class="tsd-kind-icon">can<wbr>Remove<wbr>Members</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="Group.html#canTransfer" class="tsd-kind-icon">can<wbr>Transfer</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="Group.html#canUpdate" class="tsd-kind-icon">can<wbr>Update</a>
+								<a href="Group.html#me" class="tsd-kind-icon">me</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="Group.html#changeNickname" class="tsd-kind-icon">change<wbr>Nickname</a>

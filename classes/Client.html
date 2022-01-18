@@ -129,6 +129,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Client.html#listenerCount" class="tsd-kind-icon">listener<wbr>Count</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Client.html#listeners" class="tsd-kind-icon">listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Client.html#login" class="tsd-kind-icon">login</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="Client.html#logout" class="tsd-kind-icon">logout</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Client.html#off" class="tsd-kind-icon">off</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Client.html#on" class="tsd-kind-icon">on</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Client.html#once" class="tsd-kind-icon">once</a></li>
@@ -159,7 +160,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.constructor</p>
 								<ul>
-									<li>Defined in src/client/Client.ts:26</li>
+									<li>Defined in src/client/Client.ts:27</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -182,7 +183,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of ClientInterface.chats</p>
 						<ul>
-							<li>Defined in src/client/Client.ts:21</li>
+							<li>Defined in src/client/Client.ts:22</li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +194,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of ClientInterface.groups</p>
 						<ul>
-							<li>Defined in src/client/Client.ts:19</li>
+							<li>Defined in src/client/Client.ts:20</li>
 						</ul>
 					</aside>
 				</section>
@@ -203,7 +204,7 @@
 					<div class="tsd-signature tsd-kind-icon">rest<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">default</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/client/Client.ts:23</li>
+							<li>Defined in src/client/Client.ts:24</li>
 						</ul>
 					</aside>
 				</section>
@@ -213,7 +214,7 @@
 					<div class="tsd-signature tsd-kind-icon">token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/client/Client.ts:22</li>
+							<li>Defined in src/client/Client.ts:23</li>
 						</ul>
 					</aside>
 				</section>
@@ -224,7 +225,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of ClientInterface.user</p>
 						<ul>
-							<li>Defined in src/client/Client.ts:25</li>
+							<li>Defined in src/client/Client.ts:26</li>
 						</ul>
 					</aside>
 				</section>
@@ -235,7 +236,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of ClientInterface.users</p>
 						<ul>
-							<li>Defined in src/client/Client.ts:20</li>
+							<li>Defined in src/client/Client.ts:21</li>
 						</ul>
 					</aside>
 				</section>
@@ -245,7 +246,7 @@
 					<div class="tsd-signature tsd-kind-icon">ws<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">default</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/client/Client.ts:24</li>
+							<li>Defined in src/client/Client.ts:25</li>
 						</ul>
 					</aside>
 				</section>
@@ -472,17 +473,35 @@
 					<a name="login" class="tsd-anchor"></a>
 					<h3>login</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">login<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">login<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Client.html" class="tsd-signature-type">Client</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of ClientInterface.login</p>
 								<ul>
-									<li>Defined in src/client/Client.ts:35</li>
+									<li>Defined in src/client/Client.ts:36</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Client.html" class="tsd-signature-type">Client</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="logout" class="tsd-anchor"></a>
+					<h3>logout</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">logout<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of ClientInterface.logout</p>
+								<ul>
+									<li>Defined in src/client/Client.ts:46</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1009,6 +1028,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="Client.html#login" class="tsd-kind-icon">login</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="Client.html#logout" class="tsd-kind-icon">logout</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="Client.html#off" class="tsd-kind-icon">off</a>
