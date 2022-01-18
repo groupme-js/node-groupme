@@ -13,7 +13,7 @@ jobs:
               run: npm install
 
             - name: Compile using TSC
-              run: npm run prepare
+              run: npm run build
 
             - name: Run tests
               run: npm run test
