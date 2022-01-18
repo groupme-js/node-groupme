@@ -13,6 +13,7 @@ interface ClientInterface {
     users: UserManager
     user?: ClientUser
     login: () => Promise<Client>
+    logout: () => Promise<void>
 }
 
 export default class Client extends EventEmitter implements ClientInterface {
@@ -32,7 +33,7 @@ export default class Client extends EventEmitter implements ClientInterface {
         this.rest = new RESTManager(this);
         this.ws = new WS(this)
     }
-    async login(): Promise<this> {
+    login = async (): Promise<Client> => {
         const me = await this.rest.api<APIClientUser>("GET", "users/me")
         this.user = new ClientUser(this, {
             avatar: me.image_url,
@@ -41,5 +42,8 @@ export default class Client extends EventEmitter implements ClientInterface {
         })
         await this.ws.init()
         return this;
+    }
+    logout = async (): Promise<void> => {
+        await this.ws.close()
     }
 }

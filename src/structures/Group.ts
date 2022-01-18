@@ -1,4 +1,9 @@
-import type { APIGroup, PostGroupMessageBody, PostGroupMessageResponse } from "groupme-api-types";
+import type {
+    APIGroup,
+    PostGroupMessageBody, PostGroupMessageResponse,
+    PatchGroupBody, PatchGroupResponse,
+    PostChangeOwnersBody, PostChangeOwnersResponse,
+} from "groupme-api-types";
 import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
 import GroupMessageManager from "../managers/GroupMessageManager";
 import PollManager from "../managers/PollManager";
@@ -15,19 +20,13 @@ type GroupUpdateOptions = {
 }
 
 interface ActiveGroupInterface {
-    fetch(): Promise<this>
-    update(options: GroupUpdateOptions): Promise<this>
-    transferOwnershipTo(newOwner: string): Promise<this>
+    fetch(): Promise<Group>
+    update(options: GroupUpdateOptions): Promise<Group>
+    transferOwnershipTo(newOwner: string): Promise<Group>
     delete(): Promise<void>
     changeNickname(nickname: string): Promise<Member>
     send(text: string): Promise<GroupMessage>
     leave(): Promise<FormerGroup>
-    get canLeave(): boolean
-    get canUpdate(): boolean
-    get canDelete(): boolean
-    get canTransfer(): boolean
-    get canAddMembers(): boolean
-    get canRemoveMembers(): boolean
 }
 
 export default class Group extends BaseGroup implements ActiveGroupInterface, SendableChannelInterface {
@@ -57,16 +56,64 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         return this.messages._upsert(message);
     }
 
-    fetch(): Promise<this> {
-        throw new Error("Method not implemented.");
+    fetch(): Promise<Group> {
+        return this.client.groups.fetch(this.id);
     }
 
-    update(options: GroupUpdateOptions): Promise<this> {
-        throw new Error("Method not implemented.");
+    async update(options: GroupUpdateOptions): Promise<Group> {
+        const body: PatchGroupBody = options;
+        const response = await this.client.rest.api<PatchGroupResponse>(
+            'POST',
+            `groups/${this.id}/update`,
+            { body },
+        );
+        const group = new Group(this.client, response);
+        return this.client.groups._upsert(group);
     }
 
-    transferOwnershipTo(newOwner: string): Promise<this> {
-        throw new Error("Method not implemented.");
+    async transferOwnershipTo(newOwner: string): Promise<Group> {
+        const body: PostChangeOwnersBody = {
+            requests: [
+                {
+                    group_id: this.id,
+                    owner_id: newOwner,
+                }
+            ],
+        };
+        const response = await this.client.rest.api<PostChangeOwnersResponse>(
+            'POST',
+            'groups/change_owners',
+            { body },
+        );
+        const status = response.results[0].status;
+        let errorMessage = '';
+        switch (status) {
+            case '200':
+                return this.fetch();
+            case '400':
+                errorMessage = 'You cannot transfer a group to yourself.';
+                break;
+            case '403':
+                errorMessage = 'You cannot transfer a group you do not own.';
+                break;
+            case '404':
+                errorMessage = 'Group not found, or new owner is not a member of the group.';
+                break;
+            case '405':
+                errorMessage = 'Invalid request; Request object is missing a required field, or one of the required fields is not an ID.';
+                break;
+            default:
+                errorMessage = 'Idk what this status code means, but it\'s probably an error. It wasn\'t on the docs and I\'ve never seen it before. Please report this to the developers of node-groupme and/or the GroupMe API!';
+                break;
+        }
+        const err = {
+            statusCode: status,
+            message: errorMessage,
+            groupId: this.id,
+            groupName: this.name,
+            newOwner: newOwner,
+        }
+        throw err; // Failed to transfer group, see error details
     }
 
     delete(): Promise<void> {
@@ -81,28 +128,8 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         throw new Error("Method not implemented.");
     }
 
-    get canLeave(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canUpdate(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canDelete(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canTransfer(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canAddMembers(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    get canRemoveMembers(): boolean {
-        throw new Error("Method not implemented.");
+    public get me(): Member | undefined {
+        return this.members.cache.get(this.client.user.id);
     }
 
 }
