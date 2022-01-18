@@ -1,3 +1,5 @@
+import type { Client } from "..";
+
 export type UserData = {
     id: string,
     name: string,
@@ -15,7 +17,9 @@ export default class User implements UserInterface {
     }
     avatar: string | null;
     name: string;
-    constructor(data: UserData) {
+    client: Client;
+    constructor(client: Client, data: UserData) {
+        this.client = client;
         this._id = data.id;
         this.avatar = data.avatar;
         this.name = data.name;

@@ -9,7 +9,7 @@ import MessageManager, { MessageRequestParams } from "./MessageManager";
 
 export default class ChatMessageManager extends MessageManager<Chat, ChatMessage> {
     constructor(client: Client, channel: Chat) {
-        super(client, channel);
+        super(client, channel, ChatMessage);
     }
 
     fetch(): Promise<Collection<string, ChatMessage>>;

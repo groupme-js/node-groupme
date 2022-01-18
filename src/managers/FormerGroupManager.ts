@@ -10,7 +10,7 @@ interface FormerGroupManagerInterface {
 
 export default class FormerGroupManager extends BaseManager<FormerGroup> implements FormerGroupManagerInterface {
     constructor(client: Client) {
-        super(client);
+        super(client, FormerGroup);
     }
 
     public async fetch(): Promise<Collection<string, FormerGroup>> {
@@ -24,7 +24,7 @@ export default class FormerGroupManager extends BaseManager<FormerGroup> impleme
             // we know that g.members is always defined for former groups
             // however, it would be nice if the types reflected that...
             g.members!.forEach(data => {
-                const user = this.client.users._upsert(new User({
+                const user = this.client.users._upsert(new User(this.client, {
                     id: data.user_id,
                     avatar: data.image_url,
                     name: data.name,

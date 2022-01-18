@@ -1,5 +1,5 @@
 import type { Client, Collection, Group } from "..";
-import type Poll from "../structures/Poll";
+import Poll from "../structures/Poll";
 import BaseManager from "./BaseManager";
 
 interface PollManagerInterface {
@@ -16,7 +16,7 @@ interface PollManagerInterface {
 export default class PollManager extends BaseManager<Poll> implements PollManagerInterface {
     readonly group: Group;
     constructor(client: Client, group: Group) {
-        super(client);
+        super(client, Poll);
         this.group = group;
     }
     create(question: string, options: string[], settings?: { duration?: number; endAt?: Date; public?: boolean; allowMultipleResponses?: boolean; }): Promise<Poll> {

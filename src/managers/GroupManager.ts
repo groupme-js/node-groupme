@@ -33,7 +33,7 @@ export default class GroupManager
     former: FormerGroupManager;
 
     constructor(client: Client) {
-        super(client);
+        super(client, Group);
         this.former = new FormerGroupManager(client);
     }
 
@@ -74,7 +74,7 @@ export default class GroupManager
         if (res.members) {
             res.members.forEach((data: any) => {
                 const user = this.client.users._upsert(
-                    new User({
+                    new User(this.client, {
                         id: data.user_id,
                         avatar: data.image_url,
                         name: data.name,
@@ -118,14 +118,12 @@ export default class GroupManager
             const group = this._upsert(new Group(this.client, g));
 
             if (g.members) {
-                g.members.forEach((data) => {
-                    const user = this.client.users._upsert(
-                        new User({
-                            id: data.user_id,
-                            avatar: data.image_url,
-                            name: data.name,
-                        })
-                    );
+                g.members.forEach(data => {
+                    const user = this.client.users._upsert(new User(this.client, {
+                        id: data.user_id,
+                        avatar: data.image_url,
+                        name: data.name,
+                    }));
                     group.members._upsert(new Member(this.client, group, user, data));
                 });
             }
