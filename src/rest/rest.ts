@@ -13,8 +13,10 @@ function createAPIError(message: string, endpoint: URL, options: any, response: 
 
 function* i() {
     let i = 1;
-    while (true)
-        yield i++ % 10000000;
+    while (true) {
+        i = (i + 1) % 10000000;
+        yield i;
+    }
 }
 
 type HttpMethod = "GET" | "POST";
@@ -79,7 +81,7 @@ export default class RESTManager {
     }
 
     guid(): string {
-        return 'node-groupme_' + this.generator.next().value;
+        return `node-groupme_${this.generator.next().value}_${Math.floor(Math.random() * 16 ** 6).toString(16).padEnd(6, '0')}`;
     }
 
 }
