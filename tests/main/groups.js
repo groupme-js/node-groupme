@@ -11,7 +11,7 @@ describe("Groups", () => {
     }).timeout(5000)
 
     it("should send a message in a group", async () => {
-        let str = `Hello from the node-groupme test suite, running version ${data.version}`
+        let str = `Hello from the node-groupme test suite, running version ${data.version} on commit ${data.commit} in branch ${data.branch}`
         m = await g.send(str)
         console.log(m)
         expect(m.text).to.equal(str)
