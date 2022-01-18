@@ -13,8 +13,10 @@ function createAPIError(message: string, endpoint: URL, options: any, response: 
 
 function* i() {
     let i = 1;
-    while (true)
-        yield i++ % 10000000;
+    while (true) {
+        i = (i + 1) % 10000000;
+        yield i;
+    }
 }
 
 type HttpMethod = "GET" | "POST";
@@ -59,10 +61,10 @@ export default class RESTManager {
         }
 
         const response = await fetch(url, init);
-        console.log(`-----\nAPI request\nurl: ${url}\n-----`)
+        // console.log(`-----\nAPI request\nurl: ${url}\n-----`)
 
         if (options?.skipJsonParse) return response;
-        // for (const header of response.headers.entries()) console.log(header)
+        // for (const header of response.headers.entries()) // console.log(header)
         if (response.headers.get('content-length') === '0') {
             if (options?.allowNull) return null;
             else throw createAPIError('Received a response with Content-Length: 0, but expected content', url, data, {});
@@ -79,7 +81,7 @@ export default class RESTManager {
     }
 
     guid(): string {
-        return 'node-groupme_' + this.generator.next().value;
+        return `node-groupme_${this.generator.next().value}_${Math.floor(Math.random() * 16 ** 6).toString(16).padEnd(6, '0')}`;
     }
 
 }
