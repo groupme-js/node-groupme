@@ -2,13 +2,12 @@ const { client, data } = require(".")
 
 
 exports.mochaHooks = {
-    beforeall(done) {
-        client.login()
-        console.log(client)
+    async beforeall(done) {
+        await client.login()
         done()
         
     },
-    afterAll(done) {
+    async afterAll(done) {
         client.logout()
         done()
     },
