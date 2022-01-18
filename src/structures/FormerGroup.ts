@@ -4,10 +4,13 @@ import BaseGroup from "./BaseGroup";
 import { ChannelType } from "./Channel";
 
 interface FormerGroupInterface {
-    rejoin(): Promise<Group>
+    rejoin(): Promise<Group>;
 }
 
-export default class FormerGroup extends BaseGroup implements FormerGroupInterface {
+export default class FormerGroup
+    extends BaseGroup
+    implements FormerGroupInterface
+{
     readonly type = ChannelType.FormerGroup;
     // formergroup needs to share all properties with group EXCEPT sendable
 

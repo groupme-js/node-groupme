@@ -1,15 +1,21 @@
-import type { APIChat, PostChatMessageBody, PostChatMessageResponse } from "groupme-api-types";
+import type {
+    APIChat,
+    PostChatMessageBody,
+    PostChatMessageResponse,
+} from "groupme-api-types";
 import { Channel, Client, Message, SendableChannelInterface, User } from "..";
 import ChatMessageManager from "../managers/ChatMessageManager";
 import { ChannelType } from "./Channel";
 import ChatMessage from "./ChatMessage";
 
 interface ChatInterface {
-    send(text: string): Promise<ChatMessage>
-
+    send(text: string): Promise<ChatMessage>;
 }
 
-export default class Chat extends Channel implements ChatInterface, SendableChannelInterface {
+export default class Chat
+    extends Channel
+    implements ChatInterface, SendableChannelInterface
+{
     readonly type = ChannelType.Chat;
     readonly recipient: User;
     readonly messages: ChatMessageManager;
@@ -36,7 +42,7 @@ export default class Chat extends Channel implements ChatInterface, SendableChan
         });
         this.conversationID = data.last_message.conversation_id;
         this.recipient = user;
-        this.messages = new ChatMessageManager(client, this)
+        this.messages = new ChatMessageManager(client, this);
     }
     public async send(text: string): Promise<ChatMessage> {
         const body: PostChatMessageBody = {
@@ -45,14 +51,18 @@ export default class Chat extends Channel implements ChatInterface, SendableChan
                 attachments: [],
                 source_guid: this.client.rest.guid(),
                 recipient_id: this.recipient.id,
-            }
+            },
         };
         const response = await this.client.rest.api<PostChatMessageResponse>(
-            'POST',
-            'direct_messages',
-            { body },
+            "POST",
+            "direct_messages",
+            { body }
         );
-        const message = new ChatMessage(this.client, this, response.direct_message);
+        const message = new ChatMessage(
+            this.client,
+            this,
+            response.direct_message
+        );
         return this.messages._upsert(message);
     }
 }

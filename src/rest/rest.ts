@@ -7,14 +7,22 @@ function assertDefined<T>(val: T, err: Error): asserts val is NonNullable<T> {
     if (val === undefined || val === null) throw err;
 }
 
-function createAPIError(message: string, endpoint: URL, options: any, response: any): Error {
-    return new Error(`${message}\n-- Endpoint: ${endpoint}\n-- Options: ${inspect(options)}\n-- Response: ${inspect(response)}`);
+function createAPIError(
+    message: string,
+    endpoint: URL,
+    options: any,
+    response: any
+): Error {
+    return new Error(
+        `${message}\n-- Endpoint: ${endpoint}\n-- Options: ${inspect(
+            options
+        )}\n-- Response: ${inspect(response)}`
+    );
 }
 
 function* i() {
     let i = 1;
-    while (true)
-        yield i++ % 10000000;
+    while (true) yield i++ % 10000000;
 }
 
 type HttpMethod = "GET" | "POST";
@@ -27,7 +35,7 @@ type RequestOptions = {
 };
 
 export default class RESTManager {
-    static BASE_URL = "https://api.groupme.com/v3/"
+    static BASE_URL = "https://api.groupme.com/v3/";
     public client: Client;
     private generator: Generator<number, void, unknown>;
     constructor(client: Client) {
@@ -35,10 +43,29 @@ export default class RESTManager {
         this.generator = i();
     }
 
-    async api<T>(method: HttpMethod, path: string, data?: RequestOptions): Promise<T>;
-    async api<T>(method: HttpMethod, path: string, data: RequestOptions, options: { skipJsonParse: true }): Promise<Response>;
-    async api<T>(method: HttpMethod, path: string, data: RequestOptions, options: { allowNull: true }): Promise<T | null>;
-    async api<T>(method: HttpMethod, path: string, data?: RequestOptions, options?: { skipJsonParse?: boolean, allowNull?: boolean }): Promise<T | Response | null> {
+    async api<T>(
+        method: HttpMethod,
+        path: string,
+        data?: RequestOptions
+    ): Promise<T>;
+    async api<T>(
+        method: HttpMethod,
+        path: string,
+        data: RequestOptions,
+        options: { skipJsonParse: true }
+    ): Promise<Response>;
+    async api<T>(
+        method: HttpMethod,
+        path: string,
+        data: RequestOptions,
+        options: { allowNull: true }
+    ): Promise<T | null>;
+    async api<T>(
+        method: HttpMethod,
+        path: string,
+        data?: RequestOptions,
+        options?: { skipJsonParse?: boolean; allowNull?: boolean }
+    ): Promise<T | Response | null> {
         const url = new URL(path, RESTManager.BASE_URL);
         if (data?.query) {
             for (const key in data.query) {
@@ -51,27 +78,40 @@ export default class RESTManager {
 
         const init: RequestInit = {};
         init.headers = new Headers();
-        init.headers.set('X-Access-Token', this.client.token);
+        init.headers.set("X-Access-Token", this.client.token);
         init.method = method;
         if (data?.body) {
-            init.headers.set('Content-Type', 'application/json');
+            init.headers.set("Content-Type", "application/json");
             init.body = JSON.stringify(data.body);
         }
 
         const response = await fetch(url, init);
-        console.log(`-----\nAPI request\nurl: ${url}\n-----`)
+        console.log(`-----\nAPI request\nurl: ${url}\n-----`);
 
         if (options?.skipJsonParse) return response;
         // for (const header of response.headers.entries()) console.log(header)
-        if (response.headers.get('content-length') === '0') {
+        if (response.headers.get("content-length") === "0") {
             if (options?.allowNull) return null;
-            else throw createAPIError('Received a response with Content-Length: 0, but expected content', url, data, {});
+            else
+                throw createAPIError(
+                    "Received a response with Content-Length: 0, but expected content",
+                    url,
+                    data,
+                    {}
+                );
         }
 
         const json = await response.json();
-        assertDefined<any>(json, createAPIError('Invalid API response', url, data, json));
-        assertDefined<any>(json.meta, createAPIError('Response is missing "meta" field', url, data, json));
-        if (json.meta.errors) throw createAPIError(json.meta.errors.join('; '), url, data, json);
+        assertDefined<any>(
+            json,
+            createAPIError("Invalid API response", url, data, json)
+        );
+        assertDefined<any>(
+            json.meta,
+            createAPIError('Response is missing "meta" field', url, data, json)
+        );
+        if (json.meta.errors)
+            throw createAPIError(json.meta.errors.join("; "), url, data, json);
 
         const result: T = json.response as T;
 
@@ -79,7 +119,6 @@ export default class RESTManager {
     }
 
     guid(): string {
-        return 'node-groupme_' + this.generator.next().value;
+        return "node-groupme_" + this.generator.next().value;
     }
-
 }

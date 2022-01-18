@@ -1,9 +1,7 @@
-import { Message } from '..'
+import { Message } from "..";
 
-interface ChatMessageInterface {
-    
-}
+interface ChatMessageInterface {}
 
-export default class ChatMessage extends Message implements ChatMessageInterface {
-
-}
+export default class ChatMessage
+    extends Message
+    implements ChatMessageInterface {}

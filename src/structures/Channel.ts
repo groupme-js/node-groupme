@@ -14,12 +14,12 @@ type MessagePreview = {
     createdAt: number | null;
     text: string | null;
     attachments: Attachment[];
-}
+};
 
 type UserPreview = {
     nickname: string | null;
     image_url: string | null;
-}
+};
 
 interface ChannelData {
     readonly id: string;

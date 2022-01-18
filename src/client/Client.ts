@@ -8,11 +8,11 @@ import WS from "../util/Websocket";
 import ClientUser from "./ClientUser";
 
 interface ClientInterface {
-    groups: GroupManager
-    chats: ChatManager
-    users: UserManager
-    user?: ClientUser
-    login: () => Promise<Client>
+    groups: GroupManager;
+    chats: ChatManager;
+    users: UserManager;
+    user?: ClientUser;
+    login: () => Promise<Client>;
 }
 
 export default class Client extends EventEmitter implements ClientInterface {
@@ -30,16 +30,16 @@ export default class Client extends EventEmitter implements ClientInterface {
         this.users = new UserManager(this);
         this.chats = new ChatManager(this);
         this.rest = new RESTManager(this);
-        this.ws = new WS(this)
+        this.ws = new WS(this);
     }
     login = async (): Promise<this> => {
-        const me = await this.rest.api<APIClientUser>("GET", "users/me")
+        const me = await this.rest.api<APIClientUser>("GET", "users/me");
         this.user = new ClientUser({
             avatar: me.image_url,
             id: me.user_id,
-            name: me.name
-        })
-        await this.ws.init()
+            name: me.name,
+        });
+        await this.ws.init();
         return this;
-    }
+    };
 }

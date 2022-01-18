@@ -1,10 +1,19 @@
 import type {
     APIGroup,
-    PostGroupMessageBody, PostGroupMessageResponse,
-    PatchGroupBody, PatchGroupResponse,
-    PostChangeOwnersBody, PostChangeOwnersResponse,
+    PostGroupMessageBody,
+    PostGroupMessageResponse,
+    PatchGroupBody,
+    PatchGroupResponse,
+    PostChangeOwnersBody,
+    PostChangeOwnersResponse,
 } from "groupme-api-types";
-import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
+import type {
+    Client,
+    FormerGroup,
+    Member,
+    Message,
+    SendableChannelInterface,
+} from "..";
 import GroupMessageManager from "../managers/GroupMessageManager";
 import PollManager from "../managers/PollManager";
 import BaseGroup from "./BaseGroup";
@@ -12,24 +21,27 @@ import { ChannelType } from "./Channel";
 import GroupMessage from "./GroupMessage";
 
 type GroupUpdateOptions = {
-    name: string
-    description: string
-    image_url: string
-    share: boolean
-    office_mode: boolean
-}
+    name: string;
+    description: string;
+    image_url: string;
+    share: boolean;
+    office_mode: boolean;
+};
 
 interface ActiveGroupInterface {
-    fetch(): Promise<Group>
-    update(options: GroupUpdateOptions): Promise<Group>
-    transferOwnershipTo(newOwner: string): Promise<Group>
-    delete(): Promise<void>
-    changeNickname(nickname: string): Promise<Member>
-    send(text: string): Promise<GroupMessage>
-    leave(): Promise<FormerGroup>
+    fetch(): Promise<Group>;
+    update(options: GroupUpdateOptions): Promise<Group>;
+    transferOwnershipTo(newOwner: string): Promise<Group>;
+    delete(): Promise<void>;
+    changeNickname(nickname: string): Promise<Member>;
+    send(text: string): Promise<GroupMessage>;
+    leave(): Promise<FormerGroup>;
 }
 
-export default class Group extends BaseGroup implements ActiveGroupInterface, SendableChannelInterface {
+export default class Group
+    extends BaseGroup
+    implements ActiveGroupInterface, SendableChannelInterface
+{
     readonly type = ChannelType.Group;
     readonly messages: GroupMessageManager;
     readonly polls: PollManager;
@@ -45,12 +57,12 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
                 text,
                 attachments: [],
                 source_guid: this.client.rest.guid(),
-            }
+            },
         };
         const response = await this.client.rest.api<PostGroupMessageResponse>(
-            'POST',
+            "POST",
             `groups/${this.id}/messages`,
-            { body },
+            { body }
         );
         const message = new GroupMessage(this.client, this, response.message);
         return this.messages._upsert(message);
@@ -63,9 +75,9 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
     async update(options: GroupUpdateOptions): Promise<Group> {
         const body: PatchGroupBody = options;
         const response = await this.client.rest.api<PatchGroupResponse>(
-            'POST',
+            "POST",
             `groups/${this.id}/update`,
-            { body },
+            { body }
         );
         const group = new Group(this.client, response);
         return this.client.groups._upsert(group);
@@ -77,33 +89,36 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
                 {
                     group_id: this.id,
                     owner_id: newOwner,
-                }
+                },
             ],
         };
         const response = await this.client.rest.api<PostChangeOwnersResponse>(
-            'POST',
-            'groups/change_owners',
-            { body },
+            "POST",
+            "groups/change_owners",
+            { body }
         );
         const status = response.results[0].status;
-        let errorMessage = '';
+        let errorMessage = "";
         switch (status) {
-            case '200':
+            case "200":
                 return this.fetch();
-            case '400':
-                errorMessage = 'You cannot transfer a group to yourself.';
+            case "400":
+                errorMessage = "You cannot transfer a group to yourself.";
                 break;
-            case '403':
-                errorMessage = 'You cannot transfer a group you do not own.';
+            case "403":
+                errorMessage = "You cannot transfer a group you do not own.";
                 break;
-            case '404':
-                errorMessage = 'Group not found, or new owner is not a member of the group.';
+            case "404":
+                errorMessage =
+                    "Group not found, or new owner is not a member of the group.";
                 break;
-            case '405':
-                errorMessage = 'Invalid request; Request object is missing a required field, or one of the required fields is not an ID.';
+            case "405":
+                errorMessage =
+                    "Invalid request; Request object is missing a required field, or one of the required fields is not an ID.";
                 break;
             default:
-                errorMessage = 'Idk what this status code means, but it\'s probably an error. It wasn\'t on the docs and I\'ve never seen it before. Please report this to the developers of node-groupme and/or the GroupMe API!';
+                errorMessage =
+                    "Idk what this status code means, but it's probably an error. It wasn't on the docs and I've never seen it before. Please report this to the developers of node-groupme and/or the GroupMe API!";
                 break;
         }
         const err = {
@@ -112,7 +127,7 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
             groupId: this.id,
             groupName: this.name,
             newOwner: newOwner,
-        }
+        };
         throw err; // Failed to transfer group, see error details
     }
 
@@ -131,5 +146,4 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
     public get me(): Member | undefined {
         return this.members.cache.get(this.client.user.id);
     }
-
 }

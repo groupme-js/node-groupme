@@ -1,13 +1,17 @@
 import type {
     GetChatMessageResponse,
-    GetChatMessagesQuery, GetChatMessagesResponse
+    GetChatMessagesQuery,
+    GetChatMessagesResponse,
 } from "groupme-api-types";
 import type { Chat, Client } from "..";
 import { Collection } from "..";
 import ChatMessage from "../structures/ChatMessage";
 import MessageManager, { MessageRequestParams } from "./MessageManager";
 
-export default class ChatMessageManager extends MessageManager<Chat, ChatMessage> {
+export default class ChatMessageManager extends MessageManager<
+    Chat,
+    ChatMessage
+> {
     constructor(client: Client, channel: Chat) {
         super(client, channel);
     }
@@ -15,13 +19,17 @@ export default class ChatMessageManager extends MessageManager<Chat, ChatMessage
     fetch(): Promise<Collection<string, ChatMessage>>;
     fetch(id: string): Promise<ChatMessage>;
     fetch(ids: string[]): Promise<Collection<string, ChatMessage>>;
-    fetch(options: MessageRequestParams): Promise<Collection<string, ChatMessage>>;
-    public async fetch(options?: string | string[] | MessageRequestParams): Promise<ChatMessage | Collection<string, ChatMessage>> {
-        if (typeof options === 'string') {
+    fetch(
+        options: MessageRequestParams
+    ): Promise<Collection<string, ChatMessage>>;
+    public async fetch(
+        options?: string | string[] | MessageRequestParams
+    ): Promise<ChatMessage | Collection<string, ChatMessage>> {
+        if (typeof options === "string") {
             return await this.fetchId(options);
         } else if (Array.isArray(options)) {
             return await this.fetchIds(options);
-        } else if (typeof options === 'object') {
+        } else if (typeof options === "object") {
             return await this.fetchIndex(options);
         } else {
             return await this.fetchAll();
@@ -34,21 +42,36 @@ export default class ChatMessageManager extends MessageManager<Chat, ChatMessage
             `direct_messages/${id}`,
             { query: { other_user_id: this.channel.recipient.id } }
         );
-        const message = this._upsert(new ChatMessage(this.client, this.channel, res.message));
+        const message = this._upsert(
+            new ChatMessage(this.client, this.channel, res.message)
+        );
         return message;
     }
 
-    private async fetchIds(ids: string[]): Promise<Collection<string, ChatMessage>> {
-        const messages = await Promise.all(ids.map<Promise<ChatMessage>>(this.fetchId));
-        const batch = new Collection<string, ChatMessage>(messages.map(m => [m.id, m]));
+    private async fetchIds(
+        ids: string[]
+    ): Promise<Collection<string, ChatMessage>> {
+        const messages = await Promise.all(
+            ids.map<Promise<ChatMessage>>(this.fetchId)
+        );
+        const batch = new Collection<string, ChatMessage>(
+            messages.map((m) => [m.id, m])
+        );
         return batch;
     }
 
-    private async fetchIndex(options: MessageRequestParams): Promise<Collection<string, ChatMessage>> {
-        const apiParams: GetChatMessagesQuery = { other_user_id: this.channel.recipient.id };
-        if (options.before_id !== undefined) apiParams.before_id = options.before_id;
-        if (options.after_id !== undefined) apiParams.after_id = options.after_id;
-        if (options.since_id !== undefined) apiParams.since_id = options.since_id;
+    private async fetchIndex(
+        options: MessageRequestParams
+    ): Promise<Collection<string, ChatMessage>> {
+        const apiParams: GetChatMessagesQuery = {
+            other_user_id: this.channel.recipient.id,
+        };
+        if (options.before_id !== undefined)
+            apiParams.before_id = options.before_id;
+        if (options.after_id !== undefined)
+            apiParams.after_id = options.after_id;
+        if (options.since_id !== undefined)
+            apiParams.since_id = options.since_id;
         if (options.limit !== undefined) apiParams.limit = options.limit;
 
         const batch = new Collection<string, ChatMessage>();
@@ -56,13 +79,15 @@ export default class ChatMessageManager extends MessageManager<Chat, ChatMessage
             "GET",
             `direct_messages`,
             { query: apiParams },
-            { allowNull: true },
+            { allowNull: true }
         );
 
         if (!res) return batch;
 
         for (const msgData of res.direct_messages) {
-            const message = this._upsert(new ChatMessage(this.client, this.channel, msgData));
+            const message = this._upsert(
+                new ChatMessage(this.client, this.channel, msgData)
+            );
             batch.set(message.id, message);
         }
 
@@ -80,7 +105,7 @@ export default class ChatMessageManager extends MessageManager<Chat, ChatMessage
                 limit: 100,
                 before_id: lastMessageID,
             });
-            lastMessageID = batch.last()?.id
+            lastMessageID = batch.last()?.id;
         } while (batch.size);
 
         this.cache.sort();

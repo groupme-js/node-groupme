@@ -4,12 +4,12 @@ import { User } from "..";
 import type Attachment from "./Attachment";
 
 interface MessageInterface {
-    fetch(): Promise<this>
-    reply(message: string): Promise<Message>
-    like(): Promise<this>
-    unlike(): Promise<this>
-    delete(): Promise<this>
-    get canDelete(): boolean
+    fetch(): Promise<this>;
+    reply(message: string): Promise<Message>;
+    like(): Promise<this>;
+    unlike(): Promise<this>;
+    delete(): Promise<this>;
+    get canDelete(): boolean;
 }
 
 export default abstract class Message implements MessageInterface {
@@ -22,7 +22,11 @@ export default abstract class Message implements MessageInterface {
     system: boolean;
     likes: (User | string)[];
     attachments: Attachment[];
-    constructor(client: Client, channel: Channel, data: APIGroupMessage | APIChatMessage) {
+    constructor(
+        client: Client,
+        channel: Channel,
+        data: APIGroupMessage | APIChatMessage
+    ) {
         this.id = data.id;
         this.user = client.users._upsert(
             new User({
@@ -35,8 +39,10 @@ export default abstract class Message implements MessageInterface {
         this.text = data.text;
         this.createdAt = data.created_at;
         this.sourceGuid = data.source_guid;
-        this.system = 'system' in data ? data.system : false;
-        this.likes = data.favorited_by.map(id => client.users.cache.get(id) || id);
+        this.system = "system" in data ? data.system : false;
+        this.likes = data.favorited_by.map(
+            (id) => client.users.cache.get(id) || id
+        );
         this.attachments = data.attachments;
     }
     fetch(): Promise<this> {

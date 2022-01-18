@@ -1,13 +1,13 @@
 import type { Client, User } from "..";
 import BaseManager from "./BaseManager";
 
-interface UserManagerInterface {
+interface UserManagerInterface {}
 
-}
-
-export default class UserManager extends BaseManager<User> implements UserManagerInterface {
+export default class UserManager
+    extends BaseManager<User>
+    implements UserManagerInterface
+{
     constructor(client: Client) {
         super(client);
     }
-
 }

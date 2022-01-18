@@ -15,7 +15,7 @@
         "noImplicitThis": true,
         "rootDir": "./src",
         "outDir": "./dist",
-        "declarationDir": "./typings",
+        "declarationDir": "./typings"
     },
     "include": ["./src"]
 }

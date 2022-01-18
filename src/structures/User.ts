@@ -1,12 +1,10 @@
 export type UserData = {
-    id: string,
-    name: string,
-    avatar: string | null,
-}
+    id: string;
+    name: string;
+    avatar: string | null;
+};
 
-interface UserInterface {
-
-}
+interface UserInterface {}
 
 export default class User implements UserInterface {
     private readonly _id: string;

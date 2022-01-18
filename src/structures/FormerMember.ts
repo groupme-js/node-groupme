@@ -8,13 +8,22 @@ enum State {
 }
 
 interface FormerMemberInterface {
-    ban(): Promise<this>
-    rejoin(): Promise<this>
+    ban(): Promise<this>;
+    rejoin(): Promise<this>;
 }
 
-export default class FormerMember extends Member implements FormerMemberInterface {
+export default class FormerMember
+    extends Member
+    implements FormerMemberInterface
+{
     state: State;
-    constructor(client: Client, group: Group, user: User, data: APIMember, state: State) {
+    constructor(
+        client: Client,
+        group: Group,
+        user: User,
+        data: APIMember,
+        state: State
+    ) {
         super(client, group, user, data);
         this.state = state;
     }

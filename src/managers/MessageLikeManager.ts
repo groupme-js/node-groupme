@@ -1,13 +1,14 @@
 import UserManager from "./UserManager";
 
 interface MessageLikeManagerInterface {
-    get mine(): boolean
+    get mine(): boolean;
 }
 
-export default class MessageLikeManager extends UserManager implements MessageLikeManagerInterface {
-
+export default class MessageLikeManager
+    extends UserManager
+    implements MessageLikeManagerInterface
+{
     public get mine(): boolean {
-        return this.cache.has(this.client.user.id)
+        return this.cache.has(this.client.user.id);
     }
-
 }

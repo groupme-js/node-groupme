@@ -2,15 +2,15 @@ import type { PollOptionData } from "groupme-api-types";
 import { Collection, Poll, User } from "..";
 
 interface PollOptionInterface {
-    vote(): Promise<this>
+    vote(): Promise<this>;
 }
 
 export default class PollOption implements PollOptionInterface {
     readonly poll: Poll;
     id: string;
     title: string;
-    votes: number
-    voters: Collection<string, User>
+    votes: number;
+    voters: Collection<string, User>;
     constructor(poll: Poll, data: PollOptionData) {
         this.poll = poll;
         this.id = data.id;

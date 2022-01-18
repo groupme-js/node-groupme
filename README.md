@@ -1,7 +1,7 @@
 # node-groupme
 
 | ✔️ This package is in active development! If you'd like to contribute, [click here](https://github.com/groupme-js/node-groupme/contribute) 🙂 |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| --------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ### About
 
@@ -20,12 +20,14 @@ This community-led effort is made possible by the [unofficial GroupMe API Commun
 
 Join the [node-groupme server on Discord](https://discord.gg/5yxWtuuEZg) to discuss the API or ask any questions.
 
---- 
+---
 
 ### Getting Started
+
 ```
 git clone git@github.com:groupme-js/node-groupme.git
 npm i
 npm run prepare
 ```
-`npm run prepare` sets up [husky](https://github.com/typicode/husky) pre-commit hooks, which will auto format and run eslint on your staged files locally. 
+
+`npm run prepare` sets up [husky](https://github.com/typicode/husky) pre-commit hooks, which will auto format and run eslint on your staged files locally.

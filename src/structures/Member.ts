@@ -2,9 +2,7 @@ import type { APIMember } from "groupme-api-types";
 import type { Client, User } from "..";
 import type BaseGroup from "./BaseGroup";
 
-interface MemberInterface {
-
-}
+interface MemberInterface {}
 
 export default class Member implements MemberInterface {
     readonly user: User;
