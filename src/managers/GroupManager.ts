@@ -1,6 +1,5 @@
+import type { APIGroup } from "groupme-api-types";
 import { Client, Collection, Group, Member, User } from "..";
-import { APIGroup, toGroups } from "../interfaces";
-import tArray from "../util/tArray";
 import BaseManager from "./BaseManager";
 import FormerGroupManager from "./FormerGroupManager";
 
@@ -66,8 +65,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     private async fetchId(id: string): Promise<Group> {
         let res = await this.client.rest.api<APIGroup>(
             "GET",
-            `groups/${id}`,
-            toGroups
+            `groups/${id}`
         );
         const group = this._upsert(new Group(this.client, res));
         if (res.members) {
@@ -101,7 +99,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         if (options.omit_members === true) apiParams.omit = "memberships";
 
         const batch = new Collection<string, Group>()
-        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", tArray(toGroups), { query: apiParams });
+        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", { query: apiParams });
         groupsIndexResponse.forEach(g => {
             /** The Group object to store data in. */
             const group = this._upsert(new Group(this.client, g));
@@ -126,8 +124,8 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         let batch, i = 1;
         do {
             batch = await this.fetchIndex({
-            page: i++,
-            omit_members: false,
+                page: i++,
+                omit_members: false,
             });
         } while (batch.size);
         return this.client.groups.cache;

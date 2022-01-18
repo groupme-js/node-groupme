@@ -1,6 +1,6 @@
 # node-groupme
 
-| ✔️ This package is in active development! If you'd like to contribute, [click here](https://github.com/not-so-smart/node-groupme/contribute) 🙂 |
+| ✔️ This package is in active development! If you'd like to contribute, [click here](https://github.com/groupme-js/node-groupme/contribute) 🙂 |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ### About

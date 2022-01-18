@@ -1,6 +1,6 @@
-import { Client, Message } from "..";
-import MessageManager from "../managers/MessageManager";
-import Attachment from "./Attachment";
+import type { Client, Message } from "..";
+import type MessageManager from "../managers/MessageManager";
+import type Attachment from "./Attachment";
 
 export enum ChannelType {
     Chat = "chat",
@@ -56,5 +56,5 @@ export default abstract class Channel implements ChannelData {
 
 export interface SendableChannelInterface {
     messages: MessageManager<Channel, Message>;
-    send(message: Message): Promise<Message>;
+    send(text: string): Promise<Message>;
 }

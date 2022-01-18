@@ -1,6 +1,6 @@
-import { Client, Collection } from "..";
-import BaseGroup from "../structures/BaseGroup";
-import FormerMember from "../structures/FormerMember";
+import type { Client, Collection } from "..";
+import type BaseGroup from "../structures/BaseGroup";
+import type FormerMember from "../structures/FormerMember";
 import BaseManager from "./BaseManager";
 
 interface FormerMemberManagerInterface {

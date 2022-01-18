@@ -1,5 +1,5 @@
-import { Channel, Client, Group } from "..";
-import { APIGroup } from "../interfaces";
+import type { APIGroup } from "groupme-api-types";
+import type { Client, Group } from "..";
 import BaseGroup from "./BaseGroup";
 import { ChannelType } from "./Channel";
 

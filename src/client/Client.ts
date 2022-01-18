@@ -1,5 +1,5 @@
 import EventEmitter from "events";
-import { Me, toMe } from "../interfaces";
+import type { APIClientUser } from "groupme-api-types";
 import ChatManager from "../managers/ChatManager";
 import GroupManager from "../managers/GroupManager";
 import UserManager from "../managers/UserManager";
@@ -33,7 +33,7 @@ export default class Client extends EventEmitter implements ClientInterface {
         this.ws = new WS(this)
     }
     login = async (): Promise<this> => {
-        const me = await this.rest.api<Me>("GET", "users/me", toMe)
+        const me = await this.rest.api<APIClientUser>("GET", "users/me")
         this.user = new ClientUser({
             avatar: me.image_url,
             id: me.user_id,

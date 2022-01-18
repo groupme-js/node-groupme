@@ -1,5 +1,5 @@
+import type { APIMember } from "groupme-api-types";
 import { Client, Group, Member, User } from "..";
-import { APIMember } from "../interfaces";
 
 enum State {
     Exited = "exited",

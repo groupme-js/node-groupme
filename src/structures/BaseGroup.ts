@@ -1,12 +1,12 @@
+import type { APIGroup } from "groupme-api-types";
 import { Channel, Client } from "..";
-import { APIGroup } from "../interfaces";
 import MemberManager from "../managers/MemberManager";
 
 export default abstract class BaseGroup extends Channel {
     readonly members: MemberManager;
     name: string;
     phoneNumber: string | null;
-    private: boolean;
+    closed: boolean;
     imageURL: string | null;
     creatorID: string;
     mutedUntil?: number | null;
@@ -46,7 +46,7 @@ export default abstract class BaseGroup extends Channel {
         this.members = new MemberManager(this.client, this);
         this.name = data.name;
         this.phoneNumber = data.phone_number;
-        this.private = data.type == "private";
+        this.closed = data.type == "closed";
         this.imageURL = data.image_url;
         this.creatorID = data.creator_user_id;
         this.mutedUntil = data.muted_until;
@@ -62,6 +62,6 @@ export default abstract class BaseGroup extends Channel {
         } : null;
         this.requiresApproval = data.requires_approval;
         this.showJoinQuestion = data.show_join_question;
-        this.joinQuestion = data.join_question;
+        this.joinQuestion = data.join_question ? data.join_question.text : null;
     }
 }
