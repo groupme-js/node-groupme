@@ -10,7 +10,7 @@ interface FormerGroupManagerInterface {
 
 export default class FormerGroupManager extends BaseManager<FormerGroup> implements FormerGroupManagerInterface {
     constructor(client: Client) {
-        super(client);
+        super(client, FormerGroup);
     }
 
     public async fetch(): Promise<Collection<string, FormerGroup>> {

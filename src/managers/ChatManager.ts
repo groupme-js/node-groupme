@@ -17,7 +17,7 @@ interface ChatManagerInterface {
 
 export default class ChatManager extends BaseManager<Chat> implements ChatManagerInterface {
     constructor(client: Client) {
-        super(client);
+        super(client, Chat);
     }
 
     fetch(): Promise<Collection<string, Chat>>;

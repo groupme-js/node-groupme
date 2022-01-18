@@ -31,7 +31,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     former: FormerGroupManager;
 
     constructor(client: Client) {
-        super(client);
+        super(client, Group);
         this.former = new FormerGroupManager(client);
     }
 

@@ -1,4 +1,5 @@
-import type { Client, Collection, Member } from "..";
+import type { Client, Collection } from "..";
+import { Member } from "..";
 import type BaseGroup from "../structures/BaseGroup";
 import BaseManager from "./BaseManager";
 import FormerMemberManager from "./FormerMemberManager";
@@ -13,7 +14,7 @@ export default class MemberManager extends BaseManager<Member> implements Member
     group: BaseGroup;
     former: FormerMemberManager;
     constructor(client: Client, group: BaseGroup) {
-        super(client);
+        super(client, Member);
         this.group = group;
         this.former = new FormerMemberManager(client, group);
     }

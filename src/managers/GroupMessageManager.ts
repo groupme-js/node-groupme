@@ -19,7 +19,7 @@ interface GroupMessageManagerInterface {
 
 export default class GroupMessageManager extends MessageManager<Group, GroupMessage> implements GroupMessageManagerInterface {
     constructor(client: Client, channel: Group) {
-        super(client, channel);
+        super(client, channel, GroupMessage);
     }
 
     fetch(): Promise<Collection<string, GroupMessage>>;

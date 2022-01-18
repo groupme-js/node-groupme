@@ -5,11 +5,12 @@ interface Indexable {
 }
 
 export default abstract class Manager<T extends Indexable> {
-    private readonly _client: Client;
-    public get client(): Client { return this._client }
+    readonly client: Client;
     readonly cache: Collection<string, T>;
-    constructor(client: Client) {
-        this._client = client;
+    readonly holds: new (client: Client, ...args: any) => T;
+    constructor(client: Client, holds: new (client: Client, ...args: any) => T) {
+        this.client = client;
+        this.holds = holds;
         this.cache = new Collection<string, T>();
     }
     _upsert(data: T): T {

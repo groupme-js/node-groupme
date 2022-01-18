@@ -17,8 +17,8 @@ interface MessageManagerInterface<T extends Message> {
 
 export default abstract class MessageManager<T extends Channel, U extends Message> extends BaseManager<U> implements MessageManagerInterface<U> {
     readonly channel: T;
-    constructor(client: Client, channel: T) {
-        super(client);
+    constructor(client: Client, channel: T, holds: new (client: Client, ...args: any) => U) {
+        super(client, holds);
         this.channel = channel;
     }
 
