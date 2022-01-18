@@ -13,6 +13,14 @@ export default abstract class Manager<T extends Indexable> {
         this.holds = holds;
         this.cache = new Collection<string, T>();
     }
+    resolve(data: any): T | null {
+        if (data instanceof this.holds) return data;
+        if (typeof data === 'string') return this.cache.get(data) ?? null;
+        return null;
+    }
+    resolveId(data: any): string | null {
+        return this.resolve(data)?.id ?? null;
+    }
     _upsert(data: T): T {
         let obj = this.cache.get(data.id);
         if (obj) Object.assign(obj, data);
