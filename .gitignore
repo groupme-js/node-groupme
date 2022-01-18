@@ -48,4 +48,6 @@ dist/
 
 # Reverse-engineering data
 data/
+
+# Mac filesystem files
 .DS_Store
