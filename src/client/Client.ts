@@ -32,9 +32,9 @@ export default class Client extends EventEmitter implements ClientInterface {
         this.rest = new RESTManager(this);
         this.ws = new WS(this)
     }
-    login = async (): Promise<this> => {
+    async login(): Promise<this> {
         const me = await this.rest.api<APIClientUser>("GET", "users/me")
-        this.user = new ClientUser({
+        this.user = new ClientUser(this, {
             avatar: me.image_url,
             id: me.user_id,
             name: me.name

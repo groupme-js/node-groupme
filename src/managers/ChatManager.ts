@@ -52,11 +52,13 @@ export default class ChatManager extends BaseManager<Chat> implements ChatManage
         chats.forEach(data => {
             const chat = this._upsert(new Chat(
                 this.client,
-                this.client.users._upsert(new User({
-                    id: data.other_user.id,
-                    name: data.other_user.name,
-                    avatar: data.other_user.avatar_url,
-                })),
+                this.client.users._upsert(new User(
+                    this.client,
+                    {
+                        id: data.other_user.id,
+                        name: data.other_user.name,
+                        avatar: data.other_user.avatar_url,
+                    })),
                 data,
             ));
             batch.set(chat.recipient.id, chat)

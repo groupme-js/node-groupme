@@ -71,7 +71,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         if (res.members) {
             res.members.forEach((data: any) => {
                 const user = this.client.users._upsert(
-                    new User({
+                    new User(this.client, {
                         id: data.user_id,
                         avatar: data.image_url,
                         name: data.name,
@@ -106,7 +106,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
 
             if (g.members) {
                 g.members.forEach(data => {
-                    const user = this.client.users._upsert(new User({
+                    const user = this.client.users._upsert(new User(this.client, {
                         id: data.user_id,
                         avatar: data.image_url,
                         name: data.name,
