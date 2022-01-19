@@ -2,41 +2,31 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "typescript",
-			"tsconfig": "tsconfig.json",
-			"option": "watch",
-			"problemMatcher": [
-				"$tsc-watch"
-			],
-			"group": "build",
-			"label": "tsc: watch - tsconfig.json"
-		},
-		{
-			"type": "typescript",
-			"tsconfig": "tsconfig.json",
-			"problemMatcher": [
-				"$tsc"
-			],
-			"group": "build",
-			"label": "tsc: build - tsconfig.json"
-		},
-		{
-			"type": "shell",
-			"options": {
-				"cwd": "${workspaceFolder}"
-			},
-			"command": [
-				"cmd /c rmdir /s /q dist;",
-				"npm pack;",
-				"mv -force ./node-groupme-*.tgz ../node-groupme-test/node-groupme.tgz;",
-				"cd ../node-groupme-test/;",
-				"npm i ./node-groupme.tgz;"
-			],
-			"label": "compile and send to test env",
+			"type": "npm",
+			"script": "compile",
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
-		}
+			"problemMatcher": [],
+			"label": "Build",
+			"detail": "Clean and recompile the project"
+		},
+		{
+			"type": "npm",
+			"script": "test",
+			"group": "test",
+			"problemMatcher": [],
+			"label": "Test",
+			"detail": "Run the test suite"
+		},
+		{
+			"type": "npm",
+			"script": "watch",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "Build and Watch",
+			"detail": "Live build the project on every change"
+		},
 	]
 }
