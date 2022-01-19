@@ -1,32 +1,44 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "compile",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"problemMatcher": [],
-			"label": "Build",
-			"detail": "Clean and recompile the project"
-		},
-		{
-			"type": "npm",
-			"script": "test",
-			"group": "test",
-			"problemMatcher": [],
-			"label": "Test",
-			"detail": "Run the test suite"
-		},
-		{
-			"type": "npm",
-			"script": "watch",
-			"group": "build",
-			"problemMatcher": [],
-			"label": "Build and Watch",
-			"detail": "Live build the project on every change"
-		},
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "clean",
+            "detail": "Delete the /dist folder",
+            "type": "shell",
+            "presentation": {
+                "showReuseMessage": false,
+            },
+            "windows": {
+                "command": "cmd /c rmdir /s /q dist",
+            },
+            "linux": {
+                "command": "rm -rf dist",
+            },
+            "osx": {
+                "command": "rm -rf dist",
+            },
+            "group": "build",
+        },
+        {
+            "label": "tsc: build",
+            "detail": "Compile with tsc, cleaning old files if necessary",
+            "dependsOn": "clean",
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": "$tsc",
+            "group": {
+                "kind": "build",
+                "isDefault": true,
+            },
+        },
+        {
+            "label": "tsc: watch",
+            "detail": "Start tsc in watch mode, compiling every time you save. Does NOT clean between compilations!",
+            "option": "watch",
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": "$tsc-watch",
+            "group": "build",
+        },
+    ]
 }
