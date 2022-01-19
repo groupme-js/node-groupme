@@ -1,6 +1,5 @@
 import type { Client, Collection, Group } from "..";
-import Poll from "../structures/Poll";
-import BaseManager from "./BaseManager";
+import { BaseManager, Poll } from "..";
 
 interface PollManagerInterface {
     fetch(): Promise<Collection<string, Poll>>

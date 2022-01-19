@@ -1,5 +1,6 @@
 import type { PollOptionData } from "groupme-api-types";
-import { Collection, Poll, User } from "..";
+import type { Poll, User } from "..";
+import { Collection } from "..";
 
 interface PollOptionInterface {
     vote(): Promise<this>

@@ -4,12 +4,8 @@ import type {
     PatchGroupBody, PatchGroupResponse,
     PostChangeOwnersBody, PostChangeOwnersResponse,
 } from "groupme-api-types";
-import type { Client, FormerGroup, Member, Message, SendableChannelInterface } from "..";
-import GroupMessageManager from "../managers/GroupMessageManager";
-import PollManager from "../managers/PollManager";
-import BaseGroup from "./BaseGroup";
-import { ChannelType } from "./Channel";
-import GroupMessage from "./GroupMessage";
+import type { Client, FormerGroup, Member, SendableChannelInterface } from "..";
+import { BaseGroup, ChannelType, GroupMessage, GroupMessageManager, PollManager } from "..";
 
 type GroupUpdateOptions = {
     name: string

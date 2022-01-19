@@ -1,5 +1,5 @@
 import type { Channel, Client, Collection, Message } from "..";
-import BaseManager from "./BaseManager";
+import { BaseManager } from "..";
 
 export type MessageRequestParams = {
     before_id?: string,
