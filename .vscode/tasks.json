@@ -1,42 +1,44 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "typescript",
-			"tsconfig": "tsconfig.json",
-			"option": "watch",
-			"problemMatcher": [
-				"$tsc-watch"
-			],
-			"group": "build",
-			"label": "tsc: watch - tsconfig.json"
-		},
-		{
-			"type": "typescript",
-			"tsconfig": "tsconfig.json",
-			"problemMatcher": [
-				"$tsc"
-			],
-			"group": "build",
-			"label": "tsc: build - tsconfig.json"
-		},
-		{
-			"type": "shell",
-			"options": {
-				"cwd": "${workspaceFolder}"
-			},
-			"command": [
-				"cmd /c rmdir /s /q dist;",
-				"npm pack;",
-				"mv -force ./node-groupme-*.tgz ../node-groupme-test/node-groupme.tgz;",
-				"cd ../node-groupme-test/;",
-				"npm i ./node-groupme.tgz;"
-			],
-			"label": "compile and send to test env",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-		}
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "clean",
+            "detail": "Delete the /dist folder",
+            "type": "shell",
+            "presentation": {
+                "showReuseMessage": false,
+            },
+            "windows": {
+                "command": "cmd /c rmdir /s /q dist",
+            },
+            "linux": {
+                "command": "rm -rf dist",
+            },
+            "osx": {
+                "command": "rm -rf dist",
+            },
+            "group": "build",
+        },
+        {
+            "label": "tsc: build",
+            "detail": "Compile with tsc, cleaning old files if necessary",
+            "dependsOn": "clean",
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": "$tsc",
+            "group": {
+                "kind": "build",
+                "isDefault": true,
+            },
+        },
+        {
+            "label": "tsc: watch",
+            "detail": "Start tsc in watch mode, compiling every time you save. Does NOT clean between compilations!",
+            "option": "watch",
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": "$tsc-watch",
+            "group": "build",
+        },
+    ]
 }

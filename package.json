@@ -3,11 +3,14 @@
   "version": "0.0.3",
   "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "mocha \"tests/**/*.js\" --forbid-only --bail --recursive --require tests/hooks.js",
-    "build": "npx tsc",
+  "scripts": {    
+    "clean": "rm -rf dist",
+    "compile": "npm run clean && tsc -p .",
+    "docs": "typedoc --theme ./node_modules/typedoc-neo-theme/bin/default",
     "prepare": "husky install",
-    "docs": "typedoc --theme ./node_modules/typedoc-neo-theme/bin/default"
+    "prepublishOnly": "npm run compile",
+    "test": "mocha \"tests/**/*.js\" --forbid-only --bail --recursive --require tests/hooks.js",
+    "watch": "tsc -w -p ."
   },
   "repository": {
     "type": "git",
