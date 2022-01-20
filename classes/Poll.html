@@ -265,7 +265,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="options" class="tsd-anchor"></a>
 					<h3>options</h3>
-					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="Collection.html" class="tsd-signature-type">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">default</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="Collection.html" class="tsd-signature-type">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="PollOption.html" class="tsd-signature-type">PollOption</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in src/structures/Poll.ts:21</li>
@@ -392,8 +392,8 @@
 					<a name="vote" class="tsd-anchor"></a>
 					<h3>vote</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">vote<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">default</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Poll.html" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">vote<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">default</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Poll.html" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">vote<span class="tsd-signature-symbol">(</span>option<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="PollOption.html" class="tsd-signature-type">PollOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Poll.html" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">vote<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="PollOption.html" class="tsd-signature-type">PollOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Poll.html" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -406,7 +406,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>option: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">default</span></h5>
+									<h5>option: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="PollOption.html" class="tsd-signature-type">PollOption</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Poll.html" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -421,7 +421,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">default</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>options: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="PollOption.html" class="tsd-signature-type">PollOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="Poll.html" class="tsd-signature-type">Poll</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -438,10 +438,28 @@
 						<a href="../enums/ChannelType.html" class="tsd-kind-icon">Channel<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-class root">
+						<a href="Attachment.html" class="tsd-kind-icon">Attachment</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="BaseGroup.html" class="tsd-kind-icon">Base<wbr>Group</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter root">
+						<a href="BaseManager.html" class="tsd-kind-icon">Base<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class root">
 						<a href="Channel.html" class="tsd-kind-icon">Channel</a>
 					</li>
 					<li class=" tsd-kind-class root">
 						<a href="Chat.html" class="tsd-kind-icon">Chat</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="ChatManager.html" class="tsd-kind-icon">Chat<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="ChatMessage.html" class="tsd-kind-icon">Chat<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="ChatMessageManager.html" class="tsd-kind-icon">Chat<wbr>Message<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class root">
 						<a href="Client.html" class="tsd-kind-icon">Client</a>
@@ -453,13 +471,40 @@
 						<a href="FormerGroup.html" class="tsd-kind-icon">Former<wbr>Group</a>
 					</li>
 					<li class=" tsd-kind-class root">
+						<a href="FormerGroupManager.html" class="tsd-kind-icon">Former<wbr>Group<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="FormerMember.html" class="tsd-kind-icon">Former<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="FormerMemberManager.html" class="tsd-kind-icon">Former<wbr>Member<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class root">
 						<a href="Group.html" class="tsd-kind-icon">Group</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="GroupManager.html" class="tsd-kind-icon">Group<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="GroupMessage.html" class="tsd-kind-icon">Group<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="GroupMessageManager.html" class="tsd-kind-icon">Group<wbr>Message<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class root">
 						<a href="Member.html" class="tsd-kind-icon">Member</a>
 					</li>
 					<li class=" tsd-kind-class root">
+						<a href="MemberManager.html" class="tsd-kind-icon">Member<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class root">
 						<a href="Message.html" class="tsd-kind-icon">Message</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="MessageLikeManager.html" class="tsd-kind-icon">Message<wbr>Like<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter root">
+						<a href="MessageManager.html" class="tsd-kind-icon">Message<wbr>Manager</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -531,7 +576,16 @@
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class root">
+						<a href="PollManager.html" class="tsd-kind-icon">Poll<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="PollOption.html" class="tsd-kind-icon">Poll<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-class root">
 						<a href="User.html" class="tsd-kind-icon">User</a>
+					</li>
+					<li class=" tsd-kind-class root">
+						<a href="UserManager.html" class="tsd-kind-icon">User<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-interface root">
 						<a href="../interfaces/SendableChannelInterface.html" class="tsd-kind-icon">Sendable<wbr>Channel<wbr>Interface</a>
