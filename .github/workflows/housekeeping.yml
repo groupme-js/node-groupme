@@ -28,7 +28,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_branch: docs
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: main
           publish_dir: ./docs
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
           cname: groupme.js.org
+          external_repository: groupme-js/website
