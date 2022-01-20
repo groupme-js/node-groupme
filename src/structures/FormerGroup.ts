@@ -1,7 +1,6 @@
 import type { APIGroup } from "groupme-api-types";
 import type { Client, Group } from "..";
-import BaseGroup from "./BaseGroup";
-import { ChannelType } from "./Channel";
+import { BaseGroup, ChannelType } from "..";
 
 interface FormerGroupInterface {
     rejoin(): Promise<Group>

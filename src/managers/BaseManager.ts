@@ -1,10 +1,11 @@
-import { Client, Collection } from "..";
+import type { Client } from "..";
+import { Collection } from "..";
 
 interface Indexable {
     id: string
 }
 
-export default abstract class Manager<T extends Indexable> {
+export default abstract class BaseManager<T extends Indexable> {
     readonly client: Client;
     readonly cache: Collection<string, T>;
     readonly holds: new (client: Client, ...args: any) => T;

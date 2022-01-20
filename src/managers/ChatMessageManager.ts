@@ -3,9 +3,8 @@ import type {
     GetChatMessagesQuery, GetChatMessagesResponse
 } from "groupme-api-types";
 import type { Chat, Client } from "..";
-import { Collection } from "..";
-import ChatMessage from "../structures/ChatMessage";
-import MessageManager, { MessageRequestParams } from "./MessageManager";
+import { ChatMessage, Collection, MessageManager } from "..";
+import type { MessageRequestParams } from "./MessageManager";
 
 export default class ChatMessageManager extends MessageManager<Chat, ChatMessage> {
     constructor(client: Client, channel: Chat) {

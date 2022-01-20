@@ -1,8 +1,9 @@
-import type { APIChat, PostChatMessageBody, PostChatMessageResponse } from "groupme-api-types";
-import { Channel, Client, Message, SendableChannelInterface, User } from "..";
-import ChatMessageManager from "../managers/ChatMessageManager";
-import { ChannelType } from "./Channel";
-import ChatMessage from "./ChatMessage";
+import type {
+    APIChat,
+    PostChatMessageBody, PostChatMessageResponse
+} from "groupme-api-types";
+import type { Client, SendableChannelInterface, User } from "..";
+import { Channel, ChannelType, ChatMessage, ChatMessageManager } from "..";
 
 interface ChatInterface {
     send(text: string): Promise<ChatMessage>

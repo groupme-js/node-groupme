@@ -1,6 +1,6 @@
 import type { APIPoll } from "groupme-api-types";
-import { Client, Collection, Group, User } from "..";
-import type PollOption from "./PollOption";
+import type { Client, Group, PollOption, User } from "..";
+import { Collection } from "..";
 
 interface PollInterface {
     fetch(): Promise<this>

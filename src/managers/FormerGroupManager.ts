@@ -1,6 +1,6 @@
 import type { APIGroup } from "groupme-api-types";
-import { Client, Collection, FormerGroup, Member, User } from "..";
-import BaseManager from "./BaseManager";
+import type { Client } from "..";
+import { BaseManager, Collection, FormerGroup, Member, User } from "..";
 
 interface FormerGroupManagerInterface {
     client: Client

@@ -1,7 +1,6 @@
 import type { APIGroup } from "groupme-api-types";
-import { Client, Collection, Group, Member, User } from "..";
-import BaseManager from "./BaseManager";
-import FormerGroupManager from "./FormerGroupManager";
+import type { Client } from "..";
+import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from "..";
 
 type GroupsRequestParams = {
     page?: number;

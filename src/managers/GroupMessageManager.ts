@@ -1,11 +1,10 @@
 import type {
     GetGroupMessageResponse,
-    GetGroupMessagesQuery, GetGroupMessagesResponse,
+    GetGroupMessagesQuery, GetGroupMessagesResponse
 } from "groupme-api-types";
 import type { Client, Group } from "..";
-import { Collection } from "..";
-import GroupMessage from "../structures/GroupMessage";
-import MessageManager, { MessageRequestParams } from "./MessageManager";
+import { Collection, GroupMessage, MessageManager } from "..";
+import type { MessageRequestParams } from "./MessageManager";
 
 interface GroupMessageManagerInterface {
     client: Client

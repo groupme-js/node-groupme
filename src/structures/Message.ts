@@ -1,7 +1,6 @@
-import type { APIGroupMessage, APIChatMessage } from "groupme-api-types";
-import type { Channel, Client } from "..";
+import type { APIChatMessage, APIGroupMessage } from "groupme-api-types";
+import type { Attachment, Channel, Client } from "..";
 import { User } from "..";
-import type Attachment from "./Attachment";
 
 interface MessageInterface {
     fetch(): Promise<this>

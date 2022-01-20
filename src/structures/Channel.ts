@@ -1,6 +1,4 @@
-import type { Client, Message } from "..";
-import type MessageManager from "../managers/MessageManager";
-import type Attachment from "./Attachment";
+import type { Attachment, Client, Message, MessageManager } from "..";
 
 export enum ChannelType {
     Chat = "chat",

@@ -1,6 +1,6 @@
 import type { APIChat } from "groupme-api-types";
-import { Chat, Client, Collection, User } from "..";
-import BaseManager from "./BaseManager";
+import type { Client } from "..";
+import { BaseManager, Chat, Collection, User } from "..";
 
 type ChatsRequestParams = {
     page?: number,

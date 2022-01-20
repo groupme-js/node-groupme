@@ -1,4 +1,4 @@
-import UserManager from "./UserManager";
+import { UserManager } from "..";
 
 interface MessageLikeManagerInterface {
     get mine(): boolean

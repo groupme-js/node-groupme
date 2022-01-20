@@ -1,8 +1,5 @@
-import type { Client, Collection } from "..";
-import { Member } from "..";
-import type BaseGroup from "../structures/BaseGroup";
-import BaseManager from "./BaseManager";
-import FormerMemberManager from "./FormerMemberManager";
+import type { BaseGroup, Client, Collection } from "..";
+import { BaseManager, FormerMemberManager, Member } from "..";
 
 interface MemberManagerInterface {
     add(id: string): Promise<Member>

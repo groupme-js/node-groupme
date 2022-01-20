@@ -1,6 +1,5 @@
 import type { Client } from "..";
-import { User } from "..";
-import BaseManager from "./BaseManager";
+import { User, BaseManager } from "..";
 
 interface UserManagerInterface {
 
