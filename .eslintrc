@@ -9,6 +9,7 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/no-empty-interface": ["warn"],
     "prettier/prettier": ["error"]
   }
 }
