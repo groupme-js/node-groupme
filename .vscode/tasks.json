@@ -40,5 +40,13 @@
             "problemMatcher": "$tsc-watch",
             "group": "build",
         },
+        {
+            "label": "eslint-prettier: lint and format",
+            "detail": "Scan /src with ESLint and Prettier, automatically applying fixes when available",
+            "type": "shell",
+            "command": "npx eslint src --fix",
+            "problemMatcher": "$eslint-stylish",
+            "group": "none",
+        }
     ]
 }

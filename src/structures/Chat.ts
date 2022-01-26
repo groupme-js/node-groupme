@@ -1,20 +1,16 @@
-import type {
-    APIChat,
-    PostChatMessageBody, PostChatMessageResponse
-} from "groupme-api-types";
-import type { Client, SendableChannelInterface, User } from "..";
-import { Channel, ChannelType, ChatMessage, ChatMessageManager } from "..";
+import type { APIChat, PostChatMessageBody, PostChatMessageResponse } from "groupme-api-types"
+import type { Client, SendableChannelInterface, User } from ".."
+import { Channel, ChannelType, ChatMessage, ChatMessageManager } from ".."
 
 interface ChatInterface {
     send(text: string): Promise<ChatMessage>
-
 }
 
 export default class Chat extends Channel implements ChatInterface, SendableChannelInterface {
-    readonly type = ChannelType.Chat;
-    readonly recipient: User;
-    readonly messages: ChatMessageManager;
-    readonly conversationID: string;
+    readonly type = ChannelType.Chat
+    readonly recipient: User
+    readonly messages: ChatMessageManager
+    readonly conversationID: string
     constructor(client: Client, user: User, data: APIChat) {
         super({
             id: data.other_user.id,
@@ -34,9 +30,9 @@ export default class Chat extends Channel implements ChatInterface, SendableChan
             updatedAt: data.updated_at,
             messageDeletionMode: data.message_deletion_mode,
             messageDeletionPeriod: data.message_deletion_period,
-        });
-        this.conversationID = data.last_message.conversation_id;
-        this.recipient = user;
+        })
+        this.conversationID = data.last_message.conversation_id
+        this.recipient = user
         this.messages = new ChatMessageManager(client, this)
     }
     public async send(text: string): Promise<ChatMessage> {
@@ -46,14 +42,10 @@ export default class Chat extends Channel implements ChatInterface, SendableChan
                 attachments: [],
                 source_guid: this.client.rest.guid(),
                 recipient_id: this.recipient.id,
-            }
-        };
-        const response = await this.client.rest.api<PostChatMessageResponse>(
-            'POST',
-            'direct_messages',
-            { body },
-        );
-        const message = new ChatMessage(this.client, this, response.direct_message);
-        return this.messages._upsert(message);
+            },
+        }
+        const response = await this.client.rest.api<PostChatMessageResponse>("POST", "direct_messages", { body })
+        const message = new ChatMessage(this.client, this, response.direct_message)
+        return this.messages._upsert(message)
     }
 }
