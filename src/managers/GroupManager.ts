@@ -1,11 +1,11 @@
-import type { APIGroup } from "groupme-api-types"
-import type { Client } from ".."
-import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from ".."
+import type { APIGroup } from 'groupme-api-types'
+import type { Client } from '..'
+import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from '..'
 
 type GroupsRequestParams = {
     page?: number
     per_page?: number
-    omit?: "memberships"
+    omit?: 'memberships'
 }
 
 type FetchParams = {
@@ -49,12 +49,14 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     fetch(id: string): Promise<Group>
     fetch(ids: string[]): Promise<Collection<string, Group | null>>
     fetch(options: FetchParams): Promise<Collection<string, Group | null>>
-    public async fetch(options?: string | string[] | FetchParams): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
-        if (typeof options === "string") {
+    public async fetch(
+        options?: string | string[] | FetchParams,
+    ): Promise<Group | Collection<string, Group> | Collection<string, Group | null>> {
+        if (typeof options === 'string') {
             return await this.fetchId(options)
         } else if (options instanceof Array) {
             return await this.fetchIds(options)
-        } else if (typeof options === "object") {
+        } else if (typeof options === 'object') {
             return await this.fetchIndex(options)
         } else {
             return await this.fetchAll()
@@ -62,16 +64,16 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     }
 
     private async fetchId(id: string): Promise<Group> {
-        const res = await this.client.rest.api<APIGroup>("GET", `groups/${id}`)
+        const res = await this.client.rest.api<APIGroup>('GET', `groups/${id}`)
         const group = this._upsert(new Group(this.client, res))
         if (res.members) {
-            res.members.forEach((data) => {
+            res.members.forEach(data => {
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
                         avatar: data.image_url,
                         name: data.name,
-                    })
+                    }),
                 )
                 group.members._upsert(new Member(this.client, group, user, data))
             })
@@ -82,10 +84,10 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     private async fetchIds(ids: string[]): Promise<Collection<string, Group | null>> {
         const batch = new Collection<string, Group>()
         await Promise.all(
-            ids.map(async (id) => {
+            ids.map(async id => {
                 const group = await this.fetchId(id)
                 batch.set(group.id, group)
-            })
+            }),
         )
         return batch
     }
@@ -94,22 +96,22 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         const apiParams: GroupsRequestParams = {}
         if (options.page !== undefined) apiParams.page = options.page
         if (options.per_page !== undefined) apiParams.per_page = options.per_page
-        if (options.omit_members === true) apiParams.omit = "memberships"
+        if (options.omit_members === true) apiParams.omit = 'memberships'
 
         const batch = new Collection<string, Group>()
-        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>("GET", "groups", { query: apiParams })
-        groupsIndexResponse.forEach((g) => {
+        const groupsIndexResponse = await this.client.rest.api<APIGroup[]>('GET', 'groups', { query: apiParams })
+        groupsIndexResponse.forEach(g => {
             /** The Group object to store data in. */
             const group = this._upsert(new Group(this.client, g))
 
             if (g.members) {
-                g.members.forEach((data) => {
+                g.members.forEach(data => {
                     const user = this.client.users._upsert(
                         new User(this.client, {
                             id: data.user_id,
                             avatar: data.image_url,
                             name: data.name,
-                        })
+                        }),
                     )
                     group.members._upsert(new Member(this.client, group, user, data))
                 })

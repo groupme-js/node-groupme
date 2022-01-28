@@ -1,11 +1,11 @@
-import type { APIMember } from "groupme-api-types"
-import type { Client, Group, User } from ".."
-import { Member } from ".."
+import type { APIMember } from 'groupme-api-types'
+import type { Client, Group, User } from '..'
+import { Member } from '..'
 
 enum State {
-    Exited = "exited",
-    ExitedRemoved = "exited_removed",
-    Removed = "removed",
+    Exited = 'exited',
+    ExitedRemoved = 'exited_removed',
+    Removed = 'removed',
 }
 
 interface FormerMemberInterface {
@@ -20,9 +20,9 @@ export default class FormerMember extends Member implements FormerMemberInterfac
         this.state = state
     }
     ban(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     rejoin(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 }

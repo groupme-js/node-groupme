@@ -1,6 +1,6 @@
-import type { APIGroup } from "groupme-api-types"
-import type { Client } from ".."
-import { Channel, MemberManager } from ".."
+import type { APIGroup } from 'groupme-api-types'
+import type { Client } from '..'
+import { Channel, MemberManager } from '..'
 
 export default abstract class BaseGroup extends Channel {
     readonly members: MemberManager
@@ -16,7 +16,7 @@ export default abstract class BaseGroup extends Channel {
     maxMembers: number
     theme: string | null
     likeIcon: {
-        type: "emoji"
+        type: 'emoji'
         packId: number
         packIndex: number
     } | null
@@ -46,7 +46,7 @@ export default abstract class BaseGroup extends Channel {
         this.members = new MemberManager(this.client, this)
         this.name = data.name
         this.phoneNumber = data.phone_number
-        this.closed = data.type == "closed"
+        this.closed = data.type == 'closed'
         this.imageURL = data.image_url
         this.creatorID = data.creator_user_id
         this.mutedUntil = data.muted_until
@@ -59,7 +59,7 @@ export default abstract class BaseGroup extends Channel {
             ? {
                   packId: data.like_icon.pack_id,
                   packIndex: data.like_icon.pack_index,
-                  type: "emoji",
+                  type: 'emoji',
               }
             : null
         this.requiresApproval = data.requires_approval

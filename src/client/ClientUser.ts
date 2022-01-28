@@ -1,5 +1,5 @@
-import type { Client } from ".."
-import User, { UserData } from "../structures/User"
+import type { Client } from '..'
+import User, { UserData } from '../structures/User'
 
 interface ClientUserInterface {}
 

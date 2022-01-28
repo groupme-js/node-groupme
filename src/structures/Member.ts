@@ -1,5 +1,5 @@
-import type { APIMember } from "groupme-api-types"
-import type { BaseGroup, Client, User } from ".."
+import type { APIMember } from 'groupme-api-types'
+import type { BaseGroup, Client, User } from '..'
 
 interface MemberInterface {}
 
@@ -12,7 +12,7 @@ export default class Member implements MemberInterface {
     nickname: string
     muted: boolean
     autokicked: boolean
-    roles: ("admin" | "owner" | "user")[]
+    roles: ('admin' | 'owner' | 'user')[]
 
     constructor(client: Client, group: BaseGroup, user: User, data: APIMember) {
         this.client = client
@@ -27,7 +27,7 @@ export default class Member implements MemberInterface {
     }
 
     get isAdmin(): boolean {
-        return this.roles.includes("admin") || this.isOwner
+        return this.roles.includes('admin') || this.isOwner
     }
 
     get isOwner(): boolean {

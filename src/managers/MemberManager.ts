@@ -1,5 +1,5 @@
-import type { BaseGroup, Client, Collection } from ".."
-import { BaseManager, FormerMemberManager, Member } from ".."
+import type { BaseGroup, Client, Collection } from '..'
+import { BaseManager, FormerMemberManager, Member } from '..'
 
 interface MemberManagerInterface {
     add(id: string): Promise<Member>
@@ -19,9 +19,9 @@ export default class MemberManager extends BaseManager<Member> implements Member
     add(id: string): Promise<Member>
     add(ids: string[]): Promise<Collection<string, Member>>
     add(ids: string | string[]): Promise<Member> | Promise<Collection<string, Member>> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     remove(member: Member): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 }

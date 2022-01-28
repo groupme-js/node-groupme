@@ -1,6 +1,6 @@
-import type { APIChat } from "groupme-api-types"
-import type { Client } from ".."
-import { BaseManager, Chat, Collection, User } from ".."
+import type { APIChat } from 'groupme-api-types'
+import type { Client } from '..'
+import { BaseManager, Chat, Collection, User } from '..'
 
 type ChatsRequestParams = {
     page?: number
@@ -23,8 +23,10 @@ export default class ChatManager extends BaseManager<Chat> implements ChatManage
     fetch(): Promise<Collection<string, Chat>>
     fetch(id: string): Promise<Chat>
     fetch(ids: string[]): Promise<Collection<string, Chat | null>>
-    fetch(ids?: string | string[]): Promise<Collection<string, Chat>> | Promise<Chat> | Promise<Collection<string, Chat | null>> {
-        throw new Error("Method not implemented.")
+    fetch(
+        ids?: string | string[],
+    ): Promise<Collection<string, Chat>> | Promise<Chat> | Promise<Collection<string, Chat | null>> {
+        throw new Error('Method not implemented.')
     }
 
     async fetchChats(options?: { page?: number; per_page?: number }) {
@@ -44,9 +46,9 @@ export default class ChatManager extends BaseManager<Chat> implements ChatManage
         }
 
         const batch = new Collection<string, Chat>()
-        const chats = await this.client.rest.api<APIChat[]>("GET", "chats", { query: apiParams })
+        const chats = await this.client.rest.api<APIChat[]>('GET', 'chats', { query: apiParams })
 
-        chats.forEach((data) => {
+        chats.forEach(data => {
             const chat = this._upsert(
                 new Chat(
                     this.client,
@@ -55,10 +57,10 @@ export default class ChatManager extends BaseManager<Chat> implements ChatManage
                             id: data.other_user.id,
                             name: data.other_user.name,
                             avatar: data.other_user.avatar_url,
-                        })
+                        }),
                     ),
-                    data
-                )
+                    data,
+                ),
             )
             batch.set(chat.recipient.id, chat)
         })

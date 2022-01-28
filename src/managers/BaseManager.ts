@@ -1,5 +1,5 @@
-import type { Client } from ".."
-import { Collection } from ".."
+import type { Client } from '..'
+import { Collection } from '..'
 
 interface Indexable {
     id: string
@@ -16,7 +16,7 @@ export default abstract class BaseManager<T extends Indexable> {
     }
     resolve(data: unknown): T | null {
         if (data instanceof this.holds) return data
-        if (typeof data === "string") return this.cache.get(data) ?? null
+        if (typeof data === 'string') return this.cache.get(data) ?? null
         return null
     }
     resolveId(data: unknown): string | null {

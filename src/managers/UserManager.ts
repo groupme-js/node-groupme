@@ -1,5 +1,5 @@
-import type { Client } from ".."
-import { User, BaseManager } from ".."
+import type { Client } from '..'
+import { User, BaseManager } from '..'
 
 interface UserManagerInterface {}
 

@@ -1,4 +1,4 @@
-import type { Client } from ".."
+import type { Client } from '..'
 
 export type UserData = {
     id: string

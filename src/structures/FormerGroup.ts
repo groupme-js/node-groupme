@@ -1,6 +1,6 @@
-import type { APIGroup } from "groupme-api-types"
-import type { Client, Group } from ".."
-import { BaseGroup, ChannelType } from ".."
+import type { APIGroup } from 'groupme-api-types'
+import type { Client, Group } from '..'
+import { BaseGroup, ChannelType } from '..'
 
 interface FormerGroupInterface {
     rejoin(): Promise<Group>
@@ -15,6 +15,6 @@ export default class FormerGroup extends BaseGroup implements FormerGroupInterfa
     }
 
     rejoin(): Promise<Group> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 }
