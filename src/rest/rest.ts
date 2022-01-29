@@ -24,9 +24,7 @@ function* i() {
 type HttpMethod = 'GET' | 'POST'
 
 type RequestOptions = {
-    query?: {
-        [key: string]: string
-    }
+    query?: Record<string, unknown>
     body?: unknown
 }
 
@@ -63,7 +61,7 @@ export default class RESTManager {
             for (const key in data.query) {
                 if (Object.prototype.hasOwnProperty.call(data.query, key)) {
                     const value = data.query[key]
-                    url.searchParams.set(key, value)
+                    url.searchParams.set(key, String(value))
                 }
             }
         }
