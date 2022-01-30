@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
-  "scripts": {    
+  "scripts": {
     "clean": "rm -rf dist",
     "compile": "npm run clean && tsc -p .",
     "docs": "typedoc --theme ./node_modules/typedoc-neo-theme/bin/default",
@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
-    "groupme-api-types": "^0.8.2",
+    "groupme-api-types": "^0.9.0",
     "node-fetch": "^2.6.1",
     "ws": "^8.1.0"
   },
