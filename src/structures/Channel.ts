@@ -1,9 +1,9 @@
-import type { Attachment, Client, Message, MessageManager } from ".."
+import type { Attachment, Client, Message, MessageManager } from '..'
 
 export enum ChannelType {
-    Chat = "chat",
-    Group = "group",
-    FormerGroup = "former_group",
+    Chat = 'chat',
+    Group = 'group',
+    FormerGroup = 'former_group',
 }
 
 type MessagePreview = {

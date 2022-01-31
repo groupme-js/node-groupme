@@ -1,6 +1,6 @@
-import type { APIGroupMessage } from "groupme-api-types"
-import type { Client, Group } from ".."
-import { Message } from ".."
+import type { APIGroupMessage } from 'groupme-api-types'
+import type { Client, Group } from '..'
+import { Message } from '..'
 
 interface GroupMessageInterface {}
 

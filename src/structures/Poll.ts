@@ -1,6 +1,6 @@
-import type { APIPoll } from "groupme-api-types"
-import type { Client, Group, PollOption, User } from ".."
-import { Collection } from ".."
+import type { APIPoll } from 'groupme-api-types'
+import type { Client, Group, PollOption, User } from '..'
+import { Collection } from '..'
 
 interface PollInterface {
     fetch(): Promise<this>
@@ -35,32 +35,36 @@ export default class Poll implements PollInterface {
         this.question = data.data.subject
         this.group = group
         this.creator = creator
-        this._active = data.data.status == "active"
-        this.multi = data.data.type == "multi"
-        this.public = data.data.visibility == "public"
+        this._active = data.data.status == 'active'
+        this.multi = data.data.type == 'multi'
+        this.public = data.data.visibility == 'public'
         this.createdAt = data.data.created_at
         this.updatedAt = data.data.last_modified
         this.expiresAt = data.data.expiration
         this.options = new Collection<OptionID, PollOption>()
-        this.voters = this.public ? (this.multi ? new Collection<UserID, OptionID[]>() : new Collection<UserID, OptionID>()) : undefined
+        this.voters = this.public
+            ? this.multi
+                ? new Collection<UserID, OptionID[]>()
+                : new Collection<UserID, OptionID>()
+            : undefined
         this.myVote = this.multi ? data.user_votes : data.user_vote
     }
     vote(option: string | PollOption): Promise<this>
     vote(options: (string | PollOption)[]): Promise<this>
     vote(options: string | PollOption | (string | PollOption)[]): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     fetch(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     end(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     get canEnd(): boolean {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     public get active(): boolean {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
         if (this._active /* && (this.expiresAt has passed) */) this._active = false
         return this._active
     }

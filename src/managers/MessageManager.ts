@@ -1,5 +1,5 @@
-import type { Channel, Client, Collection, Message } from ".."
-import { BaseManager } from ".."
+import type { Channel, Client, Collection, Message } from '..'
+import { BaseManager } from '..'
 
 export type MessageRequestParams = {
     before_id?: string
@@ -15,7 +15,10 @@ interface MessageManagerInterface<T extends Message> {
     fetch(options: MessageRequestParams): Promise<Collection<string, T>>
 }
 
-export default abstract class MessageManager<T extends Channel, U extends Message> extends BaseManager<U> implements MessageManagerInterface<U> {
+export default abstract class MessageManager<T extends Channel, U extends Message>
+    extends BaseManager<U>
+    implements MessageManagerInterface<U>
+{
     readonly channel: T
     constructor(client: Client, channel: T, holds: new (client: Client, ...args: any) => U) {
         super(client, holds)

@@ -1,6 +1,6 @@
-import type { PollOptionData } from "groupme-api-types"
-import type { Poll, User } from ".."
-import { Collection } from ".."
+import type { PollOptionData } from 'groupme-api-types'
+import type { Poll, User } from '..'
+import { Collection } from '..'
 
 interface PollOptionInterface {
     vote(): Promise<this>
@@ -20,6 +20,6 @@ export default class PollOption implements PollOptionInterface {
         this.voters = new Collection<string, User>()
     }
     vote(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 }

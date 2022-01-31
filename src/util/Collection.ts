@@ -1,1 +1,1 @@
-export { default as Collection } from "@discordjs/collection"
+export { default as Collection } from '@discordjs/collection'

@@ -1,11 +1,11 @@
-import EventEmitter from "events"
-import type { APIClientUser } from "groupme-api-types"
-import ChatManager from "../managers/ChatManager"
-import GroupManager from "../managers/GroupManager"
-import UserManager from "../managers/UserManager"
-import RESTManager from "../rest/rest"
-import WS from "../util/Websocket"
-import ClientUser from "./ClientUser"
+import EventEmitter from 'events'
+import type { APIClientUser } from 'groupme-api-types'
+import ChatManager from '../managers/ChatManager'
+import GroupManager from '../managers/GroupManager'
+import UserManager from '../managers/UserManager'
+import RESTManager from '../rest/rest'
+import WS from '../util/Websocket'
+import ClientUser from './ClientUser'
 
 interface ClientInterface {
     groups: GroupManager
@@ -34,7 +34,7 @@ export default class Client extends EventEmitter implements ClientInterface {
         this.ws = new WS(this)
     }
     login = async (): Promise<Client> => {
-        const me = await this.rest.api<APIClientUser>("GET", "users/me")
+        const me = await this.rest.api<APIClientUser>('GET', 'users/me')
         this.user = new ClientUser(this, {
             avatar: me.image_url,
             id: me.user_id,

@@ -1,7 +1,7 @@
-import type { GetChatMessageResponse, GetChatMessagesQuery, GetChatMessagesResponse } from "groupme-api-types"
-import type { Chat, Client } from ".."
-import { ChatMessage, Collection, MessageManager } from ".."
-import type { MessageRequestParams } from "./MessageManager"
+import type { GetChatMessageResponse, GetChatMessagesQuery, GetChatMessagesResponse } from 'groupme-api-types'
+import type { Chat, Client } from '..'
+import { ChatMessage, Collection, MessageManager } from '..'
+import type { MessageRequestParams } from './MessageManager'
 
 export default class ChatMessageManager extends MessageManager<Chat, ChatMessage> {
     constructor(client: Client, channel: Chat) {
@@ -12,12 +12,14 @@ export default class ChatMessageManager extends MessageManager<Chat, ChatMessage
     fetch(id: string): Promise<ChatMessage>
     fetch(ids: string[]): Promise<Collection<string, ChatMessage>>
     fetch(options: MessageRequestParams): Promise<Collection<string, ChatMessage>>
-    public async fetch(options?: string | string[] | MessageRequestParams): Promise<ChatMessage | Collection<string, ChatMessage>> {
-        if (typeof options === "string") {
+    public async fetch(
+        options?: string | string[] | MessageRequestParams,
+    ): Promise<ChatMessage | Collection<string, ChatMessage>> {
+        if (typeof options === 'string') {
             return await this.fetchId(options)
         } else if (Array.isArray(options)) {
             return await this.fetchIds(options)
-        } else if (typeof options === "object") {
+        } else if (typeof options === 'object') {
             return await this.fetchIndex(options)
         } else {
             return await this.fetchAll()
@@ -25,14 +27,16 @@ export default class ChatMessageManager extends MessageManager<Chat, ChatMessage
     }
 
     private async fetchId(id: string): Promise<ChatMessage> {
-        const res = await this.client.rest.api<GetChatMessageResponse>("GET", `direct_messages/${id}`, { query: { other_user_id: this.channel.recipient.id } })
+        const res = await this.client.rest.api<GetChatMessageResponse>('GET', `direct_messages/${id}`, {
+            query: { other_user_id: this.channel.recipient.id },
+        })
         const message = this._upsert(new ChatMessage(this.client, this.channel, res.message))
         return message
     }
 
     private async fetchIds(ids: string[]): Promise<Collection<string, ChatMessage>> {
         const messages = await Promise.all(ids.map<Promise<ChatMessage>>(this.fetchId))
-        const batch = new Collection<string, ChatMessage>(messages.map((m) => [m.id, m]))
+        const batch = new Collection<string, ChatMessage>(messages.map(m => [m.id, m]))
         return batch
     }
 
@@ -44,7 +48,12 @@ export default class ChatMessageManager extends MessageManager<Chat, ChatMessage
         if (options.limit !== undefined) apiParams.limit = options.limit
 
         const batch = new Collection<string, ChatMessage>()
-        const res = await this.client.rest.api<GetChatMessagesResponse>("GET", `direct_messages`, { query: apiParams }, { allowNull: true })
+        const res = await this.client.rest.api<GetChatMessagesResponse>(
+            'GET',
+            `direct_messages`,
+            { query: apiParams },
+            { allowNull: true },
+        )
 
         if (!res) return batch
 

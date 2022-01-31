@@ -1,7 +1,7 @@
-import { ok } from "assert"
-import EventEmitter from "events"
-import WebSocket from "ws"
-import type { Client } from ".."
+import { ok } from 'assert'
+import EventEmitter from 'events'
+import WebSocket from 'ws'
+import type { Client } from '..'
 
 export default class WS {
     client: Client
@@ -15,22 +15,22 @@ export default class WS {
     }
     init = async () =>
         new Promise<void>((resolve, reject) => {
-            this.ws = new WebSocket("wss://push.groupme.com/faye")
-                .on("open", () => {
+            this.ws = new WebSocket('wss://push.groupme.com/faye')
+                .on('open', () => {
                     this.handshake()
                 })
-                .on("message", (data) => this.handle(data))
+                .on('message', data => this.handle(data))
             this.channels
-                .once("/meta/handshake", (data) => {
-                    if (!this.client.user) return reject("Client user must be defined before init")
+                .once('/meta/handshake', data => {
+                    if (!this.client.user) return reject('Client user must be defined before init')
                     this.client_id = data.clientId
                     this.subscribe(`/user/${this.client.user.id}`)
                 })
-                .once("/meta/subscribe", (data) => {
+                .once('/meta/subscribe', data => {
                     this.connect()
                     resolve()
                 })
-                .on("/meta/connect", (data) => {
+                .on('/meta/connect', data => {
                     this.connect()
                 })
             // this.debug();
@@ -47,9 +47,9 @@ export default class WS {
         data.id = this.request_id++
         data.clientId = this.client_id
         const str = JSON.stringify([data])
-        this.ws.send(str, (err) => {
+        this.ws.send(str, err => {
             if (err) {
-                console.error("An error occurred while trying to send:", data)
+                console.error('An error occurred while trying to send:', data)
                 throw err
             }
             // console.log('SENT:', data)
@@ -57,22 +57,22 @@ export default class WS {
     }
     private handshake = () => {
         this.send({
-            channel: "/meta/handshake",
-            version: "1.0",
-            supportedConnectionTypes: ["websocket"],
+            channel: '/meta/handshake',
+            version: '1.0',
+            supportedConnectionTypes: ['websocket'],
         })
     }
     private subscribe = (channel: string) => {
         this.send({
-            channel: "/meta/subscribe",
+            channel: '/meta/subscribe',
             subscription: channel,
             ext: { access_token: this.client.token },
         })
     }
     private connect = () => {
         this.send({
-            channel: "/meta/connect",
-            connectionType: "websocket",
+            channel: '/meta/connect',
+            connectionType: 'websocket',
         })
     }
 
@@ -84,36 +84,36 @@ export default class WS {
         ok(this.ws)
 
         this.ws
-            .on("open", () => {
-                console.log("Event: OPEN")
+            .on('open', () => {
+                console.log('Event: OPEN')
             })
-            .on("upgrade", (request) => {
-                console.log("Event: UPGRADE")
-                console.log("Request:", request.headers)
+            .on('upgrade', request => {
+                console.log('Event: UPGRADE')
+                console.log('Request:', request.headers)
             })
-            .on("close", (code, reason) => {
-                console.log("Event: CLOSE")
-                console.log("Code:", code)
-                console.log("Reason:", reason.toString())
+            .on('close', (code, reason) => {
+                console.log('Event: CLOSE')
+                console.log('Code:', code)
+                console.log('Reason:', reason.toString())
                 console.log()
             })
-            .on("message", (data) => {
-                console.log("MESSAGE:", JSON.parse(data.toString())[0])
+            .on('message', data => {
+                console.log('MESSAGE:', JSON.parse(data.toString())[0])
             })
-            .on("ping", (data) => {
-                console.log("PING:", data.toString())
+            .on('ping', data => {
+                console.log('PING:', data.toString())
             })
-            .on("pong", (data) => {
-                console.log("PONG:", data.toString())
+            .on('pong', data => {
+                console.log('PONG:', data.toString())
             })
-            .on("error", (err) => {
-                console.log("Event: ERROR")
-                console.log("Error:", err)
+            .on('error', err => {
+                console.log('Event: ERROR')
+                console.log('Error:', err)
             })
-            .on("unexpected-response", (request, response) => {
-                console.log("Event: UNEXPECTED RESPONSE")
-                console.log("Request:", request.getHeaders())
-                console.log("Response:", response.headers)
+            .on('unexpected-response', (request, response) => {
+                console.log('Event: UNEXPECTED RESPONSE')
+                console.log('Request:', request.getHeaders())
+                console.log('Response:', response.headers)
             })
     }
 }

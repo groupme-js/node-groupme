@@ -1,6 +1,14 @@
-import type { APIGroup, PostGroupMessageBody, PostGroupMessageResponse, PatchGroupBody, PatchGroupResponse, PostChangeOwnersBody, PostChangeOwnersResponse } from "groupme-api-types"
-import type { Client, FormerGroup, Member, SendableChannelInterface } from ".."
-import { BaseGroup, ChannelType, GroupMessage, GroupMessageManager, PollManager } from ".."
+import type {
+    APIGroup,
+    PostGroupMessageBody,
+    PostGroupMessageResponse,
+    PatchGroupBody,
+    PatchGroupResponse,
+    PostChangeOwnersBody,
+    PostChangeOwnersResponse,
+} from 'groupme-api-types'
+import type { Client, FormerGroup, Member, SendableChannelInterface } from '..'
+import { BaseGroup, ChannelType, GroupMessage, GroupMessageManager, PollManager } from '..'
 
 type GroupUpdateOptions = {
     name: string
@@ -38,7 +46,9 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
                 source_guid: this.client.rest.guid(),
             },
         }
-        const response = await this.client.rest.api<PostGroupMessageResponse>("POST", `groups/${this.id}/messages`, { body })
+        const response = await this.client.rest.api<PostGroupMessageResponse>('POST', `groups/${this.id}/messages`, {
+            body,
+        })
         const message = new GroupMessage(this.client, this, response.message)
         return this.messages._upsert(message)
     }
@@ -49,7 +59,7 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
 
     async update(options: GroupUpdateOptions): Promise<Group> {
         const body: PatchGroupBody = options
-        const response = await this.client.rest.api<PatchGroupResponse>("POST", `groups/${this.id}/update`, { body })
+        const response = await this.client.rest.api<PatchGroupResponse>('POST', `groups/${this.id}/update`, { body })
         const group = new Group(this.client, response)
         return this.client.groups._upsert(group)
     }
@@ -63,26 +73,28 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
                 },
             ],
         }
-        const response = await this.client.rest.api<PostChangeOwnersResponse>("POST", "groups/change_owners", { body })
+        const response = await this.client.rest.api<PostChangeOwnersResponse>('POST', 'groups/change_owners', { body })
         const status = response.results[0].status
-        let errorMessage = ""
+        let errorMessage = ''
         switch (status) {
-            case "200":
+            case '200':
                 return this.fetch()
-            case "400":
-                errorMessage = "You cannot transfer a group to yourself."
+            case '400':
+                errorMessage = 'You cannot transfer a group to yourself.'
                 break
-            case "403":
-                errorMessage = "You cannot transfer a group you do not own."
+            case '403':
+                errorMessage = 'You cannot transfer a group you do not own.'
                 break
-            case "404":
-                errorMessage = "Group not found, or new owner is not a member of the group."
+            case '404':
+                errorMessage = 'Group not found, or new owner is not a member of the group.'
                 break
-            case "405":
-                errorMessage = "Invalid request; Request object is missing a required field, or one of the required fields is not an ID."
+            case '405':
+                errorMessage =
+                    'Invalid request; Request object is missing a required field, or one of the required fields is not an ID.'
                 break
             default:
-                errorMessage = "Idk what this status code means, but it's probably an error. It wasn't on the docs and I've never seen it before. Please report this to the developers of node-groupme and/or the GroupMe API!"
+                errorMessage =
+                    "Idk what this status code means, but it's probably an error. It wasn't on the docs and I've never seen it before. Please report this to the developers of node-groupme and/or the GroupMe API!"
                 break
         }
         const err = {
@@ -96,15 +108,15 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
     }
 
     delete(): Promise<void> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 
     changeNickname(nickname: string): Promise<Member> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 
     leave(): Promise<FormerGroup> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 
     public get me(): Member | undefined {

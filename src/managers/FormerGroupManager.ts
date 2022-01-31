@@ -1,6 +1,6 @@
-import type { APIGroup } from "groupme-api-types"
-import type { Client } from ".."
-import { BaseManager, Collection, FormerGroup, Member, User } from ".."
+import type { APIGroup } from 'groupme-api-types'
+import type { Client } from '..'
+import { BaseManager, Collection, FormerGroup, Member, User } from '..'
 
 interface FormerGroupManagerInterface {
     client: Client
@@ -14,22 +14,22 @@ export default class FormerGroupManager extends BaseManager<FormerGroup> impleme
     }
 
     public async fetch(): Promise<Collection<string, FormerGroup>> {
-        const groupsFormerResponse = await this.client.rest.api<APIGroup[]>("GET", "groups/former")
+        const groupsFormerResponse = await this.client.rest.api<APIGroup[]>('GET', 'groups/former')
         const batch = new Collection<string, FormerGroup>()
 
-        groupsFormerResponse.forEach((g) => {
+        groupsFormerResponse.forEach(g => {
             /** The Group object to store data in. */
             const formerGroup = this._upsert(new FormerGroup(this.client, g))
 
             // we know that g.members is always defined for former groups
             // however, it would be nice if the types reflected that...
-            g.members!.forEach((data) => {
+            g.members!.forEach(data => {
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
                         avatar: data.image_url,
                         name: data.name,
-                    })
+                    }),
                 )
                 formerGroup.members._upsert(new Member(this.client, formerGroup, user, data))
             })

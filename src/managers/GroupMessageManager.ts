@@ -1,7 +1,7 @@
-import type { GetGroupMessageResponse, GetGroupMessagesQuery, GetGroupMessagesResponse } from "groupme-api-types"
-import type { Client, Group } from ".."
-import { Collection, GroupMessage, MessageManager } from ".."
-import type { MessageRequestParams } from "./MessageManager"
+import type { GetGroupMessageResponse, GetGroupMessagesQuery, GetGroupMessagesResponse } from 'groupme-api-types'
+import type { Client, Group } from '..'
+import { Collection, GroupMessage, MessageManager } from '..'
+import type { MessageRequestParams } from './MessageManager'
 
 interface GroupMessageManagerInterface {
     client: Client
@@ -13,7 +13,10 @@ interface GroupMessageManagerInterface {
     fetch(options: MessageRequestParams): Promise<Collection<string, GroupMessage>>
 }
 
-export default class GroupMessageManager extends MessageManager<Group, GroupMessage> implements GroupMessageManagerInterface {
+export default class GroupMessageManager
+    extends MessageManager<Group, GroupMessage>
+    implements GroupMessageManagerInterface
+{
     constructor(client: Client, channel: Group) {
         super(client, channel, GroupMessage)
     }
@@ -22,12 +25,14 @@ export default class GroupMessageManager extends MessageManager<Group, GroupMess
     fetch(id: string): Promise<GroupMessage>
     fetch(ids: string[]): Promise<Collection<string, GroupMessage>>
     fetch(options: MessageRequestParams): Promise<Collection<string, GroupMessage>>
-    public async fetch(options?: string | string[] | MessageRequestParams): Promise<GroupMessage | Collection<string, GroupMessage>> {
-        if (typeof options === "string") {
+    public async fetch(
+        options?: string | string[] | MessageRequestParams,
+    ): Promise<GroupMessage | Collection<string, GroupMessage>> {
+        if (typeof options === 'string') {
             return await this.fetchId(options)
         } else if (Array.isArray(options)) {
             return await this.fetchIds(options)
-        } else if (typeof options === "object") {
+        } else if (typeof options === 'object') {
             return await this.fetchIndex(options)
         } else {
             return await this.fetchAll()
@@ -35,14 +40,17 @@ export default class GroupMessageManager extends MessageManager<Group, GroupMess
     }
 
     private async fetchId(id: string): Promise<GroupMessage> {
-        const res = await this.client.rest.api<GetGroupMessageResponse>("GET", `groups/${this.channel.id}/messages/${id}`)
+        const res = await this.client.rest.api<GetGroupMessageResponse>(
+            'GET',
+            `groups/${this.channel.id}/messages/${id}`,
+        )
         const message = this._upsert(new GroupMessage(this.client, this.channel, res.message))
         return message
     }
 
     private async fetchIds(ids: string[]): Promise<Collection<string, GroupMessage>> {
         const messages = await Promise.all(ids.map<Promise<GroupMessage>>(this.fetchId))
-        const batch = new Collection<string, GroupMessage>(messages.map((m) => [m.id, m]))
+        const batch = new Collection<string, GroupMessage>(messages.map(m => [m.id, m]))
         return batch
     }
 
@@ -54,7 +62,12 @@ export default class GroupMessageManager extends MessageManager<Group, GroupMess
         if (options.limit !== undefined) apiParams.limit = options.limit
 
         const batch = new Collection<string, GroupMessage>()
-        const res = await this.client.rest.api<GetGroupMessagesResponse>("GET", `groups/${this.channel.id}/messages`, { query: apiParams }, { allowNull: true })
+        const res = await this.client.rest.api<GetGroupMessagesResponse>(
+            'GET',
+            `groups/${this.channel.id}/messages`,
+            { query: apiParams },
+            { allowNull: true },
+        )
 
         if (!res) return batch
 

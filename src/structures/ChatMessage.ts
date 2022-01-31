@@ -1,4 +1,4 @@
-import { Message } from ".."
+import { Message } from '..'
 
 interface ChatMessageInterface {}
 

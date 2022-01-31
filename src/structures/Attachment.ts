@@ -6,21 +6,21 @@ export default abstract class Attachment {
 }
 
 export class ImageAttachment extends Attachment {
-    type = "image"
+    type = 'image'
     url: string
     constructor(data: Omit<ImageAttachment, keyof Attachment>) {
-        super("image")
+        super('image')
         this.url = data.url
     }
 }
 
 export class LocationAttachment extends Attachment {
-    type = "location"
+    type = 'location'
     lat: string
     lng: string
     name: string
     constructor(data: Omit<LocationAttachment, keyof Attachment>) {
-        super("location")
+        super('location')
         this.lat = data.lat
         this.lng = data.lng
         this.name = data.name
@@ -28,20 +28,20 @@ export class LocationAttachment extends Attachment {
 }
 
 export class SplitAttachment extends Attachment {
-    type = "split"
+    type = 'split'
     token: string
     constructor(data: Omit<SplitAttachment, keyof Attachment>) {
-        super("split")
+        super('split')
         this.token = data.token
     }
 }
 
 export class EmojiAttachment extends Attachment {
-    type = "emoji"
+    type = 'emoji'
     placeholder: string
     charmap: [number, number][]
     constructor(data: Omit<EmojiAttachment, keyof Attachment>) {
-        super("emoji")
+        super('emoji')
         this.placeholder = data.placeholder
         this.charmap = data.charmap
     }

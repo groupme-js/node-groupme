@@ -1,6 +1,6 @@
-import type { APIChatMessage, APIGroupMessage } from "groupme-api-types"
-import type { Attachment, Channel, Client } from ".."
-import { User } from ".."
+import type { APIChatMessage, APIGroupMessage } from 'groupme-api-types'
+import type { Attachment, Channel, Client } from '..'
+import { User } from '..'
 
 interface MessageInterface {
     fetch(): Promise<this>
@@ -28,32 +28,32 @@ export default abstract class Message implements MessageInterface {
                 id: data.user_id,
                 avatar: data.avatar_url,
                 name: data.name,
-            })
+            }),
         )
         this.channel = channel
         this.text = data.text
         this.createdAt = data.created_at
         this.sourceGuid = data.source_guid
-        this.system = "system" in data ? data.system : false
-        this.likes = data.favorited_by.map((id) => client.users.cache.get(id) || id)
+        this.system = 'system' in data ? data.system : false
+        this.likes = data.favorited_by.map(id => client.users.cache.get(id) || id)
         this.attachments = data.attachments
     }
     fetch(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     reply(message: string): Promise<Message> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     like(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     unlike(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     delete(): Promise<this> {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
     get canDelete(): boolean {
-        throw new Error("Method not implemented.")
+        throw new Error('Method not implemented.')
     }
 }
