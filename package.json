@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
-  "scripts": {    
+  "scripts": {
     "clean": "rm -rf dist",
     "compile": "npm run clean && tsc -p .",
     "docs": "typedoc --theme ./node_modules/typedoc-neo-theme/bin/default",
@@ -29,6 +29,8 @@
   },
   "homepage": "https://groupme.js.org",
   "devDependencies": {
+    "@commitlint/cli": "^16.1.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "@types/node": "^14.14.27",
     "@types/node-fetch": "^2.5.8",
     "@types/ws": "^7.4.7",
