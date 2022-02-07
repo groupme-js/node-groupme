@@ -11,7 +11,7 @@ export default class Member implements MemberInterface {
     readonly id: string
     nickname: string
     muted: boolean
-    autokicked: boolean
+    // autokicked: boolean
     roles: ('admin' | 'owner' | 'user')[]
 
     constructor(client: Client, group: BaseGroup, user: User, data: APIMember) {
@@ -22,7 +22,7 @@ export default class Member implements MemberInterface {
         this.memberID = data.id
         this.nickname = data.nickname
         this.muted = data.muted
-        this.autokicked = data.autokicked
+        // this.autokicked = data.autokicked
         this.roles = data.roles
     }
 
