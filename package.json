@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
-    "groupme-api-types": "^0.9.6",
+    "groupme-api-types": "^1.0.1",
     "node-fetch": "^2.6.1",
     "ws": "^8.1.0"
   },
