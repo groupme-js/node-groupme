@@ -29,7 +29,11 @@ type RequestOptions = {
 }
 
 export default class RESTManager {
-    static BASE_URL = 'https://api.groupme.com/v3/'
+    static URLS = {
+        v4: 'https://api.groupme.com/v4/',
+        v3: 'https://api.groupme.com/v3/',
+        v2: 'https://v2.groupme.com/',
+    }
     public client: Client
     private generator: Generator<number, void, unknown>
     constructor(client: Client) {
@@ -37,8 +41,13 @@ export default class RESTManager {
         this.generator = i()
     }
 
-    async api<T>(method: HttpMethod, path: string, data?: RequestOptions): Promise<T>
     async api<T>(
+        method: HttpMethod,
+        path: string,
+        data?: RequestOptions,
+        options?: { version: keyof typeof RESTManager.URLS },
+    ): Promise<T>
+    async api(
         method: HttpMethod,
         path: string,
         data: RequestOptions,
@@ -53,10 +62,18 @@ export default class RESTManager {
     async api<T>(
         method: HttpMethod,
         path: string,
-        data?: RequestOptions,
-        options?: { skipJsonParse?: boolean; allowNull?: boolean },
+        data: RequestOptions = {},
+        {
+            skipJsonParse = false,
+            allowNull = false,
+            version = 'v3',
+        }: {
+            skipJsonParse?: boolean
+            allowNull?: boolean
+            version?: keyof typeof RESTManager.URLS
+        } = {},
     ): Promise<T | Response | null> {
-        const url = new URL(path, RESTManager.BASE_URL)
+        const url = new URL(path, RESTManager.URLS[version])
         if (data?.query) {
             for (const key in data.query) {
                 if (Object.prototype.hasOwnProperty.call(data.query, key)) {
@@ -76,12 +93,12 @@ export default class RESTManager {
         }
 
         const response = await fetch(url, init)
-        // console.log(`-----\nAPI request\nurl: ${url}\n-----`)
+        console.log(`-----\nAPI request\nurl: ${url}\n-----`)
 
-        if (options?.skipJsonParse) return response
+        if (skipJsonParse) return response
         // for (const header of response.headers.entries()) // console.log(header)
         if (response.headers.get('content-length') === '0') {
-            if (options?.allowNull) return null
+            if (allowNull) return null
             else throw createAPIError('Received a response with Content-Length: 0, but expected content', url, data, {})
         }
 
