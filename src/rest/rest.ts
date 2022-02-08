@@ -93,7 +93,7 @@ export default class RESTManager {
         }
 
         const response = await fetch(url, init)
-        console.log(`-----\nAPI request\nurl: ${url}\n-----`)
+        // console.log(`-----\nAPI request\nurl: ${url}\n-----`)
 
         if (skipJsonParse) return response
         // for (const header of response.headers.entries()) // console.log(header)
