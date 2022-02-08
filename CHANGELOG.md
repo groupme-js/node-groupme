@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/groupme-js/node-groupme/compare/v2.0.0...v2.1.0) (2022-02-08)
+
+
+### Bug Fixes
+
+* :mute: remove logging ([7d740cb](https://github.com/groupme-js/node-groupme/commit/7d740cb6d80cdcd3d5eb976f6734605c55455b15))
+
+
+### Features
+
+* :sparkles: add support for API versions v2, v3, v4 ([c06d5f9](https://github.com/groupme-js/node-groupme/commit/c06d5f9c19f5a8dd1d33c948fb6f0e4859e01720))
+
 # [2.0.0](https://github.com/groupme-js/node-groupme/compare/v1.0.0...v2.0.0) (2022-02-07)
 
 
