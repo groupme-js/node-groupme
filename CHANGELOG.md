@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/groupme-js/node-groupme/compare/v2.1.0...v2.2.0) (2022-02-09)
+
+
+### Features
+
+* **Relationships:** :sparkles: add relationship support ([9d5b534](https://github.com/groupme-js/node-groupme/commit/9d5b534882b42327725aa122ee805cea6ddaa490))
+
 # [2.1.0](https://github.com/groupme-js/node-groupme/compare/v2.0.0...v2.1.0) (2022-02-08)
 
 
