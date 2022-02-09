@@ -1,13 +1,12 @@
 import EventEmitter from 'events'
 import type { APIClientUser } from 'groupme-api-types'
-import ChatManager from '../managers/ChatManager'
-import GroupManager from '../managers/GroupManager'
-import UserManager from '../managers/UserManager'
+import { ChatManager, GroupManager, RelationshipManager, UserManager } from '..'
 import RESTManager from '../rest/rest'
 import WS from '../util/Websocket'
 import ClientUser from './ClientUser'
 
 interface ClientInterface {
+    relationships: RelationshipManager
     groups: GroupManager
     chats: ChatManager
     users: UserManager
@@ -17,6 +16,7 @@ interface ClientInterface {
 }
 
 export default class Client extends EventEmitter implements ClientInterface {
+    relationships: RelationshipManager
     groups: GroupManager
     users: UserManager
     chats: ChatManager
@@ -27,6 +27,7 @@ export default class Client extends EventEmitter implements ClientInterface {
     constructor(token: string) {
         super()
         this.token = token
+        this.relationships = new RelationshipManager(this)
         this.groups = new GroupManager(this)
         this.users = new UserManager(this)
         this.chats = new ChatManager(this)
