@@ -24,6 +24,8 @@ export { default as Group } from './structures/Group'
 export { default as FormerGroupManager } from './managers/FormerGroupManager'
 export { default as ChatManager } from './managers/ChatManager'
 export { default as GroupManager } from './managers/GroupManager'
+export { default as Relationship } from './structures/Relationship'
+export { default as RelationshipManager } from './managers/RelationshipManager'
 
 export { default as Attachment } from './structures/Attachment'
 export { default as PollOption } from './structures/PollOption'
