@@ -24,6 +24,23 @@ Join the [node-groupme server on Discord](https://discord.gg/5yxWtuuEZg) to disc
 
 ### Getting Started
 ```
+npm i node-groupme
+```
+```js
+const GroupMe = require('node-groupme');
+const client = new GroupMe.Client('YOUR_TOKEN_HERE');
+
+client.login()
+    .then(client => client.groups.fetch())
+    .then(groups => groups.forEach(group => console.log(group.name)))
+    .then(client.logout)
+    .catch(console.error);
+```
+
+---
+
+### Getting Started (Contributing)
+```
 git clone git@github.com:groupme-js/node-groupme.git
 npm i
 npm run prepare
