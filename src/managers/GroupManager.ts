@@ -2,6 +2,13 @@ import type { APIGroup } from 'groupme-api-types'
 import type { Client } from '..'
 import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from '..'
 
+type GroupCreateOptions = {
+    name: string
+    description?: string
+    image_url?: string
+    share?: boolean
+}
+
 type GroupsRequestParams = {
     page?: number
     per_page?: number
@@ -20,6 +27,7 @@ interface GroupManagerInterface {
     client: Client
     cache: Collection<string, Group>
     former: FormerGroupManager
+    create(options: GroupCreateOptions): Promise<Group>
     fetch(): Promise<Collection<string, Group>>
     fetch(id: string): Promise<Group>
     fetch(ids: string[]): Promise<Collection<string, Group | null>>
@@ -32,6 +40,31 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     constructor(client: Client) {
         super(client, Group)
         this.former = new FormerGroupManager(client)
+    }
+
+    /**
+     * Creates a group.
+     *
+     * @param options Options for creating a group.
+     * @returns The created group.
+     */
+    create(options: GroupCreateOptions): Promise<Group>
+    public async create(options: GroupCreateOptions): Promise<Group> {
+        const res = await this.client.rest.api<APIGroup>('POST', 'groups', { body: options })
+        const group = this._upsert(new Group(this.client, res))
+        if (res.members) {
+            res.members.forEach(data => {
+                const user = this.client.users._upsert(
+                    new User(this.client, {
+                        id: data.user_id,
+                        avatar: data.image_url,
+                        name: data.name,
+                    }),
+                )
+                group.members._upsert(new Member(this.client, group, user, data))
+            })
+        }
+        return await group
     }
 
     /**
