@@ -1,12 +1,16 @@
-import type { APIGroup } from 'groupme-api-types'
+import type { APIGroup, PostGroupBody, PostGroupResponse } from 'groupme-api-types'
 import type { Client } from '..'
 import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from '..'
 
 type GroupCreateOptions = {
     name: string
+    type?: 'private' | 'closed'
     description?: string
     image_url?: string
     share?: boolean
+    join_question?: string
+    requires_approval?: boolean
+    office_mode?: boolean
 }
 
 type GroupsRequestParams = {
@@ -50,7 +54,18 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
      */
     create(options: GroupCreateOptions): Promise<Group>
     public async create(options: GroupCreateOptions): Promise<Group> {
-        const res = await this.client.rest.api<PostGroupResponse>('POST', 'groups', { body: options })
+        const reqBody: PostGroupBody = { name: options.name }
+        if (options.type !== undefined) reqBody.type = options.type
+        if (options.description !== undefined) reqBody.description = options.description
+        if (options.image_url !== undefined) reqBody.image_url = options.description
+        if (options.share !== undefined) reqBody.share = options.share
+        if (options.join_question !== undefined) {
+            reqBody.show_join_question = true
+            reqBody.join_question = { text: options.join_question, type: 'join_reason/questions/text' }
+        }
+        if (options.requires_approval !== undefined) reqBody.requires_approval = options.requires_approval
+        if (options.office_mode !== undefined) reqBody.office_mode = options.office_mode
+        const res = await this.client.rest.api<PostGroupResponse>('POST', 'groups', { body: reqBody })
         const group = this._upsert(new Group(this.client, res))
         if (res.members) {
             res.members.forEach(data => {
