@@ -50,7 +50,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
      */
     create(options: GroupCreateOptions): Promise<Group>
     public async create(options: GroupCreateOptions): Promise<Group> {
-        const res = await this.client.rest.api<APIGroup>('POST', 'groups', { body: options })
+        const res = await this.client.rest.api<PostGroupResponse>('POST', 'groups', { body: options })
         const group = this._upsert(new Group(this.client, res))
         if (res.members) {
             res.members.forEach(data => {
