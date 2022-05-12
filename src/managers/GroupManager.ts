@@ -64,7 +64,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
                 group.members._upsert(new Member(this.client, group, user, data))
             })
         }
-        return await group
+        return group
     }
 
     /**
