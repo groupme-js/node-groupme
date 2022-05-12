@@ -1,6 +1,17 @@
-import type { APIGroup } from 'groupme-api-types'
+import type { APIGroup, PostGroupBody, PostGroupResponse } from 'groupme-api-types'
 import type { Client } from '..'
 import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from '..'
+
+type GroupCreateOptions = {
+    name: string
+    type?: 'private' | 'closed'
+    description?: string
+    image_url?: string
+    share?: boolean
+    join_question?: string
+    requires_approval?: boolean
+    office_mode?: boolean
+}
 
 type GroupsRequestParams = {
     page?: number
@@ -20,6 +31,7 @@ interface GroupManagerInterface {
     client: Client
     cache: Collection<string, Group>
     former: FormerGroupManager
+    create(options: GroupCreateOptions): Promise<Group>
     fetch(): Promise<Collection<string, Group>>
     fetch(id: string): Promise<Group>
     fetch(ids: string[]): Promise<Collection<string, Group | null>>
@@ -32,6 +44,42 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     constructor(client: Client) {
         super(client, Group)
         this.former = new FormerGroupManager(client)
+    }
+
+    /**
+     * Creates a group.
+     *
+     * @param options Options for creating a group.
+     * @returns The created group.
+     */
+    create(options: GroupCreateOptions): Promise<Group>
+    public async create(options: GroupCreateOptions): Promise<Group> {
+        const body: PostGroupBody = { name: options.name }
+        if (options.type !== undefined) body.type = options.type
+        if (options.description !== undefined) body.description = options.description
+        if (options.image_url !== undefined) body.image_url = options.description
+        if (options.share !== undefined) body.share = options.share
+        if (options.join_question !== undefined) {
+            body.show_join_question = true
+            body.join_question = { text: options.join_question, type: 'join_reason/questions/text' }
+        }
+        if (options.requires_approval !== undefined) body.requires_approval = options.requires_approval
+        if (options.office_mode !== undefined) body.office_mode = options.office_mode
+        const res = await this.client.rest.api<PostGroupResponse>('POST', 'groups', { body })
+        const group = this._upsert(new Group(this.client, res))
+        if (res.members) {
+            res.members.forEach(data => {
+                const user = this.client.users._upsert(
+                    new User(this.client, {
+                        id: data.user_id,
+                        avatar: data.image_url,
+                        name: data.name,
+                    }),
+                )
+                group.members._upsert(new Member(this.client, group, user, data))
+            })
+        }
+        return group
     }
 
     /**
