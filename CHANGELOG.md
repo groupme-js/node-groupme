@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/groupme-js/node-groupme/compare/v2.3.0...v2.4.0) (2022-05-14)
+
+
+### Features
+
+* **Groups:** implement Group#delete ([cda2b80](https://github.com/groupme-js/node-groupme/commit/cda2b80a12ebb59e9ff8a2f99f300532b9645735))
+
 # [2.3.0](https://github.com/groupme-js/node-groupme/compare/v2.2.0...v2.3.0) (2022-05-12)
 
 
