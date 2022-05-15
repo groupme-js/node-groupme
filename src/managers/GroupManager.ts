@@ -1,4 +1,5 @@
-import type { APIGroup, PostGroupBody, PostGroupResponse } from 'groupme-api-types'
+import type { APIGroup, PostGroupBody, PostGroupResponse, PostJoinGroupResponse } from 'groupme-api-types'
+import { URL } from 'url'
 import type { Client } from '..'
 import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from '..'
 
@@ -32,6 +33,8 @@ interface GroupManagerInterface {
     cache: Collection<string, Group>
     former: FormerGroupManager
     create(options: GroupCreateOptions): Promise<Group>
+    join(inviteLink: string): Promise<Group>
+    join(groupID: string, shareToken: string): Promise<Group>
     fetch(): Promise<Collection<string, Group>>
     fetch(id: string): Promise<Group>
     fetch(ids: string[]): Promise<Collection<string, Group | null>>
@@ -69,6 +72,44 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         const group = this._upsert(new Group(this.client, res))
         if (res.members) {
             res.members.forEach(data => {
+                const user = this.client.users._upsert(
+                    new User(this.client, {
+                        id: data.user_id,
+                        avatar: data.image_url,
+                        name: data.name,
+                    }),
+                )
+                group.members._upsert(new Member(this.client, group, user, data))
+            })
+        }
+        return group
+    }
+
+    /**
+     * Joins a group.
+     *
+     * @param inviteLinkOrGroupID The group invite link or group ID.
+     * @param shareToken The group's share token.
+     * @returns The joined group.
+     */
+    join(inviteLink: string): Promise<Group>
+    join(groupID: string, shareToken: string): Promise<Group>
+    public async join(inviteLinkOrGroupID: string, shareToken?: string): Promise<Group> {
+        if (shareToken !== undefined) {
+            return await this.joinWithToken(inviteLinkOrGroupID, shareToken)
+        } else {
+            const urlPath = new URL(inviteLinkOrGroupID).pathname
+            const matches = urlPath.match(/.+\/(\d+)\/([A-Za-z0-9]+)$/)
+            if (matches === null) throw new Error(`Invalid invite link\n-- URL: ${inviteLinkOrGroupID}`)
+            return await this.joinWithToken(matches[1], matches[2])
+        }
+    }
+
+    private async joinWithToken(groupID: string, shareToken: string): Promise<Group> {
+        const res = await this.client.rest.api<PostJoinGroupResponse>('POST', `groups/${groupID}/join/${shareToken}`)
+        const group = this._upsert(new Group(this.client, res.group))
+        if (res.group.members) {
+            res.group.members.forEach(data => {
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
