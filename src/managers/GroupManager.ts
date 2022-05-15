@@ -88,11 +88,17 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
     /**
      * Joins a group.
      *
-     * @param inviteLinkOrGroupID The group invite link or group ID.
-     * @param shareToken The group's share token.
+     * @param inviteLink The group invite link.
      * @returns The joined group.
      */
     join(inviteLink: string): Promise<Group>
+    /**
+     * Joins a group.
+     *
+     * @param groupID The group ID.
+     * @param shareToken The group's share token.
+     * @returns The joined group.
+     */
     join(groupID: string, shareToken: string): Promise<Group>
     public async join(inviteLinkOrGroupID: string, shareToken?: string): Promise<Group> {
         if (shareToken !== undefined) {
