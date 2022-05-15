@@ -1,14 +1,22 @@
 const { client, data } = require(".")
 
+const { setupServer } = require("msw/node")
+const { handlers } = require("./handlers")
+
+const server = setupServer(...handlers)
 
 exports.mochaHooks = {
-    async beforeall(done) {
+    async beforeAll() {
+        server.listen()
         await client.login()
-        done()
-        
     },
-    async afterAll(done) {
+
+    async afterEach() {
+        server.resetHandlers()
+    },
+
+    async afterAll() {
         client.logout()
-        done()
+        server.close()
     },
 }
