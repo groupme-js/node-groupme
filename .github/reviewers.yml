@@ -1,0 +1,13 @@
+reviewers:
+  defaults:
+    - not-so-smart
+    - thewilloftheshadow
+
+files:
+  '.github/**':
+    - thewilloftheshadow
+  'tests/**':
+    - thewilloftheshadow
+
+options:
+  ignore_draft: true
