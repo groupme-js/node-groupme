@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/groupme-js/node-groupme/compare/v2.5.0...v2.6.0) (2022-05-15)
+
+
+### Features
+
+* Create autoreviewers github action ([6995694](https://github.com/groupme-js/node-groupme/commit/69956940c5033e592bc664a215ad5c2ddfe2e2d0))
+
 # [2.5.0](https://github.com/groupme-js/node-groupme/compare/v2.4.0...v2.5.0) (2022-05-15)
 
 
