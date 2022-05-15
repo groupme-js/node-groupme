@@ -1,3 +1,16 @@
+# [2.5.0](https://github.com/groupme-js/node-groupme/compare/v2.4.0...v2.5.0) (2022-05-15)
+
+
+### Bug Fixes
+
+* **Groups:** separate documentation of overloaded GroupManager#join ([999e0bf](https://github.com/groupme-js/node-groupme/commit/999e0bf96178ed3c8879cd75a59762b7a50ea9ee))
+* **Groups:** validate invite link hostname ([c6d9b9e](https://github.com/groupme-js/node-groupme/commit/c6d9b9ef22f74bcb7a5ecc04674855bb3e382942))
+
+
+### Features
+
+* **Groups:** implement GroupManager#join ([1422615](https://github.com/groupme-js/node-groupme/commit/14226158603bfec87437f14093c14887935fe7aa))
+
 # [2.4.0](https://github.com/groupme-js/node-groupme/compare/v2.3.0...v2.4.0) (2022-05-14)
 
 
