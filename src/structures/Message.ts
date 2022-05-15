@@ -1,4 +1,4 @@
-import type { APIChatMessage, APIGroupMessage } from 'groupme-api-types'
+import type { APIChatMessage, APIGroupMessage, DeleteGroupMessageResponse } from 'groupme-api-types'
 import type { Attachment, Channel, Client } from '..'
 import { User } from '..'
 
@@ -7,7 +7,7 @@ interface MessageInterface {
     reply(message: string): Promise<Message>
     like(): Promise<this>
     unlike(): Promise<this>
-    delete(): Promise<this>
+    delete(): Promise<void>
     get canDelete(): boolean
 }
 
@@ -50,8 +50,11 @@ export default abstract class Message implements MessageInterface {
     unlike(): Promise<this> {
         throw new Error('Method not implemented.')
     }
-    delete(): Promise<this> {
-        throw new Error('Method not implemented.')
+    async delete(): Promise<void> {
+        await this.user.client.rest.api<DeleteGroupMessageResponse>(
+            'DELETE',
+            `conversations/${this.channel.id}/messages/${this.id}`,
+        )
     }
     get canDelete(): boolean {
         throw new Error('Method not implemented.')
