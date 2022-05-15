@@ -104,8 +104,10 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         if (shareToken !== undefined) {
             return await this.joinWithToken(inviteLinkOrGroupID, shareToken)
         } else {
-            const urlPath = new URL(inviteLinkOrGroupID).pathname
-            const matches = urlPath.match(/.+\/(\d+)\/([A-Za-z0-9]+)$/)
+            const inviteURL = new URL(inviteLinkOrGroupID)
+            if (!inviteURL.hostname.endsWith('groupme.com'))
+                throw new Error(`Invalid invite link\n-- URL: ${inviteLinkOrGroupID}`)
+            const matches = inviteURL.pathname.match(/.+\/(\d+)\/([A-Za-z0-9]+)$/)
             if (matches === null) throw new Error(`Invalid invite link\n-- URL: ${inviteLinkOrGroupID}`)
             return await this.joinWithToken(matches[1], matches[2])
         }
