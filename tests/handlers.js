@@ -17,6 +17,52 @@ const api = path => {
     return `https://api.groupme.com/v3${path}`
 }
 
+function wrapJsonBody(status, body, errors) {
+    const jsonBody = {
+        meta: {
+            code: status,
+        },
+        response: body
+    }
+    if(errors !== undefined) jsonBody.meta.errors = errors
+    
+    return jsonBody
+}
+
+function constructHandler(reqType, path, status, body, bodyType = 'json', errors, headers) {
+    const requestResolver = async (req, res, ctx) => {
+        const resParams = []
+        resParams.push(ctx.status(status))
+        if(body !== undefined) {
+            switch(bodyType) {
+                case 'json':
+                    resParams.push(ctx.json(wrapJsonBody(status, body, errors)))
+                case 'text':
+                    resParams.push(ctx.text(body))
+                case 'raw':
+                    resParams.push(ctx.body(body))
+                default:
+                    throw new Error('Body type not implemented')
+            }
+        }
+        if (headers !== undefined) resParams.push(ctx.set(headers))
+
+        return res(...resParams)
+    }
+
+    const type = reqType.toUppercase()
+    switch(type) {
+        case 'GET':
+            return rest.get(api(path), requestResolver)
+        case 'POST':
+            return rest.post(api(path), requestResolver)
+        case 'DELETE':
+            return rest.delete(api(path), requestResolver)
+        default:
+            throw new Error('Invalid HTTP request type')
+    }
+}
+
 const handlers = [
     rest.get(api('/users/me'), async (req, res, ctx) => {
         return res(
@@ -114,4 +160,4 @@ const handlers = [
     }),
 ]
 
-module.exports = { handlers }
+module.exports = { constructHandler, handlers }
