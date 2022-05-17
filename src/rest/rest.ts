@@ -21,7 +21,7 @@ function* i() {
     }
 }
 
-type HttpMethod = 'GET' | 'POST'
+type HttpMethod = 'GET' | 'POST' | 'DELETE'
 
 type RequestOptions = {
     query?: Record<string, unknown>
