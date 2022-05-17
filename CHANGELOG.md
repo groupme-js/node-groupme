@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/groupme-js/node-groupme/compare/v2.6.0...v2.7.0) (2022-05-17)
+
+
+### Features
+
+* **Messages:** implement Message#delete ([c1f4857](https://github.com/groupme-js/node-groupme/commit/c1f4857d1f26af907036c2beab5426342b98c465))
+
 # [2.6.0](https://github.com/groupme-js/node-groupme/compare/v2.5.0...v2.6.0) (2022-05-15)
 
 
