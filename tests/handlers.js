@@ -34,13 +34,15 @@ function constructHandler(reqType, path, status, body, bodyType = 'json', errors
         const resParams = []
         resParams.push(ctx.status(status))
         if(body !== undefined) {
+            let bodyContent = body
+            if(typeof body === 'function') bodyContent = body(req)
             switch(bodyType) {
                 case 'json':
-                    resParams.push(ctx.json(wrapJsonBody(status, body, errors)))
+                    resParams.push(ctx.json(wrapJsonBody(status, bodyContent, errors)))
                 case 'text':
-                    resParams.push(ctx.text(body))
+                    resParams.push(ctx.text(bodyContent))
                 case 'raw':
-                    resParams.push(ctx.body(body))
+                    resParams.push(ctx.body(bodyContent))
                 default:
                     throw new Error('Body type not implemented')
             }
@@ -50,7 +52,7 @@ function constructHandler(reqType, path, status, body, bodyType = 'json', errors
         return res(...resParams)
     }
 
-    const type = reqType.toUppercase()
+    const type = reqType.toUpperCase()
     switch(type) {
         case 'GET':
             return rest.get(api(path), requestResolver)
