@@ -1,4 +1,5 @@
 const { rest } = require('msw')
+const { setupServer } = require('msw/node')
 
 const package = require("../package.json")
 
@@ -162,4 +163,6 @@ const handlers = [
     }),
 ]
 
-module.exports = { constructHandler, handlers }
+const server = setupServer(...handlers)
+
+module.exports = { constructHandler, server }
