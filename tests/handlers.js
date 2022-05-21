@@ -40,12 +40,15 @@ function constructHandler(reqType, path, status, body, bodyType = 'json', errors
             switch(bodyType) {
                 case 'json':
                     resParams.push(ctx.json(wrapJsonBody(status, bodyContent, errors)))
+                    break
                 case 'text':
                     resParams.push(ctx.text(bodyContent))
+                    break
                 case 'raw':
                     resParams.push(ctx.body(bodyContent))
+                    break
                 default:
-                    throw new Error('Body type not implemented')
+                    throw new Error(`Body type not implemented - ${bodyType}`)
             }
         }
         if (headers !== undefined) resParams.push(ctx.set(headers))
