@@ -27,7 +27,7 @@ export default class FormerGroupManager extends BaseManager<FormerGroup> impleme
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
-                        avatar: data.image_url,
+                        avatar_url: data.image_url,
                         name: data.name,
                     }),
                 )

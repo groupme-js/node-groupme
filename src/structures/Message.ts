@@ -26,7 +26,7 @@ export default abstract class Message implements MessageInterface {
         this.user = client.users._upsert(
             new User(client, {
                 id: data.user_id,
-                avatar: data.avatar_url,
+                avatar_url: data.avatar_url,
                 name: data.name,
             }),
         )
