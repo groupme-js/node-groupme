@@ -1,11 +1,9 @@
 import type { APIRelationship } from 'groupme-api-types/v4'
 import type { Client } from '..'
-import { User } from '..'
+import { Base, User } from '..'
 
-export default class Relationship {
-    client: Client
+export default class Relationship extends Base {
     user: User
-    id: string
     reason: number
     hidden: boolean
     appInstalled: boolean
@@ -14,15 +12,14 @@ export default class Relationship {
     updatedAt: number
     _iso8601: string
     constructor(client: Client, data: APIRelationship) {
-        this.client = client
+        super(client, data.user_id)
         this.user = client.users._upsert(
             new User(client, {
                 id: data.user_id,
                 name: data.name,
-                avatar: data.avatar_url,
+                avatar_url: data.avatar_url,
             }),
         )
-        this.id = data.id
         this.reason = data.reason
         this.hidden = data.hidden
         this.appInstalled = data.app_installed
@@ -30,5 +27,21 @@ export default class Relationship {
         this.createdAt = data.created_at
         this.updatedAt = data.updated_at
         this._iso8601 = data.updated_at_iso8601
+    }
+    _patch(data: Partial<APIRelationship>): this {
+        this.user._patch({
+            name: data.name,
+            avatar_url: data.avatar_url,
+        })
+
+        if (data.app_installed !== undefined) this.appInstalled = data.app_installed
+        if (data.created_at !== undefined) this.createdAt = data.created_at
+        if (data.hidden !== undefined) this.hidden = data.hidden
+        if (data.mri !== undefined) this.mri = data.mri
+        if (data.reason !== undefined) this.reason = data.reason
+        if (data.updated_at !== undefined) this.updatedAt = data.updated_at
+        if (data.updated_at_iso8601) this._iso8601 = data.updated_at_iso8601
+
+        return this
     }
 }
