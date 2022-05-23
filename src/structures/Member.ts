@@ -9,6 +9,7 @@ export default class Member extends Base implements MemberInterface {
     readonly group: BaseGroup
     readonly memberID: string
     nickname: string
+    image_url: string | null
     muted: boolean
     // autokicked: boolean
     roles: ('admin' | 'owner' | 'user')[]
@@ -19,6 +20,7 @@ export default class Member extends Base implements MemberInterface {
         this.group = group
         this.memberID = data.id
         this.nickname = data.nickname
+        this.image_url = data.image_url
         this.muted = data.muted
         // this.autokicked = data.autokicked
         this.roles = data.roles
