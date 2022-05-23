@@ -1,6 +1,6 @@
 import type { APIPoll } from 'groupme-api-types'
-import type { Client, Group, PollOption, User } from '..'
-import { Collection } from '..'
+import type { Client, Group, User } from '..'
+import { Base, Collection, PollOption } from '..'
 
 interface PollInterface {
     fetch(): Promise<this>
@@ -13,10 +13,8 @@ interface PollInterface {
 type UserID = string
 type OptionID = string
 
-export default class Poll implements PollInterface {
-    readonly client: Client
+export default class Poll extends Base implements PollInterface {
     private _active: boolean
-    id: string
     question: string
     options: Collection<OptionID, PollOption>
     voters?: Collection<UserID, OptionID> | Collection<UserID, OptionID[]>
@@ -30,8 +28,7 @@ export default class Poll implements PollInterface {
     expiresAt: number
 
     constructor(client: Client, group: Group, creator: User, data: APIPoll) {
-        this.client = client
-        this.id = data.data.id
+        super(client, data.data.id)
         this.question = data.data.subject
         this.group = group
         this.creator = creator
@@ -42,6 +39,9 @@ export default class Poll implements PollInterface {
         this.updatedAt = data.data.last_modified
         this.expiresAt = data.data.expiration
         this.options = new Collection<OptionID, PollOption>()
+        data.data.options.forEach(option => {
+            this.options.set(option.id, new PollOption(this, option))
+        })
         this.voters = this.public
             ? this.multi
                 ? new Collection<UserID, OptionID[]>()
@@ -49,6 +49,20 @@ export default class Poll implements PollInterface {
             : undefined
         this.myVote = this.multi ? data.user_votes : data.user_vote
     }
+    _patch(data: Partial<APIPoll>): this {
+        if (data.data?.subject !== undefined) this.question = data.data.subject
+        if (data.data?.status !== undefined) this._active = data.data.status == 'active'
+        if (data.data?.type !== undefined) this.multi = data.data.type == 'multi'
+        if (data.data?.visibility !== undefined) this.public = data.data.visibility == 'public'
+        if (data.data?.created_at !== undefined) this.createdAt = data.data.created_at
+        if (data.data?.last_modified !== undefined) this.updatedAt = data.data.last_modified
+        if (data.data?.expiration !== undefined) this.expiresAt = data.data.expiration
+
+        this.myVote = this.multi ? data.user_votes : data.user_vote
+
+        return this
+    }
+
     vote(option: string | PollOption): Promise<this>
     vote(options: (string | PollOption)[]): Promise<this>
     vote(options: string | PollOption | (string | PollOption)[]): Promise<this> {
