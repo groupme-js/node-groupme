@@ -24,25 +24,7 @@ export default abstract class BaseGroup extends Channel {
     showJoinQuestion: boolean
     joinQuestion: string | null
     constructor(client: Client, data: APIGroup) {
-        super({
-            id: data.id,
-            client: client,
-            lastMessage: {
-                id: data.messages.last_message_id,
-                createdAt: data.messages.last_message_created_at,
-                text: data.messages.preview.text,
-                attachments: data.messages.preview.attachments,
-                user: {
-                    image_url: data.messages.preview.image_url,
-                    nickname: data.messages.preview.nickname,
-                },
-            },
-            messageCount: data.messages.count,
-            createdAt: data.created_at,
-            updatedAt: data.updated_at,
-            messageDeletionMode: data.message_deletion_mode,
-            messageDeletionPeriod: data.message_deletion_period,
-        })
+        super(client, Channel.dataFromGroup(data))
         this.members = new MemberManager(this.client, this)
         this.name = data.name
         this.phoneNumber = data.phone_number
