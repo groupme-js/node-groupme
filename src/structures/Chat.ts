@@ -17,6 +17,18 @@ export default class Chat extends Channel implements ChatInterface, SendableChan
         this.recipient = user
         this.messages = new ChatMessageManager(client, this)
     }
+
+    _patch(data: Partial<APIChat>): this {
+        this.recipient._patch({
+            name: data.other_user?.name,
+            avatar_url: data.other_user?.avatar_url,
+        })
+
+        Channel._patch(this, Channel.dataFromChat(data as APIChat)) // this is dangerous
+
+        return this
+    }
+
     public async send(text: string): Promise<ChatMessage> {
         const body: PostChatMessageBody = {
             direct_message: {
