@@ -8,7 +8,10 @@ interface FormerGroupManagerInterface {
     fetch(): Promise<Collection<string, FormerGroup>>
 }
 
-export default class FormerGroupManager extends BaseManager<FormerGroup> implements FormerGroupManagerInterface {
+export default class FormerGroupManager
+    extends BaseManager<FormerGroup, typeof FormerGroup>
+    implements FormerGroupManagerInterface
+{
     constructor(client: Client) {
         super(client, FormerGroup)
     }

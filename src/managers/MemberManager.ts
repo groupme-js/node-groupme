@@ -7,7 +7,7 @@ interface MemberManagerInterface {
     remove(member: Member): Promise<this>
 }
 
-export default class MemberManager extends BaseManager<Member> implements MemberManagerInterface {
+export default class MemberManager extends BaseManager<Member, typeof Member> implements MemberManagerInterface {
     group: BaseGroup
     former: FormerMemberManager
     constructor(client: Client, group: BaseGroup) {

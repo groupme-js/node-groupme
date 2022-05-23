@@ -15,7 +15,7 @@ interface ChatManagerInterface {
     fetch(ids: string[]): Promise<Collection<string, Chat | null>>
 }
 
-export default class ChatManager extends BaseManager<Chat> implements ChatManagerInterface {
+export default class ChatManager extends BaseManager<Chat, typeof Chat> implements ChatManagerInterface {
     constructor(client: Client) {
         super(client, Chat)
     }
