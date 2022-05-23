@@ -1,4 +1,5 @@
 import type { Attachment, Client, Message, MessageManager } from '..'
+import { Base } from '..'
 
 export enum ChannelType {
     Chat = 'chat',
@@ -21,7 +22,6 @@ type UserPreview = {
 
 interface ChannelData {
     readonly id: string
-    readonly client: Client
     messageCount: number
     lastMessage: MessagePreview
     createdAt: number
@@ -30,25 +30,33 @@ interface ChannelData {
     messageDeletionPeriod?: number
 }
 
-export default abstract class Channel implements ChannelData {
+export default abstract class Channel extends Base implements ChannelData {
     abstract readonly type: ChannelType
-    readonly id: string
-    readonly client: Client
     messageCount: number
     lastMessage: MessagePreview
     createdAt: number
     updatedAt: number
     messageDeletionMode?: string[]
     messageDeletionPeriod?: number
-    constructor(data: ChannelData) {
-        this.id = data.id
-        this.client = data.client
+    constructor(client: Client, data: ChannelData) {
+        super(client, data.id)
         this.messageCount = data.messageCount
         this.lastMessage = data.lastMessage
         this.createdAt = data.createdAt
         this.updatedAt = data.updatedAt
         this.messageDeletionMode = data.messageDeletionMode
         this.messageDeletionPeriod = data.messageDeletionPeriod
+    }
+
+    static _patch(self: Channel, data: Partial<ChannelData>): typeof self {
+        if (data.messageCount !== undefined) self.messageCount = data.messageCount
+        if (data.lastMessage !== undefined) self.lastMessage = data.lastMessage
+        if (data.createdAt !== undefined) self.createdAt = data.createdAt
+        if (data.updatedAt !== undefined) self.updatedAt = data.updatedAt
+        if (data.messageDeletionMode !== undefined) self.messageDeletionMode = data.messageDeletionMode
+        if (data.messageDeletionPeriod !== undefined) self.messageDeletionPeriod = data.messageDeletionPeriod
+
+        return self
     }
 }
 
