@@ -104,6 +104,6 @@ export default abstract class Channel extends Base implements ChannelData {
 }
 
 export interface SendableChannelInterface {
-    messages: MessageManager<Channel, Message>
-    send(text: string): Promise<Message>
+    messages: MessageManager<Channel, Message<Channel>, new (...args: any[]) => Message<Channel>>
+    send(text: string): Promise<Message<Channel>>
 }
