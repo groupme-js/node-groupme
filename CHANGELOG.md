@@ -1,3 +1,33 @@
+# [3.0.0](https://github.com/groupme-js/node-groupme/compare/v2.7.0...v3.0.0) (2022-05-27)
+
+
+### Bug Fixes
+
+* :rotating_light: replace avatar with avatar_url ([826ef0b](https://github.com/groupme-js/node-groupme/commit/826ef0be0661a0363ff26a2dc0815964fa23decc))
+
+
+### Code Refactoring
+
+* **Channel:** :building_construction: extend `Base`, update constructor signature ([e5feacb](https://github.com/groupme-js/node-groupme/commit/e5feacbd0e914281c264200b75d44eee08b747f6))
+* **User:** :recycle: rename `avatar` to `avatar_url` in User constructors ([1e5c629](https://github.com/groupme-js/node-groupme/commit/1e5c629cb6b626fbe6c21eb62195b8c325f88ebd))
+
+
+### Features
+
+* add helper functions for constructing request handlers ([#98](https://github.com/groupme-js/node-groupme/issues/98)) ([1aea72e](https://github.com/groupme-js/node-groupme/commit/1aea72e239121f0b2698ae4f7c943c25be16fa0a))
+* **Base:** :poop: implement BaseGroup#_patch ([7641639](https://github.com/groupme-js/node-groupme/commit/7641639f7409c2f9cf56ac857688e8b99c6a7d0b))
+* **Base:** :poop: implement Chat#_patch ([1a86da5](https://github.com/groupme-js/node-groupme/commit/1a86da567e22fecfcd41b379c0a0f397cc1442e2))
+* **Member:** :sparkles: add Member#image_url ([1376aed](https://github.com/groupme-js/node-groupme/commit/1376aed6da22349710f0fc6e6aef484ab42a03dc))
+* mock API calls in tests ([#96](https://github.com/groupme-js/node-groupme/issues/96)) ([a97289c](https://github.com/groupme-js/node-groupme/commit/a97289cd8b39def11edf5a77baca66038af1ddc8))
+* **Poll:** :beers: poll overhaul ([67f700b](https://github.com/groupme-js/node-groupme/commit/67f700b209dd63a886e15bcfbb40e3617e308216))
+
+
+### BREAKING CHANGES
+
+* **Channel:** Channel constructor changed:
+`Channel(ChannelData)` -> `Channel(Client, ChannelData)`
+* **User:** User constructor no longer accepts `avatar` property; use `avatar_url` instead
+
 # [2.7.0](https://github.com/groupme-js/node-groupme/compare/v2.6.0...v2.7.0) (2022-05-17)
 
 
