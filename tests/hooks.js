@@ -1,9 +1,6 @@
 const { client, data } = require(".")
 
-const { setupServer } = require("msw/node")
-const { handlers } = require("./handlers")
-
-const server = setupServer(...handlers)
+const { server } = require("./handlers")
 
 exports.mochaHooks = {
     async beforeAll() {
@@ -16,7 +13,7 @@ exports.mochaHooks = {
     },
 
     async afterAll() {
-        client.logout()
+        await client.logout()
         server.close()
     },
 }
