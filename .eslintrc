@@ -1,15 +1,38 @@
 {
-  "root": true,
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "rules": {
-    "@typescript-eslint/no-empty-interface": ["warn"],
-    "prettier/prettier": ["error"]
-  }
+    "root": true,
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+    "plugins": ["prettier"],
+    "extends": [
+        "eslint:recommended",
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": ["error"]
+    },
+    "env": {
+        "node": true
+    },
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": ["@typescript-eslint"],
+            "extends": [
+                "plugin:@typescript-eslint/eslint-recommended",
+                "plugin:@typescript-eslint/recommended",
+                "prettier"
+            ],
+            "rules": {
+                "@typescript-eslint/no-empty-interface": ["warn"]
+            }
+        },
+        {
+            "files": ["tests/**/*.js"],
+            "env": {
+                "mocha": true
+            }
+        }
+    ]
 }
