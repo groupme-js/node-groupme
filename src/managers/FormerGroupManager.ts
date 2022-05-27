@@ -8,7 +8,10 @@ interface FormerGroupManagerInterface {
     fetch(): Promise<Collection<string, FormerGroup>>
 }
 
-export default class FormerGroupManager extends BaseManager<FormerGroup> implements FormerGroupManagerInterface {
+export default class FormerGroupManager
+    extends BaseManager<FormerGroup, typeof FormerGroup>
+    implements FormerGroupManagerInterface
+{
     constructor(client: Client) {
         super(client, FormerGroup)
     }
@@ -27,7 +30,7 @@ export default class FormerGroupManager extends BaseManager<FormerGroup> impleme
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
-                        avatar: data.image_url,
+                        avatar_url: data.image_url,
                         name: data.name,
                     }),
                 )

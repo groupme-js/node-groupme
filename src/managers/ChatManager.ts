@@ -15,7 +15,7 @@ interface ChatManagerInterface {
     fetch(ids: string[]): Promise<Collection<string, Chat | null>>
 }
 
-export default class ChatManager extends BaseManager<Chat> implements ChatManagerInterface {
+export default class ChatManager extends BaseManager<Chat, typeof Chat> implements ChatManagerInterface {
     constructor(client: Client) {
         super(client, Chat)
     }
@@ -56,7 +56,7 @@ export default class ChatManager extends BaseManager<Chat> implements ChatManage
                         new User(this.client, {
                             id: data.other_user.id,
                             name: data.other_user.name,
-                            avatar: data.other_user.avatar_url,
+                            avatar_url: data.other_user.avatar_url,
                         }),
                     ),
                     data,

@@ -41,7 +41,7 @@ interface GroupManagerInterface {
     fetch(options: FetchParams): Promise<Collection<string, Group | null>>
 }
 
-export default class GroupManager extends BaseManager<Group> implements GroupManagerInterface {
+export default class GroupManager extends BaseManager<Group, typeof Group> implements GroupManagerInterface {
     former: FormerGroupManager
 
     constructor(client: Client) {
@@ -75,7 +75,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
-                        avatar: data.image_url,
+                        avatar_url: data.image_url,
                         name: data.name,
                     }),
                 )
@@ -121,7 +121,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
-                        avatar: data.image_url,
+                        avatar_url: data.image_url,
                         name: data.name,
                     }),
                 )
@@ -168,7 +168,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
                 const user = this.client.users._upsert(
                     new User(this.client, {
                         id: data.user_id,
-                        avatar: data.image_url,
+                        avatar_url: data.image_url,
                         name: data.name,
                     }),
                 )
@@ -206,7 +206,7 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
                     const user = this.client.users._upsert(
                         new User(this.client, {
                             id: data.user_id,
-                            avatar: data.image_url,
+                            avatar_url: data.image_url,
                             name: data.name,
                         }),
                     )

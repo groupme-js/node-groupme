@@ -4,7 +4,7 @@ import { Message } from '..'
 
 interface GroupMessageInterface {}
 
-export default class GroupMessage extends Message implements GroupMessageInterface {
+export default class GroupMessage extends Message<Group> implements GroupMessageInterface {
     constructor(client: Client, group: Group, data: APIGroupMessage) {
         super(client, group, data)
     }

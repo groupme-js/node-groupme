@@ -1,25 +1,19 @@
+import type { APIUser } from 'groupme-api-types'
 import type { Client } from '..'
+import { Base } from '..'
 
-export type UserData = {
-    id: string
-    name: string
-    avatar: string | null
-}
-
-interface UserInterface {}
-
-export default class User implements UserInterface {
-    private readonly _id: string
-    public get id(): string {
-        return this._id
-    }
+export default class User extends Base {
     avatar: string | null
     name: string
-    client: Client
-    constructor(client: Client, data: UserData) {
-        this.client = client
-        this._id = data.id
-        this.avatar = data.avatar
+    constructor(client: Client, data: APIUser) {
+        super(client, data.id)
+        this.avatar = data.avatar_url
         this.name = data.name
+    }
+    _patch(data: Partial<APIUser>): this {
+        if (data.avatar_url !== undefined) this.avatar = data.avatar_url
+        if (data.name !== undefined) this.name = data.name
+
+        return this
     }
 }

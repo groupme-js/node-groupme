@@ -3,7 +3,7 @@ import type { Chat, Client } from '..'
 import { ChatMessage, Collection, MessageManager } from '..'
 import type { MessageRequestParams } from './MessageManager'
 
-export default class ChatMessageManager extends MessageManager<Chat, ChatMessage> {
+export default class ChatMessageManager extends MessageManager<Chat, ChatMessage, typeof ChatMessage> {
     constructor(client: Client, channel: Chat) {
         super(client, channel, ChatMessage)
     }

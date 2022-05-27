@@ -2,7 +2,7 @@ import type { GetRelationshipsQuery, GetRelationshipsResponse } from 'groupme-ap
 import type { Client, Collection } from '..'
 import { BaseManager, Relationship } from '..'
 
-export default class RelationshipManager extends BaseManager<Relationship> {
+export default class RelationshipManager extends BaseManager<Relationship, typeof Relationship> {
     constructor(client: Client) {
         super(client, Relationship)
     }
