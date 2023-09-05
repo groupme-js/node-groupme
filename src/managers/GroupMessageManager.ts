@@ -90,7 +90,7 @@ export default class GroupMessageManager
                 limit: 100,
                 before_id: lastMessageID,
             })
-            lastMessageID = batch.last()?.id
+            lastMessageID = batch.first()?.id
         } while (batch.size)
 
         this.cache.sort()
