@@ -10,7 +10,6 @@ export default abstract class BaseManager<T extends Base, TCtor extends new (...
         this.holds = holds
         this.cache = new Collection<string, T>()
     }
-    abstract fetch(id: string): Promise<T>
     resolve(data: unknown): T | null {
         if (data instanceof this.holds) return data
         if (typeof data === 'string') return this.cache.get(data) ?? null
