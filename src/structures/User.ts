@@ -1,7 +1,7 @@
 import type { Client } from '..'
 
 export type UserData = {
-    id: string
+    id: string | number
     name: string
     avatar: string | null
 }
@@ -18,7 +18,7 @@ export default class User implements UserInterface {
     client: Client
     constructor(client: Client, data: UserData) {
         this.client = client
-        this._id = data.id
+        this._id = String(data.id)
         this.avatar = data.avatar
         this.name = data.name
     }
