@@ -16,7 +16,7 @@ interface PollManagerInterface {
     ): Promise<Poll>
 }
 
-export default class PollManager extends BaseManager<Poll> implements PollManagerInterface {
+export default class PollManager extends BaseManager<Poll, typeof Poll> implements PollManagerInterface {
     readonly group: Group
     constructor(client: Client, group: Group) {
         super(client, Poll)

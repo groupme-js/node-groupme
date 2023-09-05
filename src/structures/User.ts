@@ -1,4 +1,6 @@
+import type { APIUser } from 'groupme-api-types'
 import type { Client } from '..'
+import { Base } from '..'
 
 export type UserData = {
     id: string | number
@@ -8,18 +10,18 @@ export type UserData = {
 
 interface UserInterface {}
 
-export default class User implements UserInterface {
-    private readonly _id: string
-    public get id(): string {
-        return this._id
-    }
+export default class User extends Base implements UserInterface {
     avatar: string | null
     name: string
-    client: Client
-    constructor(client: Client, data: UserData) {
-        this.client = client
-        this._id = String(data.id)
-        this.avatar = data.avatar
+    constructor(client: Client, data: APIUser) {
+        super(client, String(data.id))
+        this.avatar = data.avatar_url
         this.name = data.name
+    }
+    _patch(data: Partial<APIUser>): this {
+        if (data.avatar_url !== undefined) this.avatar = data.avatar_url
+        if (data.name !== undefined) this.name = data.name
+
+        return this
     }
 }

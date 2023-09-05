@@ -6,6 +6,7 @@ import type {
     PatchGroupResponse,
     PostChangeOwnersBody,
     PostChangeOwnersResponse,
+    DeleteGroupResponse,
 } from 'groupme-api-types'
 import type { Client, FormerGroup, Member, SendableChannelInterface } from '..'
 import { BaseGroup, ChannelType, GroupMessage, GroupMessageManager, PollManager } from '..'
@@ -107,8 +108,8 @@ export default class Group extends BaseGroup implements ActiveGroupInterface, Se
         throw err // Failed to transfer group, see error details
     }
 
-    delete(): Promise<void> {
-        throw new Error('Method not implemented.')
+    public async delete(): Promise<void> {
+        await this.client.rest.api<DeleteGroupResponse>('POST', `groups/${this.id}/destroy`)
     }
 
     changeNickname(nickname: string): Promise<Member> {

@@ -14,7 +14,7 @@ interface GroupMessageManagerInterface {
 }
 
 export default class GroupMessageManager
-    extends MessageManager<Group, GroupMessage>
+    extends MessageManager<Group, GroupMessage, typeof GroupMessage>
     implements GroupMessageManagerInterface
 {
     constructor(client: Client, channel: Group) {

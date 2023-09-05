@@ -1,5 +1,6 @@
 export { Collection } from './util/Collection'
 
+export { default as Base } from './structures/Base'
 export { default as User } from './structures/User'
 export { default as Message } from './structures/Message'
 export { default as BaseManager } from './managers/BaseManager'

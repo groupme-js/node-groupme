@@ -6,6 +6,7 @@ on:
 
 jobs:
     tests:
+        if: github.repository == 'groupme-js/node-groupme'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code

@@ -24,25 +24,7 @@ export default abstract class BaseGroup extends Channel {
     showJoinQuestion: boolean
     joinQuestion: string | null
     constructor(client: Client, data: APIGroup) {
-        super({
-            id: data.id,
-            client: client,
-            lastMessage: {
-                id: data.messages.last_message_id,
-                createdAt: data.messages.last_message_created_at,
-                text: data.messages.preview.text,
-                attachments: data.messages.preview.attachments,
-                user: {
-                    image_url: data.messages.preview.image_url,
-                    nickname: data.messages.preview.nickname,
-                },
-            },
-            messageCount: data.messages.count,
-            createdAt: data.created_at,
-            updatedAt: data.updated_at,
-            messageDeletionMode: data.message_deletion_mode,
-            messageDeletionPeriod: data.message_deletion_period,
-        })
+        super(client, Channel.dataFromGroup(data))
         this.members = new MemberManager(this.client, this)
         this.name = data.name
         this.phoneNumber = data.phone_number
@@ -65,5 +47,33 @@ export default abstract class BaseGroup extends Channel {
         this.requiresApproval = data.requires_approval
         this.showJoinQuestion = data.show_join_question
         this.joinQuestion = data.join_question ? data.join_question.text : null
+    }
+    _patch(data: Partial<APIGroup>): this {
+        Channel._patch(this, Channel.dataFromGroup(data as APIGroup)) // this is dangerous
+
+        if (data.name !== undefined) this.name = data.name
+        if (data.phone_number !== undefined) this.phoneNumber = data.phone_number
+        if (data.type !== undefined) this.closed = data.type == 'closed'
+        if (data.image_url !== undefined) this.imageURL = data.image_url
+        if (data.creator_user_id !== undefined) this.creatorID = data.creator_user_id
+        if (data.muted_until !== undefined) this.mutedUntil = data.muted_until
+        if (data.office_mode !== undefined) this.officeMode = data.office_mode
+        if (data.share_url !== undefined) this.inviteURL = data.share_url
+        if (data.share_qr_code_url !== undefined) this.inviteQR = data.share_qr_code_url
+        if (data.max_members !== undefined) this.maxMembers = data.max_members
+        if (data.theme_name !== undefined) this.theme = data.theme_name
+        if (data.like_icon !== undefined)
+            this.likeIcon = data.like_icon
+                ? {
+                      packId: data.like_icon.pack_id,
+                      packIndex: data.like_icon.pack_index,
+                      type: 'emoji',
+                  }
+                : null
+        if (data.requires_approval !== undefined) this.requiresApproval = data.requires_approval
+        if (data.show_join_question !== undefined) this.showJoinQuestion = data.show_join_question
+        if (data.join_question !== undefined) this.joinQuestion = data.join_question ? data.join_question.text : null
+
+        return this
     }
 }

@@ -4,7 +4,7 @@ import type { UserData } from '../structures/User'
 
 interface UserManagerInterface {}
 
-export default class UserManager extends BaseManager<User> implements UserManagerInterface {
+export default class UserManager extends BaseManager<User, typeof User> implements UserManagerInterface {
     constructor(client: Client) {
         super(client, User)
     }

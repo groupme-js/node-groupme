@@ -1,15 +1,11 @@
-import type { Client } from '..'
+import type { Base, Client } from '..'
 import { Collection } from '..'
 
-interface Indexable {
-    id: string
-}
-
-export default abstract class BaseManager<T extends Indexable> {
+export default abstract class BaseManager<T extends Base, TCtor extends new (...args: any[]) => T> {
     readonly client: Client
     readonly cache: Collection<string, T>
-    readonly holds: new (client: Client, ...args: any[]) => T
-    constructor(client: Client, holds: new (client: Client, ...args: any[]) => T) {
+    readonly holds: TCtor
+    constructor(client: Client, holds: TCtor) {
         this.client = client
         this.holds = holds
         this.cache = new Collection<string, T>()

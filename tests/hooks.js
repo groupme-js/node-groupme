@@ -1,14 +1,19 @@
-const { client, data } = require(".")
+const { client } = require('.')
 
+const { server } = require('./handlers')
 
 exports.mochaHooks = {
-    async beforeall(done) {
+    async beforeAll() {
+        server.listen()
         await client.login()
-        done()
-        
     },
-    async afterAll(done) {
-        client.logout()
-        done()
+
+    async afterEach() {
+        server.resetHandlers()
+    },
+
+    async afterAll() {
+        await client.logout()
+        server.close()
     },
 }
