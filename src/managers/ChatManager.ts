@@ -1,6 +1,6 @@
 import type { APIChat } from 'groupme-api-types'
 import type { Client } from '..'
-import { BaseManager, Chat, Collection, User } from '..'
+import { BaseManager, Chat, Collection } from '..'
 
 type ChatsRequestParams = {
     page?: number
@@ -52,13 +52,11 @@ export default class ChatManager extends BaseManager<Chat> implements ChatManage
             const chat = this._upsert(
                 new Chat(
                     this.client,
-                    this.client.users._upsert(
-                        new User(this.client, {
-                            id: data.other_user.id,
-                            name: data.other_user.name,
-                            avatar: data.other_user.avatar_url,
-                        }),
-                    ),
+                    this.client.users._add({
+                        id: data.other_user.id,
+                        name: data.other_user.name,
+                        avatar: data.other_user.avatar_url,
+                    }),
                     data,
                 ),
             )

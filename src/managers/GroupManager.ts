@@ -1,6 +1,6 @@
 import type { APIGroup } from 'groupme-api-types'
 import type { Client } from '..'
-import { BaseManager, Collection, FormerGroupManager, Group, Member, User } from '..'
+import { BaseManager, Collection, FormerGroupManager, Group, Member } from '..'
 
 type GroupsRequestParams = {
     page?: number
@@ -68,13 +68,11 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
         const group = this._upsert(new Group(this.client, res))
         if (res.members) {
             res.members.forEach(data => {
-                const user = this.client.users._upsert(
-                    new User(this.client, {
-                        id: data.user_id,
-                        avatar: data.image_url,
-                        name: data.name,
-                    }),
-                )
+                const user = this.client.users._add({
+                    id: data.user_id,
+                    avatar: data.image_url,
+                    name: data.name,
+                })
                 group.members._upsert(new Member(this.client, group, user, data))
             })
         }
@@ -106,13 +104,11 @@ export default class GroupManager extends BaseManager<Group> implements GroupMan
 
             if (g.members) {
                 g.members.forEach(data => {
-                    const user = this.client.users._upsert(
-                        new User(this.client, {
-                            id: data.user_id,
-                            avatar: data.image_url,
-                            name: data.name,
-                        }),
-                    )
+                    const user = this.client.users._add({
+                        id: data.user_id,
+                        avatar: data.image_url,
+                        name: data.name,
+                    })
                     group.members._upsert(new Member(this.client, group, user, data))
                 })
             }
