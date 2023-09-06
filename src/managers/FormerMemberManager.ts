@@ -14,7 +14,9 @@ export default class FormerMemberManager
         super(client, FormerMember)
         this.group = group
     }
-    fetch(): Promise<Collection<string, FormerMember>> {
+    fetch(): Promise<Collection<string, FormerMember>>
+    fetch(id: string): Promise<FormerMember>
+    public async fetch(id?: string): Promise<Collection<string, FormerMember> | FormerMember> {
         throw new Error('Method not implemented.')
     }
 }

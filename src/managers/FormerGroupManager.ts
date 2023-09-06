@@ -16,7 +16,9 @@ export default class FormerGroupManager
         super(client, FormerGroup)
     }
 
-    public async fetch(): Promise<Collection<string, FormerGroup>> {
+    fetch(): Promise<Collection<string, FormerGroup>>
+    fetch(id: string): Promise<FormerGroup>
+    public async fetch(id?: string): Promise<Collection<string, FormerGroup> | FormerGroup> {
         const groupsFormerResponse = await this.client.rest.api<APIGroup[]>('GET', 'groups/former')
         const batch = new Collection<string, FormerGroup>()
 
@@ -29,7 +31,7 @@ export default class FormerGroupManager
             g.members!.forEach(data => {
                 const user = this.client.users._add({
                     id: data.user_id,
-                    avatar: data.image_url,
+                    avatar_url: data.image_url,
                     name: data.name,
                 })
                 formerGroup.members._upsert(new Member(this.client, formerGroup, user, data))

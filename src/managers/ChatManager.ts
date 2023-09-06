@@ -55,7 +55,7 @@ export default class ChatManager extends BaseManager<Chat, typeof Chat> implemen
                     this.client.users._add({
                         id: data.other_user.id,
                         name: data.other_user.name,
-                        avatar: data.other_user.avatar_url,
+                        avatar_url: data.other_user.avatar_url,
                     }),
                     data,
                 ),

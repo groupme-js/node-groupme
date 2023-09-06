@@ -7,7 +7,9 @@ export default class RelationshipManager extends BaseManager<Relationship, typeo
         super(client, Relationship)
     }
 
-    async fetch(includeBlocked = true): Promise<Collection<string, Relationship>> {
+    fetch(): Promise<Collection<string, Relationship>>
+    fetch(id: string): Promise<Relationship>
+    public async fetch(id?: string, includeBlocked = true): Promise<Collection<string, Relationship> | Relationship> {
         const query: GetRelationshipsQuery = { include_blocked: includeBlocked }
         let response: GetRelationshipsResponse
         do {

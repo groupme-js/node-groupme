@@ -72,13 +72,11 @@ export default class GroupManager extends BaseManager<Group, typeof Group> imple
         const group = this._upsert(new Group(this.client, res))
         if (res.members) {
             res.members.forEach(data => {
-                const user = this.client.users._upsert(
-                    new User(this.client, {
-                        id: data.user_id,
-                        avatar_url: data.image_url,
-                        name: data.name,
-                    }),
-                )
+                const user = this.client.users._add({
+                    id: data.user_id,
+                    avatar_url: data.image_url,
+                    name: data.name,
+                })
                 group.members._upsert(new Member(this.client, group, user, data))
             })
         }
@@ -118,13 +116,11 @@ export default class GroupManager extends BaseManager<Group, typeof Group> imple
         const group = this._upsert(new Group(this.client, res.group))
         if (res.group.members) {
             res.group.members.forEach(data => {
-                const user = this.client.users._upsert(
-                    new User(this.client, {
-                        id: data.user_id,
-                        avatar_url: data.image_url,
-                        name: data.name,
-                    }),
-                )
+                const user = this.client.users._add({
+                    id: data.user_id,
+                    avatar_url: data.image_url,
+                    name: data.name,
+                })
                 group.members._upsert(new Member(this.client, group, user, data))
             })
         }
@@ -167,7 +163,7 @@ export default class GroupManager extends BaseManager<Group, typeof Group> imple
             res.members.forEach(data => {
                 const user = this.client.users._add({
                     id: data.user_id,
-                    avatar: data.image_url,
+                    avatar_url: data.image_url,
                     name: data.name,
                 })
                 group.members._upsert(new Member(this.client, group, user, data))
@@ -203,7 +199,7 @@ export default class GroupManager extends BaseManager<Group, typeof Group> imple
                 g.members.forEach(data => {
                     const user = this.client.users._add({
                         id: data.user_id,
-                        avatar: data.image_url,
+                        avatar_url: data.image_url,
                         name: data.name,
                     })
                     group.members._upsert(new Member(this.client, group, user, data))

@@ -16,7 +16,7 @@ export default class Relationship extends Base {
         this.user = client.users._add({
             id: data.user_id,
             name: data.name,
-            avatar: data.avatar_url,
+            avatar_url: data.avatar_url,
         })
         this.reason = data.reason
         this.hidden = data.hidden
