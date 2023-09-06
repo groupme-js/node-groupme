@@ -1,5 +1,6 @@
 import type { APIChatMessage, APIGroupMessage, DeleteGroupMessageResponse } from 'groupme-api-types'
-import type { Attachment, Channel, Client, Base, User } from '..'
+import type { Attachment, Channel, Client, User } from '..'
+import { Base } from '..'
 
 interface MessageInterface<T extends Channel> {
     fetch(): Promise<this>
