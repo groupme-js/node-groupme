@@ -1,6 +1,6 @@
+import type { APIUser } from 'groupme-api-types'
 import type { Client } from '..'
 import { BaseManager, User } from '..'
-import type { UserData } from '../structures/User'
 
 interface UserManagerInterface {}
 
@@ -9,7 +9,7 @@ export default class UserManager extends BaseManager<User, typeof User> implemen
         super(client, User)
     }
 
-    _add(data: UserData): User {
+    _add(data: APIUser): User {
         return this._upsert(new User(this.client, data))
     }
 

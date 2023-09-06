@@ -2,12 +2,6 @@ import type { APIUser } from 'groupme-api-types'
 import type { Client } from '..'
 import { Base } from '..'
 
-export type UserData = {
-    id: string | number
-    name: string
-    avatar: string | null
-}
-
 interface UserInterface {}
 
 export default class User extends Base implements UserInterface {
