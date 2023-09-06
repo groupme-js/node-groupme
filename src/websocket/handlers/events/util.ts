@@ -1,15 +1,10 @@
-import type { APIGroupMessage } from 'groupme-api-types'
-import type { Client } from '../../..'
+import type { Base, Client } from '../../..'
 import type BaseManager from '../../../managers/BaseManager'
 
-interface Indexable {
-    id: string
-}
-
-async function getThing<T extends Indexable>(
+async function getThing<T extends Base, TCtor extends new (...args: any[]) => T>(
     client: Client,
     id: string | number,
-    manager: BaseManager<T>,
+    manager: BaseManager<T, TCtor>,
     partialType: keyof Client['options']['fetchPartials'],
 ): Promise<T | undefined> {
     let thing = manager.cache.get(String(id))
