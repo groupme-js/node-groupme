@@ -25,4 +25,7 @@ export default abstract class BaseManager<T extends Base, TCtor extends new (...
         this.cache.set(obj.id, obj)
         return obj
     }
+    _remove(data: T): boolean {
+        return this.cache.delete(data.id)
+    }
 }
