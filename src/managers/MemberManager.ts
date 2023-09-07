@@ -29,7 +29,7 @@ export default class MemberManager extends BaseManager<Member, typeof Member> im
         )
         const formerMember = new FormerMember(this.client, this.group, member.user, member, FormerMemberState.Removed)
         this.former._upsert(formerMember)
-        this.group.members._remove(member)
+        this._remove(member)
         return formerMember
     }
 }
