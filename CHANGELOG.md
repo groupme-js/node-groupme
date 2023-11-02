@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/groupme-js/node-groupme/compare/v3.1.0...v3.2.0) (2023-11-02)
+
+
+### Features
+
+* :sparkles: add nothing ([6c7d7cf](https://github.com/groupme-js/node-groupme/commit/6c7d7cfdb102f37690fa6d6f4e840bb4c4aeb193))
+
 # [3.1.0](https://github.com/groupme-js/node-groupme/compare/v3.0.0...v3.1.0) (2023-09-07)
 
 
