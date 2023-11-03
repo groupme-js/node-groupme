@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/groupme-js/node-groupme/compare/v3.2.0...v3.2.1) (2023-11-03)
+
+
+### Bug Fixes
+
+* :ambulance: do something ([c2e5053](https://github.com/groupme-js/node-groupme/commit/c2e5053798503f4249df906e2e5e7d495b196f11))
+
 # [3.2.0](https://github.com/groupme-js/node-groupme/compare/v3.1.0...v3.2.0) (2023-11-02)
 
 
