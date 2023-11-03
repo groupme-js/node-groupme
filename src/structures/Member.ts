@@ -1,5 +1,6 @@
 import type { APIMember } from 'groupme-api-types'
-import type { BaseGroup, Client, User } from '..'
+import { MemberRole } from 'groupme-api-types'
+import type { BaseGroup, Client, FormerMember, User } from '..'
 import { Base } from '..'
 
 interface MemberInterface {}
@@ -12,7 +13,7 @@ export default class Member extends Base implements MemberInterface {
     image_url: string | null
     muted: boolean
     // autokicked: boolean
-    roles: ('admin' | 'owner' | 'user')[]
+    roles: MemberRole[]
 
     constructor(client: Client, group: BaseGroup, user: User, data: APIMember) {
         super(client, user.id)
@@ -41,7 +42,7 @@ export default class Member extends Base implements MemberInterface {
     }
 
     get isAdmin(): boolean {
-        return this.roles.includes('admin') || this.isOwner
+        return this.roles.includes(MemberRole.Admin) || this.isOwner
     }
 
     get isOwner(): boolean {
@@ -70,5 +71,9 @@ export default class Member extends Base implements MemberInterface {
 
     get canTransferGroup(): boolean {
         return this.isOwner
+    }
+
+    async remove(): Promise<FormerMember> {
+        return this.group.members.remove(this)
     }
 }

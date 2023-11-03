@@ -1,3 +1,36 @@
+## [3.2.2](https://github.com/groupme-js/node-groupme/compare/v3.2.1...v3.2.2) (2023-11-03)
+
+
+### Bug Fixes
+
+* :zap: nothing ([ccb1a8f](https://github.com/groupme-js/node-groupme/commit/ccb1a8fbb448068ee976765bffab523c907e3eb9))
+
+## [3.2.1](https://github.com/groupme-js/node-groupme/compare/v3.2.0...v3.2.1) (2023-11-03)
+
+
+### Bug Fixes
+
+* :ambulance: do something ([c2e5053](https://github.com/groupme-js/node-groupme/commit/c2e5053798503f4249df906e2e5e7d495b196f11))
+
+# [3.2.0](https://github.com/groupme-js/node-groupme/compare/v3.1.0...v3.2.0) (2023-11-02)
+
+
+### Features
+
+* :sparkles: add nothing ([6c7d7cf](https://github.com/groupme-js/node-groupme/commit/6c7d7cfdb102f37690fa6d6f4e840bb4c4aeb193))
+
+# [3.1.0](https://github.com/groupme-js/node-groupme/compare/v3.0.0...v3.1.0) (2023-09-07)
+
+
+### Bug Fixes
+
+* **Members:** remove redundant reference ([9608d2b](https://github.com/groupme-js/node-groupme/commit/9608d2bc5de711724d1956fc62348227967d7522))
+
+
+### Features
+
+* **Members:** implement member removal ([93222a1](https://github.com/groupme-js/node-groupme/commit/93222a18a854081c04a8c588524ed82f0c11b1b0))
+
 # [3.0.0](https://github.com/groupme-js/node-groupme/compare/v2.7.0...v3.0.0) (2022-05-27)
 
 

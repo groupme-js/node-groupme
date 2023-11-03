@@ -1,6 +1,6 @@
 {
   "name": "node-groupme",
-  "version": "3.0.0",
+  "version": "3.2.2",
   "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
   "scripts": {
@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@discordjs/collection": "^0.1.6",
-    "groupme-api-types": "^2.0.0",
+    "groupme-api-types": "^2.1.0",
     "node-fetch": "^2.6.1",
     "faye": "^1.4.0",
     "ws": "^8.1.0"
