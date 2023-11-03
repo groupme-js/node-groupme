@@ -1,3 +1,10 @@
+## [3.2.2](https://github.com/groupme-js/node-groupme/compare/v3.2.1...v3.2.2) (2023-11-03)
+
+
+### Bug Fixes
+
+* :zap: nothing ([ccb1a8f](https://github.com/groupme-js/node-groupme/commit/ccb1a8fbb448068ee976765bffab523c907e3eb9))
+
 ## [3.2.1](https://github.com/groupme-js/node-groupme/compare/v3.2.0...v3.2.1) (2023-11-03)
 
 
