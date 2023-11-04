@@ -1,3 +1,28 @@
+# [4.0.0](https://github.com/groupme-js/node-groupme/compare/v3.2.2...v4.0.0) (2023-11-04)
+
+
+### Bug Fixes
+
+* :bug: change user id type to `string | number` ([3129ebc](https://github.com/groupme-js/node-groupme/commit/3129ebc8250486c42c06c54e3d9336c7d47c3871))
+* :bug: fix bug causing minor performance issue ([206ca24](https://github.com/groupme-js/node-groupme/commit/206ca24446eee770e67a7e4ae1af2ba7d64e50b9))
+* :rotating_light: import Base for real instead of as a type-only import ([68f1205](https://github.com/groupme-js/node-groupme/commit/68f12058293d8afb4b3661163782013626a94841))
+
+
+### Build System
+
+* :pushpin: update package-lock.json ([38e53a7](https://github.com/groupme-js/node-groupme/commit/38e53a76772d779f50d65d6e99cefbb78d3638b3))
+
+
+### Features
+
+* :rewind: reinstate BaseManager#fetch and avatar_url ([c7b4bf5](https://github.com/groupme-js/node-groupme/commit/c7b4bf51b8916d3b7ce89d426bd0cc3ca0286936))
+* **Websocket:** :construction: add event handlers for websockets ([c1ea762](https://github.com/groupme-js/node-groupme/commit/c1ea76214aa805bc5a44c1d2fe992ec6e490dd0e))
+
+
+### BREAKING CHANGES
+
+* WEBSOCKETS ARE HERE!!!!!! only took 1 year to complete B)
+
 ## [3.2.2](https://github.com/groupme-js/node-groupme/compare/v3.2.1...v3.2.2) (2023-11-03)
 
 
