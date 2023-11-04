@@ -1,6 +1,6 @@
-const { client, data } = require(".")
+const { client } = require('.')
 
-const { server } = require("./handlers")
+const { server } = require('./handlers')
 
 exports.mochaHooks = {
     async beforeAll() {

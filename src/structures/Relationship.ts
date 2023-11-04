@@ -1,6 +1,6 @@
 import type { APIRelationship } from 'groupme-api-types/v4'
-import type { Client } from '..'
-import { Base, User } from '..'
+import type { Client, User } from '..'
+import { Base } from '..'
 
 export default class Relationship extends Base {
     user: User
@@ -13,13 +13,11 @@ export default class Relationship extends Base {
     _iso8601: string
     constructor(client: Client, data: APIRelationship) {
         super(client, data.user_id)
-        this.user = client.users._upsert(
-            new User(client, {
-                id: data.user_id,
-                name: data.name,
-                avatar_url: data.avatar_url,
-            }),
-        )
+        this.user = client.users._add({
+            id: data.user_id,
+            name: data.name,
+            avatar_url: data.avatar_url,
+        })
         this.reason = data.reason
         this.hidden = data.hidden
         this.appInstalled = data.app_installed

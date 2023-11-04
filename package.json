@@ -57,6 +57,7 @@
     "@discordjs/collection": "^0.1.6",
     "groupme-api-types": "^2.1.0",
     "node-fetch": "^2.6.1",
+    "faye": "^1.4.0",
     "ws": "^8.1.0"
   },
   "files": [

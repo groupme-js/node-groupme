@@ -1,15 +1,15 @@
 const { rest } = require('msw')
 const { setupServer } = require('msw/node')
 
-const package = require("../package.json")
+const package = require('../package.json')
 
-let commit = require("child_process").execSync("git rev-parse --short HEAD").toString().trim()
-let branch = require("child_process").execSync("git rev-parse --abbrev-ref HEAD").toString().trim()
+let commit = require('child_process').execSync('git rev-parse --short HEAD').toString().trim()
+let branch = require('child_process').execSync('git rev-parse --abbrev-ref HEAD').toString().trim()
 
 const data = {
-    testGroup: "70077952",
+    testGroup: '70077952',
     version: package.version,
-    testUser: "99172139",
+    testUser: '99172139',
     commit,
     branch,
 }
@@ -23,10 +23,10 @@ function wrapJsonBody(status, body, errors) {
         meta: {
             code: status,
         },
-        response: body
+        response: body,
     }
-    if(errors !== undefined) jsonBody.meta.errors = errors
-    
+    if (errors !== undefined) jsonBody.meta.errors = errors
+
     return jsonBody
 }
 
@@ -34,10 +34,10 @@ function constructHandler(reqType, path, status, body, bodyType = 'json', errors
     const requestResolver = async (req, res, ctx) => {
         const resParams = []
         resParams.push(ctx.status(status))
-        if(body !== undefined) {
+        if (body !== undefined) {
             let bodyContent = body
-            if(typeof body === 'function') bodyContent = body(req)
-            switch(bodyType) {
+            if (typeof body === 'function') bodyContent = body(req)
+            switch (bodyType) {
                 case 'json':
                     resParams.push(ctx.json(wrapJsonBody(status, bodyContent, errors)))
                     break
@@ -57,7 +57,7 @@ function constructHandler(reqType, path, status, body, bodyType = 'json', errors
     }
 
     const type = reqType.toUpperCase()
-    switch(type) {
+    switch (type) {
         case 'GET':
             return rest.get(api(path), requestResolver)
         case 'POST':
@@ -75,7 +75,7 @@ const handlers = [
             ctx.status(200),
             ctx.json({
                 meta: {
-                    code: 200
+                    code: 200,
                 },
                 response: {
                     created_at: 0,
@@ -90,7 +90,7 @@ const handlers = [
                     twitter_connected: false,
                     updated_at: 1,
                     user_id: data.testUser,
-                }
+                },
             }),
         )
     }),
@@ -101,7 +101,7 @@ const handlers = [
             ctx.status(200),
             ctx.json({
                 meta: {
-                    code: 200
+                    code: 200,
                 },
                 response: {
                     id: group_id,
@@ -133,7 +133,7 @@ const handlers = [
                             image_url: null,
                         },
                     ],
-                }
+                },
             }),
         )
     }),
@@ -144,7 +144,7 @@ const handlers = [
             ctx.status(200),
             ctx.json({
                 meta: {
-                    code: 200
+                    code: 200,
                 },
                 response: {
                     message: {
@@ -160,7 +160,7 @@ const handlers = [
                         favorited_by: [],
                         attachments: [],
                     },
-                }
+                },
             }),
         )
     }),

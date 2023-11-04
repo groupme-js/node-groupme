@@ -1,6 +1,6 @@
 import type { APIChatMessage, APIGroupMessage, DeleteGroupMessageResponse } from 'groupme-api-types'
-import type { Attachment, Channel, Client } from '..'
-import { Base, User } from '..'
+import type { Attachment, Channel, Client, User } from '..'
+import { Base } from '..'
 
 interface MessageInterface<T extends Channel> {
     fetch(): Promise<this>
@@ -22,19 +22,17 @@ export default abstract class Message<T extends Channel> extends Base implements
     attachments: Attachment[]
     constructor(client: Client, channel: T, data: APIGroupMessage | APIChatMessage) {
         super(client, data.id)
-        this.user = client.users._upsert(
-            new User(client, {
-                id: data.user_id,
-                avatar_url: data.avatar_url,
-                name: data.name,
-            }),
-        )
+        this.user = client.users._add({
+            id: data.user_id,
+            avatar_url: data.avatar_url,
+            name: data.name,
+        })
         this.channel = channel
         this.text = data.text
         this.createdAt = data.created_at
         this.sourceGuid = data.source_guid
         this.attachments = data.attachments
-        this.likes = data.favorited_by.map(id => client.users.cache.get(id) || id)
+        this.likes = data.favorited_by?.map(id => client.users.cache.get(id) || id)
         this.system = 'system' in data ? data.system : false
     }
 
