@@ -1,6 +1,6 @@
 import type { APIChatMessage, APIGroupMessage, DeleteGroupMessageResponse } from 'groupme-api-types'
 import type { Attachment, Channel, Client, User } from '..'
-import { Base } from '..'
+import { Base, MessageLikeManager } from '..'
 
 interface MessageInterface<T extends Channel> {
     fetch(): Promise<this>
@@ -18,7 +18,7 @@ export default abstract class Message<T extends Channel> extends Base implements
     createdAt: number
     sourceGuid: string
     system: boolean
-    likes: (User | string)[]
+    likes: MessageLikeManager
     attachments: Attachment[]
     constructor(client: Client, channel: T, data: APIGroupMessage | APIChatMessage) {
         super(client, data.id)
@@ -32,7 +32,7 @@ export default abstract class Message<T extends Channel> extends Base implements
         this.createdAt = data.created_at
         this.sourceGuid = data.source_guid
         this.attachments = data.attachments
-        this.likes = data.favorited_by?.map(id => client.users.cache.get(id) || id)
+        this.likes = new MessageLikeManager(this.client, data.favorited_by)
         this.system = 'system' in data ? data.system : false
     }
 
@@ -46,8 +46,7 @@ export default abstract class Message<T extends Channel> extends Base implements
         if (data.created_at !== undefined) this.createdAt = data.created_at
         if (data.source_guid !== undefined) this.sourceGuid = data.source_guid
         if (data.attachments !== undefined) this.attachments = data.attachments
-        if (data.favorited_by !== undefined)
-            this.likes = data.favorited_by.map(id => this.client.users.cache.get(id) || id)
+        if (data.favorited_by !== undefined) this.likes = new MessageLikeManager(this.client, data.favorited_by)
         if ('system' in data && data.system !== undefined) this.system = data.system
 
         return this
