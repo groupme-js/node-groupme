@@ -1,5 +1,5 @@
-import type { PostMemberRemoveResponse } from 'groupme-api-types'
-import type { BaseGroup, Client, Collection } from '..'
+import type { APIMember, PostMemberRemoveResponse } from 'groupme-api-types'
+import { BaseGroup, Client, Collection } from '..'
 import { BaseManager, FormerMember, FormerMemberManager, FormerMemberState, Member } from '..'
 
 interface MemberManagerInterface {
@@ -19,9 +19,35 @@ export default class MemberManager extends BaseManager<Member, typeof Member> im
 
     fetch(): Promise<Collection<string, Member>>
     fetch(id: string): Promise<Member>
-    public async fetch(id?: string): Promise<Collection<string, Member> | Member> {
+    public fetch(id?: string): Promise<Collection<string, Member> | Member> {
+        if (typeof id === 'string') {
+            return this.fetchId(id)
+        }
+        return this.fetchAll()
+    }
+
+    private fetchId(id: string): Promise<Member> {
         throw new Error('Method not implemented.')
     }
+
+    private async fetchAll(): Promise<Collection<string, Member>> {
+        const membersResponse = await this.client.rest.api<APIMember[]>('GET', `groups/${this.group.id}/members`)
+        const batch = new Collection<string, Member>()
+
+        membersResponse.forEach(data => {
+            const user = this.client.users._add({
+                id: data.user_id,
+                avatar_url: data.image_url,
+                name: data.name,
+            })
+
+            const member = this._upsert(new Member(this.client, this.group, user, data))
+            batch.set(member.memberID, member)
+        })
+
+        return batch
+    }
+
     add(id: string): Promise<Member>
     add(ids: string[]): Promise<Collection<string, Member>>
     add(ids: string | string[]): Promise<Member> | Promise<Collection<string, Member>> {
