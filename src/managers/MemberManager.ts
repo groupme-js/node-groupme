@@ -1,6 +1,6 @@
 import type { APIMember, PostMemberRemoveResponse } from 'groupme-api-types'
-import { BaseGroup, Client, Collection } from '..'
-import { BaseManager, FormerMember, FormerMemberManager, FormerMemberState, Member } from '..'
+import type { BaseGroup, Client } from '..'
+import { BaseManager, Collection, FormerMember, FormerMemberManager, FormerMemberState, Member } from '..'
 
 interface MemberManagerInterface {
     add(id: string): Promise<Member>
