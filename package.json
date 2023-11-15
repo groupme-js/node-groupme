@@ -1,6 +1,6 @@
 {
   "name": "node-groupme",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "The only GroupMe API library that isn't a million years old.",
   "main": "dist/index.js",
   "scripts": {

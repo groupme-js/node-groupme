@@ -1,6 +1,6 @@
-import type { PostMemberRemoveResponse } from 'groupme-api-types'
-import type { BaseGroup, Client, Collection } from '..'
-import { BaseManager, FormerMember, FormerMemberManager, FormerMemberState, Member } from '..'
+import type { APIGroup, PostMemberRemoveResponse } from 'groupme-api-types'
+import type { BaseGroup, Client } from '..'
+import { BaseManager, Collection, FormerMember, FormerMemberManager, FormerMemberState, Member } from '..'
 
 interface MemberManagerInterface {
     add(id: string): Promise<Member>
@@ -19,9 +19,36 @@ export default class MemberManager extends BaseManager<Member, typeof Member> im
 
     fetch(): Promise<Collection<string, Member>>
     fetch(id: string): Promise<Member>
-    public async fetch(id?: string): Promise<Collection<string, Member> | Member> {
+    public fetch(id?: string): Promise<Collection<string, Member> | Member> {
+        if (typeof id === 'string') {
+            return this.fetchId(id)
+        }
+        return this.fetchAll()
+    }
+
+    private fetchId(id: string): Promise<Member> {
         throw new Error('Method not implemented.')
     }
+
+    private async fetchAll(): Promise<Collection<string, Member>> {
+        // The /members endpoint is reserved for admins, so to be safe we just fetch the group instead
+        const groupResponse = await this.client.rest.api<APIGroup>('GET', `groups/${this.group.id}`)
+        const batch = new Collection<string, Member>()
+
+        groupResponse.members?.forEach(data => {
+            const user = this.client.users._add({
+                id: data.user_id,
+                avatar_url: data.image_url,
+                name: data.name,
+            })
+
+            const member = this._upsert(new Member(this.client, this.group, user, data))
+            batch.set(member.memberID, member)
+        })
+
+        return batch
+    }
+
     add(id: string): Promise<Member>
     add(ids: string[]): Promise<Collection<string, Member>>
     add(ids: string | string[]): Promise<Member> | Promise<Collection<string, Member>> {

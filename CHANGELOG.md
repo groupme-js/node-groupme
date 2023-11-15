@@ -1,3 +1,16 @@
+# [4.1.0](https://github.com/groupme-js/node-groupme/compare/v4.0.0...v4.1.0) (2023-11-15)
+
+
+### Bug Fixes
+
+* :adhesive_bandage: fix imports ([8a2f7c5](https://github.com/groupme-js/node-groupme/commit/8a2f7c5ea7667f38467186949a0f5929a50d0bad))
+* :bug: fetch /group/:id instead of /group/:id/members ([a8775f5](https://github.com/groupme-js/node-groupme/commit/a8775f5f49dc5b851cecb561a8717092e901ae11))
+
+
+### Features
+
+* Implemented fetchAll for MemberManager ([425d0c0](https://github.com/groupme-js/node-groupme/commit/425d0c06850f4ace3bac6139e027de0054cb6bfa))
+
 # [4.0.0](https://github.com/groupme-js/node-groupme/compare/v3.2.2...v4.0.0) (2023-11-04)
 
 
