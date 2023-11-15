@@ -1,4 +1,4 @@
-import type { APIMember, PostMemberRemoveResponse } from 'groupme-api-types'
+import type { APIGroup, PostMemberRemoveResponse } from 'groupme-api-types'
 import type { BaseGroup, Client } from '..'
 import { BaseManager, Collection, FormerMember, FormerMemberManager, FormerMemberState, Member } from '..'
 
@@ -31,10 +31,11 @@ export default class MemberManager extends BaseManager<Member, typeof Member> im
     }
 
     private async fetchAll(): Promise<Collection<string, Member>> {
-        const membersResponse = await this.client.rest.api<APIMember[]>('GET', `groups/${this.group.id}/members`)
+        // The /members endpoint is reserved for admins, so to be safe we just fetch the group instead
+        const groupResponse = await this.client.rest.api<APIGroup>('GET', `groups/${this.group.id}`)
         const batch = new Collection<string, Member>()
 
-        membersResponse.forEach(data => {
+        groupResponse.members?.forEach(data => {
             const user = this.client.users._add({
                 id: data.user_id,
                 avatar_url: data.image_url,
