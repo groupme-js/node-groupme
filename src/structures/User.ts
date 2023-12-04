@@ -5,7 +5,7 @@ import { Base } from '..'
 interface UserInterface {}
 
 export default class User extends Base implements UserInterface {
-    avatar: string | null
+    avatar?: string | null
     name: string
     constructor(client: Client, data: APIUser) {
         super(client, String(data.id))
