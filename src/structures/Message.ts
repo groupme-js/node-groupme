@@ -46,7 +46,7 @@ export default abstract class Message<T extends Channel> extends Base implements
         if (data.created_at !== undefined) this.createdAt = data.created_at
         if (data.source_guid !== undefined) this.sourceGuid = data.source_guid
         if (data.attachments !== undefined) this.attachments = data.attachments
-        if (data.favorited_by !== undefined) this.likes = new MessageLikeManager(this.client, data.favorited_by)
+        if (data.favorited_by !== undefined) this.likes._patchIDs(data.favorited_by)
         if ('system' in data && data.system !== undefined) this.system = data.system
 
         return this

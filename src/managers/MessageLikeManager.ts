@@ -29,6 +29,15 @@ export default class MessageLikeManager extends UserManager implements MessageLi
         return this
     }
 
+    _patchIDs(ids: string[]): this {
+        this.idSet.clear()
+        this.cache.clear()
+        for (const id of ids) {
+            this._addID(id)
+        }
+        return this
+    }
+
     public get ids(): string[] {
         const idArray: string[] = []
         this.idSet.forEach(id => idArray.push(id))
